@@ -1,0 +1,40 @@
+$color-primary: #4263EB;
+
+
+$color-grey-light-1: #F5F5F7; // Light background
+$color-grey-dark-1: #555; //Normal text
+
+$background-color: $color-grey-light-1;
+
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+
+html {
+  box-sizing: border-box;
+  font-size: 62.5%;
+}
+
+body {
+  font-family: 'Lexend', sans-serif;
+  font-weight: 400;
+  line-height: 1.6;
+  color: $color-grey-dark-1;
+  background-color: $background-color;
+}
+
+/*
+.container {
+  max-width: 120rem;
+  padding: 0 3.2rem;
+  margin: 0 auto;
+}
+*/
