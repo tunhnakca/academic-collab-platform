@@ -1,0 +1,27 @@
+{
+  "name": "learningplatformfirstterm",
+  "version": "1.0.0",
+  "description": "This project is carried out in cooperation with Tunahan Akça and Mert Munar under the leadership of our teacher Ahmet Özmen for Seng students at Sakarya University",
+  "main": "app.js",
+  "scripts": {
+    "start": "parcel src/main/resources/static/js/app.js --dist-dir src/main/resources/static/dist",
+    "build": "parcel build src/main/resources/static/js/app.js --dist-dir src/main/resources/static/dist"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tunhnakca/LearningPlatformFirstTerm.git"
+  },
+  "author": "Tunahan Akça",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tunhnakca/LearningPlatformFirstTerm/issues"
+  },
+  "homepage": "https://github.com/tunhnakca/LearningPlatformFirstTerm#readme",
+  "devDependencies": {
+    "parcel": "^2.13.2"
+  },
+  "dependencies": {
+    "core-js": "^3.39.0",
+    "regenerator-runtime": "^0.14.1"
+  }
+}

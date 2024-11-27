@@ -31,3 +31,20 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### For Parcel ###
+# Parcel cache
+.parcel-cache/
+
+# Build output
+dist/
+
+# Node modules
+node_modules/
+
+# NPM lock file
+package-lock.json
+
+# Other unnecessary files
+*.log
+.DS_Store
