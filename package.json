@@ -4,8 +4,8 @@
   "description": "This project is carried out in cooperation with Tunahan Akça and Mert Munar under the leadership of our teacher Ahmet Özmen for Seng students at Sakarya University",
   "main": "app.js",
   "scripts": {
-    "start": "parcel src/main/resources/static/js/app.js --dist-dir src/main/resources/static/dist",
-    "build": "parcel build src/main/resources/static/js/app.js --dist-dir src/main/resources/static/dist"
+    "start": "parcel src/main/resources/static/js/app.js src/main/resources/static/scss/main.scss --dist-dir src/main/resources/static/dist",
+    "build": "parcel build src/main/resources/static/js/app.js src/main/resources/static/scss/main.scss --dist-dir src/main/resources/static/dist"
   },
   "repository": {
     "type": "git",
@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/tunhnakca/LearningPlatformFirstTerm#readme",
   "devDependencies": {
+    "@parcel/transformer-sass": "^2.13.2",
     "parcel": "^2.13.2"
   },
   "dependencies": {

@@ -24,7 +24,7 @@ Install Parcel as a development dependency.
 npm install --save-dev parcel
 ```
 
-#### 1.4 Update package.json
+#### 1.3 Update package.json
 
 Update your package.json file with build and start scripts:
 
@@ -33,8 +33,8 @@ Update your package.json file with build and start scripts:
   "name": "learning-platform",
   "version": "1.0.0",
   "scripts": {
-    "start": "parcel src/main/resources/static/js/app.js --dist-dir src/main/resources/static/dist",
-    "build": "parcel build src/main/resources/static/js/app.js --dist-dir src/main/resources/static/dist"
+    "start": "parcel src/main/resources/static/js/app.js src/main/resources/static/scss/main.scss --dist-dir src/main/resources/static/dist",
+    "build": "parcel build src/main/resources/static/js/app.js src/main/resources/static/scss/main.scss --dist-dir src/main/resources/static/dist"
   },
   "author": "Tunahan Akça",
   "license": "ISC",
@@ -44,7 +44,7 @@ Update your package.json file with build and start scripts:
 }
 ```
 
-#### 1.5 Run Parcel
+#### 1.4 Run Parcel
 
 To start development mode:
 
