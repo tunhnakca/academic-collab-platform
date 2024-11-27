@@ -1,0 +1,1 @@
+{"mappings":"","sources":["src/main/resources/static/js/app.js"],"sourcesContent":["\"use strict\";\n\nconst apiUrl = \"http://localhost:8080/api/endpoint\";\n"],"names":[],"version":3,"file":"app.js.map"}
