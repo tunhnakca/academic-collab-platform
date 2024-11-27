@@ -12,14 +12,19 @@
       rel="stylesheet"
     />
 
-    <link rel="stylesheet" href="../static/scss/main.scss" />
-    <script type="module" defer src="../static/js/app.js"></script>
+    <!--  
+        <link rel="stylesheet" th:href="@{/static/dist/main.css}" />
+        <script type="module" defer th:src="@{/static/dist/app.js}"></script>
+    -->
+
+    <link rel="stylesheet" href="/static/dist/main.css" />
+    <script type="module" defer src="/static/dist/app.js"></script>
 
     <title>Learning Platform</title>
   </head>
   <body>
     <header th:replace="~{fragments/navbar.html}"></header>
 
-    <main></main>
+    <main>a</main>
   </body>
 </html>
