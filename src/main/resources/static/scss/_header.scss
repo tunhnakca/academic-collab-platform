@@ -67,29 +67,62 @@
     &__tag {
         position: absolute;
         top: 0; 
-        right: -80px;
-        transform: translateY(-25%);
-        font-size: 1.2rem;
+        right: 0;
+        transform: translateY(-30%) translateX(115%);
+        font-size: 1rem;
+        letter-spacing: .15rem;
         padding: 0.2rem 0.8rem;
         border-radius: 1rem;
         color: #fff;
         text-transform: uppercase;
-        font-weight: bold;
+        font-weight: 600;
+        transition: all 0.3s ease;
 
         &--admin {
             background-color: #000;
+            box-shadow: 0 2px 3px rgba($color: #000000, $alpha: 0.1);
         }
 
         &--instructor {
             background-color: #3498db;
+            box-shadow: 0 2px 3px rgba($color: #000000, $alpha: 0.1);
         }
 
         &--mediator {
             background-color: #9b59b6;
+            box-shadow: 0 2px 3px rgba($color: #000000, $alpha: 0.1);
         }
 
         &--student {
             background-color: #2ecc71;
+            box-shadow: 0 2px 3px rgba($color: #000000, $alpha: 0.1);
         }
+
+        .user-info__name:hover & {
+            &--admin {
+                color: #000;
+                box-shadow: inset 0 0 0 1px #000;
+                background-color: #fff;
+            }
+            &--instructor {
+                color: #3498db; 
+                box-shadow: inset 0 0 0 1px #3498db;
+                background-color: #fff;
+            }
+            &--mediator {
+                color: #9b59b6; 
+                box-shadow: inset 0 0 0 1px #9b59b6;
+                background-color: #fff;
+            }
+            &--student {
+                color: #2ecc71; 
+                box-shadow: inset 0 0 0 1px #2ecc71;
+                background-color: #fff;
+            }
+        }
+    }
+
+    &__popup {
+
     }
 }
