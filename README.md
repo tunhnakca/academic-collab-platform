@@ -21,38 +21,47 @@ npm init -y
 Install Parcel as a development dependency.
 
 ```bash
-npm install --save-dev parcel
+npm install --save-dev parcel concurrently
 ```
 
 #### 1.3 Update package.json
 
-Update your package.json file with build and start scripts:
+Update your package.json file with the following scripts for watching, building assets, and running the application:
 
 ```json
 {
-  "name": "learning-platform",
-  "version": "1.0.0",
   "scripts": {
-    "start": "parcel src/main/resources/static/js/app.js src/main/resources/static/scss/main.scss --dist-dir src/main/resources/static/dist",
-    "build": "parcel build src/main/resources/static/js/app.js src/main/resources/static/scss/main.scss --dist-dir src/main/resources/static/dist"
-  },
-  "author": "Tunahan Akça",
-  "license": "ISC",
-  "devDependencies": {
-    "parcel": "latest"
+    "watch": "npx parcel watch src/main/resources/static/js/app.js src/main/resources/static/scss/main.scss --dist-dir src/main/resources/static/dist --public-url /dist",
+    "build-assets": "npx parcel build src/main/resources/static/js/app.js src/main/resources/static/scss/main.scss --dist-dir src/main/resources/static/dist --public-url /dist",
+    "build": "npm run build-assets && ./mvnw clean package",
+    "dev": "concurrently -k \"npm run watch\" \"./mvnw spring-boot:run\""
   }
 }
 ```
 
-#### 1.4 Run Parcel
+- watch: Watches for changes in JavaScript and SCSS files, then updates the dist directory dynamically.
 
-To start development mode:
+- build-assets: Builds optimized assets for production.
+
+- build: Combines the build-assets script with Maven's clean and package commands to create a production-ready build.
+
+- dev: Runs the Parcel watcher and the Spring Boot application concurrently for a seamless development experience.
+
+#### 1.4 Run Parcel and Spring Boot
+
+To start development mode with Parcel and Spring Boot:
 
 ```bash
-npm start
+npm run dev
 ```
 
-To build for production:
+To build assets for production:
+
+```bash
+npm run build-assets
+```
+
+To create a complete production build (frontend + backend):
 
 ```bash
 npm run build
