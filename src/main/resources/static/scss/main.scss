@@ -1,4 +1,6 @@
-@use 'base';
+@use 'abstracts/base';
+@use 'abstracts/mixins';
+@use 'abstracts/utilities';
 @use 'components';
-@use 'header';
+@use 'views/header';
 

@@ -66,3 +66,14 @@ To create a complete production build (frontend + backend):
 ```bash
 npm run build
 ```
+
+### 2. Cache Busting with Spring Boot
+
+Add the following lines to your application.properties file to enable cache busting for static resources:
+
+```properties
+spring.resources.chain.strategy.content.enabled=true
+spring.resources.chain.strategy.content.paths=/**
+```
+
+These settings append a hash to your static asset filenames, ensuring browsers always fetch the latest versions of your files after updates.

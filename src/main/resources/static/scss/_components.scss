@@ -1,0 +1,31 @@
+@use 'abstracts/base' as *;
+@use 'abstracts/utilities' as *;
+@use 'abstracts/mixins' as *;
+
+/******* Hover effects ********/
+.transition-hover-effect {
+    transition: all 0.3s ease;
+}
+
+/***********************/
+/* User badge */
+/***********************/
+.badge  {
+    @extend .transition-hover-effect;
+    @include box-shadow(rgba(0, 0, 0, 0.1));
+    font-size: 1rem;
+    letter-spacing: .15rem;
+    padding: 0.2rem 0.8rem;
+    border-radius: 1rem;
+    text-transform: uppercase;
+    font-weight: 600;
+    color: #fff;
+
+    &--admin { background-color: $color-admin; }
+    &--instructor { background-color: $color-instructor; }
+    &--mediator { background-color: $color-mediator; }
+    &--student { background-color: $color-student; }
+}
+/***********************/
+/***********************/
+/***********************/

@@ -3,8 +3,16 @@ $color-primary: #4263EB;
 
 $color-grey-light-1: #F5F5F7; // Light background
 $color-grey-light-2: #ced4da; // Light lines
+$color-grey-light-3: #e9ecef; // Link hover gray background
 $color-grey-dark-1: #494949; //Normal text
 $color-grey-dark-2: #333; //Darker text
+
+/* User colors */
+$color-admin: #000;
+$color-student: #2ecc71;
+$color-instructor: #3498db;
+$color-mediator: #9b59b6;
+
 
 $background-color: $color-grey-light-1;
 

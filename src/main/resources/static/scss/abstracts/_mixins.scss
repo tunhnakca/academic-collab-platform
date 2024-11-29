@@ -1,0 +1,14 @@
+/****** min-sized box shadow ******/
+@mixin box-shadow($color: rgba(0, 0, 0, 0.1), $position: '') {
+    $position-value: if($position != '', $position, '');
+    box-shadow: #{$position-value} 0 2px 3px $color;
+}
+// @include box-shadow(#9b59b6, 'inset');
+// @include box-shadow(#9b59b6);
+// @include box-shadow(#9b59b6, 'outset');
+
+/****** making border with box-shadow ******/
+@mixin border-box-shadow($color: rgba(0, 0, 0, 0.1), $size: 1px) {
+    box-shadow: inset 0 0 0 $size $color;
+}
+  
