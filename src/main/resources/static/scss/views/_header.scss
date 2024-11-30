@@ -41,7 +41,7 @@
         }
 
         &:active {
-            transform: scale(0.96);
+            @extend .scale-click-effect;
           }
     }
 }
@@ -56,6 +56,16 @@
         display: inline-block;
         color: $color-grey-dark-1;
         font-weight: 300;
+        padding: 0.4rem 0.8rem;
+        @extend .transition-hover-effect;
+
+        &:hover { 
+            background-color: $color-grey-light-3; 
+            border-radius: 8px; 
+        }
+        &:active {
+            @extend .scale-click-effect;
+        }
     }
 
     &__tag {
@@ -63,7 +73,7 @@
         position: absolute;
         top: 0; 
         right: 0;
-        transform: translateY(-30%) translateX(115%);
+        transform: translateY(-15%) translateX(105%);
 
         &--admin {
             @extend .badge--admin;
@@ -110,10 +120,43 @@
         top: calc(100% + 1px); // 1px means that header border bottom px
         background-color: #fff;
         border-radius: 1rem;
-        box-shadow: 0 2px 3px rgba($color: #000000, $alpha: 0.1);
-        opacity: 0;
-        visibility: hidden;
-        transition: all 0.3s ease;
+        @include box-shadow(rgba(0, 0, 0, 0.1));
+        @extend .transition-hover-effect;
         z-index: 1000;
+
+        ul {
+            list-style: none;
+        }
+
+        &__link {
+            display: flex;
+            gap: 1.2rem;
+            align-items: center;
+            justify-content: flex-start;
+            width: 100%;
+            text-decoration: none;
+            color: $color-grey-dark-1;
+            padding: 1.2rem 1.6rem;
+            @extend .transition-hover-effect;
+            border: none;
+            background: none;
+            cursor: pointer;
+            font: inherit;
+            font-size: 1.6rem;
+            font-weight: 300;
+
+            &__icon {
+                height: 2.4rem;
+                width: 2.4rem;
+            }
+
+            &:hover {
+                background-color: $color-grey-light-3; 
+            }
+
+            &--logout {
+                color: $color-danger;
+            }
+        }
     }
 }
