@@ -1,5 +1,9 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html
+  lang="en"
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+>
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -28,10 +32,9 @@
     <title>Learning Platform</title>
   </head>
   <body>
-    <header class="header">
-      <div th:replace="~{fragments/navbar.html}"></div>
-    </header>
-
-    <main></main>
+    <div th:replace="fragments/header :: header"></div>
+    <div layout:fragment="content">
+      <h1>Deneme</h1>
+    </div>
   </body>
 </html>
