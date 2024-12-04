@@ -1,5 +1,6 @@
 import { toggleDropdown } from "./pages/header.js";
 import { updatePadding, init } from "./pages/courses.js";
+import "./pages/add-course.js"; // Load the add-course module
 
 ///////////////////////////
 // Header
