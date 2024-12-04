@@ -45,6 +45,54 @@
     &--mediator { background-color: $color-mediator; }
     &--student { background-color: $color-student; }
 }
+
 /***********************/
+/* Link Buttons */
 /***********************/
-/***********************/
+
+%link-btn-base {
+  display: inline-block;
+  text-decoration: none;
+  font-family: inherit;
+  font-weight: 500;
+  text-align: center;
+  border-radius: 0.6rem 0;
+  @extend .shadow-normal;
+  @extend .transition-hover-effect;
+  cursor: pointer;
+}
+
+.link-btn {
+  @extend %link-btn-base;
+  padding: 0.8rem 1.6rem;
+  font-size: 1.6rem;
+  @include box-shadow(rgba(0, 0, 0, 0.15));
+  color: #fff;
+
+  .link-btn:visited,
+  .link-btn:link {
+    @extend %link-btn-base;
+    padding: 0.8rem 1.6rem;
+    font-size: 1.6rem;
+    @include box-shadow(rgba(0, 0, 0, 0.15));
+    color: #fff;
+  }
+
+
+  &:hover {
+    @extend .shadow-medium;
+  }
+
+  &:active {
+    @extend .shadow-smaller;
+    transform: scale(0.98);
+  }
+
+  &--success {
+    background-color: $color-success;
+  }
+
+  &--danger {
+    background-color: $color-danger;
+  }
+}
