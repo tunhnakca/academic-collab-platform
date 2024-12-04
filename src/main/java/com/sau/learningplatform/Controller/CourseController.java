@@ -11,4 +11,10 @@ public class CourseController {
         // Add logic to fetch courses
         return "courses";
     }
+
+    @GetMapping("/courses/add")
+    public String addCourses(Model model) {
+        // Add logic to fetch courses
+        return "add-course";
+    }
 }

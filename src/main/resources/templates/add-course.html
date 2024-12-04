@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{layout}"
+>
+  <head>
+    <title>Add Course</title>
+  </head>
+  <body>
+    <section class="section-add-course" layout:fragment="content">
+      <div class="container container-add-course container-form">
+        <h2 class="heading-secondary add-course__heading">Add Course</h2>
+        <form
+          action="/courses/add"
+          method="post"
+          class="form form-add-course"
+          name="add-course"
+        >
+          <div class="form-group">
+            <label for="courseName">Course Name</label>
+            <input
+              type="text"
+              id="courseName"
+              name="courseName"
+              placeholder="Enter course name"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="courseCode">Course Code</label>
+            <input
+              type="text"
+              id="courseCode"
+              name="courseCode"
+              placeholder="Enter course code"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="studentFile">Upload Student File</label>
+            <input
+              type="file"
+              id="studentFile"
+              name="studentFile"
+              accept=".xlsx, .xls"
+              required
+            />
+            <small class="file-hint">Accepted formats: .xls, .xlsx</small>
+          </div>
+          <button type="submit" class="btn btn--success">Add Course</button>
+        </form>
+      </div>
+    </section>
+  </body>
+</html>
