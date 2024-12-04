@@ -1,7 +1,7 @@
 /****** min-sized box shadow ******/
 @mixin box-shadow($color: rgba(0, 0, 0, 0.1), $position: '') {
     $position-value: if($position != '', $position, '');
-    box-shadow: #{$position-value} 0 2px 3px $color;
+    box-shadow: #{$position-value} 0 2px 4px $color;
 }
 // @include box-shadow(#9b59b6, 'inset');
 // @include box-shadow(#9b59b6);

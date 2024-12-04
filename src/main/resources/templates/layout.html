@@ -32,9 +32,7 @@
     <title>Learning Platform</title>
   </head>
   <body>
-    <div th:replace="fragments/header :: header"></div>
-    <div layout:fragment="content">
-      <h1>Deneme</h1>
-    </div>
+    <div th:replace="~{fragments/header :: header}"></div>
+    <div layout:fragment="content"></div>
   </body>
 </html>
