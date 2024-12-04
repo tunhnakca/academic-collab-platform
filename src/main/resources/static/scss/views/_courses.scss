@@ -51,15 +51,20 @@
     }
 
     &__title {
-            display: block;
-            text-decoration: none;
             text-transform: uppercase;
             color: $color-grey-dark-2;
             font-size: 1.8rem;
             font-weight: 600;
             line-height: 1.4;
-            margin-bottom: 1.6rem;
-            flex-grow: 1; 
+            margin-bottom: 0.6rem;
+    }
+
+    &__instructor {
+        color: $color-grey-light-4;
+        margin-bottom: 2rem;
+        font-size: 1.2rem;
+        font-weight: 300;
+        flex-grow: 1; 
     }
 
     &__informations {
