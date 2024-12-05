@@ -26,6 +26,7 @@ public class HomeController {
     public String homepage(Model model) {
         // mock user
         User user = userService.findById(12);
+        model.addAttribute("loggedUser", user);
         List<CourseResponse> courses = courseService.getCoursesByUser(user);
 
         model.addAttribute("courses", courses);
@@ -36,6 +37,8 @@ public class HomeController {
 
     @GetMapping("/courses/add")
     public String addCoursePage(Model model) {
+        User user = userService.findById(12);
+        model.addAttribute("loggedUser", user);
 
         return "add-course";
     }

@@ -10,6 +10,44 @@
     <section class="section-courses" layout:fragment="content">
       <div class="container container-courses">
         <div class="courses">
+          <a href="#" class="course" th:each="course : ${courses}">
+            <span class="course__code" th:text="${course.code}">SWE000</span>
+            <p class="course__title" th:text="${course.title}">Course Title</p>
+            <p class="course__instructor" th:text="${course.owner}">
+              Deg - Name Surname
+            </p>
+            <ul class="course__informations">
+              <li>
+                <ion-icon
+                  name="checkmark-circle-outline"
+                  class="course__information__icon course__information__icon--open-projects"
+                ></ion-icon>
+                <span class="course__information"
+                  >Open Projects <span>1</span></span
+                >
+              </li>
+              <li>
+                <ion-icon
+                  name="close-circle-outline"
+                  class="course__information__icon course__information__icon--closed-projects"
+                ></ion-icon>
+                <span class="course__information"
+                  >Closed Projects <span>4</span></span
+                >
+              </li>
+              <li>
+                <ion-icon
+                  name="people-outline"
+                  class="course__information__icon"
+                ></ion-icon>
+                <span class="course__information"
+                  >Number of Students <span>54</span></span
+                >
+              </li>
+            </ul>
+          </a>
+
+          <!--
           <a href="#" class="course">
             <span class="course__code">SWE420</span>
             <p class="course__title">Natural Language Processing</p>
@@ -148,8 +186,28 @@
               </li>
             </ul>
           </a>
+          -->
         </div>
-        <div class="courses-buttons">
+
+        <div
+          class="courses-buttons"
+          th:if="${#strings.toLowerCase(loggedUser.role).replace('ı', 'i') == 'admin' or #strings.toLowerCase(loggedUser.role).replace('ı', 'i') == 'instructor'}"
+        >
+          <a class="courses-buttons__link link-btn link-btn--danger" href="#"
+            >Delete Course</a
+          >
+          <a
+            class="courses-buttons__link link-btn link-btn--success"
+            th:href="@{/courses/add}"
+            >Add Course</a
+          >
+        </div>
+
+        <!--
+        <div
+          class="courses-buttons"
+          th:if="${#authentication.principal.role == 'admin' or #authentication.principal.role == 'instructor'}"
+        >
           <a class="courses-buttons__link link-btn link-btn--danger" href="#"
             >Delete Course</a
           >
@@ -157,7 +215,7 @@
             >Add Course</a
           >
         </div>
-      </div>
+      --></div>
     </section>
   </body>
 </html>

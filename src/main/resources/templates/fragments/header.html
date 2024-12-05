@@ -2,14 +2,23 @@
   <nav class="main-nav">
     <ul class="main-nav__list">
       <li>
-        <a class="main-nav__link" href="#" title="Go to Courses">Courses</a>
+        <a class="main-nav__link" th:href="@{/courses}" title="Go to Courses"
+          >Courses</a
+        >
       </li>
     </ul>
   </nav>
   <div class="user-info">
     <div class="user-info__name" title="Open profile menu">
-      Tunahan Akça
-      <span class="user-info__tag user-info__tag--admin">Admin</span>
+      <span th:text="${loggedUser.name} + ' ' + ${loggedUser.surname}"
+        >Name Surname</span
+      >
+      <span
+        class="user-info__tag"
+        th:classappend="' user-info__tag--' + ${#strings.toLowerCase(loggedUser.role).replace('ı', 'i')}"
+        th:text="${loggedUser.role}"
+        >Role</span
+      >
     </div>
     <nav class="user-info__dropdown d-none">
       <ul>
