@@ -1,0 +1,125 @@
+@use '../abstracts/base' as *;
+@use '../abstracts/mixins' as *;
+@use '../abstracts/utilities' as *;
+@use '../components' as *;
+
+.section-courses {
+    padding: 4.8rem 0 3.2rem 0;
+}
+
+.container-courses {
+    display: flex;
+    flex-direction: column;
+    gap: 2.8rem;
+}
+
+.courses {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    row-gap: 2.8rem;
+    column-gap: 4rem;
+
+    &-buttons {
+        align-self: flex-end;
+        display: flex;
+        gap: 1.6rem;
+    }
+}
+
+.course {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+    position: relative;
+    overflow: hidden;
+    padding: 2.4rem 2.8rem;
+    border-radius: 1rem;
+    background-color: #fff;
+    @include box-shadow(rgba(0, 0, 0, 0.06));
+    @extend .transition-hover-effect;
+    display: flex;
+    flex-direction: column;
+
+    &:hover {
+        transform: translateY(-5%);
+    }
+
+    &:active {
+        transform: translateY(-3%);
+    }
+
+    &__code {
+        position: absolute;
+        top: 0;
+        right: 0;
+        background-color: #1a285e;
+        color: #fff;
+        font-size: 1.4rem;
+        font-weight: 500;
+        padding: 1.2rem 1.6rem;
+        border-bottom-left-radius: 2rem;
+        display: inline-block;
+
+    }
+
+    &__title {
+            text-transform: uppercase;
+            color: $color-grey-dark-2;
+            font-size: 1.8rem;
+            font-weight: 600;
+            line-height: 1.4;
+            margin-bottom: 0.6rem;
+    }
+
+    &__instructor {
+        color: $color-grey-light-4;
+        margin-bottom: 2rem;
+        font-size: 1.2rem;
+        font-weight: 300;
+        flex-grow: 1; 
+    }
+
+    &__informations {
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        gap: 1.2rem;
+        padding: 0 2.8rem;
+        font-size: 1.4rem;
+        color: #666;
+
+        li {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            width: 100%;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid $color-grey-light-2;
+        }
+
+        li:last-child {
+            border-bottom: none; 
+            padding-bottom: 0;
+        }
+    }
+
+    &__information {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+
+        &__icon {
+            height: 2rem;
+            width: 2rem;
+
+            &--open-projects {
+                color: $color-success;
+            }
+
+            &--closed-projects {
+                color: $color-danger;
+            }
+        }
+    }
+}

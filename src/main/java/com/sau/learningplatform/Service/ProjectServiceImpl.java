@@ -1,0 +1,44 @@
+package com.sau.learningplatform.Service;
+
+import com.sau.learningplatform.Entity.Project;
+import com.sau.learningplatform.Repository.ProjectRepository;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Optional;
+
+@Service
+@Slf4j
+public class ProjectServiceImpl implements ProjectService{
+    private ProjectRepository projectRepository;
+
+    public ProjectServiceImpl(ProjectRepository projectRepository) {
+        this.projectRepository = projectRepository;
+    }
+
+    @Override
+    public Project findById(int id) {
+        Optional<Project>result=projectRepository.findById(id);
+
+        if (result.isEmpty()){
+            throw new RuntimeException("Project not found with given id !");
+        }
+        return result.get();
+    }
+
+    @Override
+    public List<Project> getProjectsByCourseId(int courseId) {
+
+        List<Project>projects=projectRepository.findByCourseId(courseId);
+
+        if (projects.isEmpty()){
+            log.info("No projects found for the given course!");
+        }
+
+        return projects;
+
+    }
+
+
+}
