@@ -17,3 +17,11 @@ export function updatePadding() {
 export function init() {
   updatePadding();
 }
+
+// When the document is fully loaded, start calculating padding
+document.addEventListener("DOMContentLoaded", function (e) {
+  init();
+
+  // Call updatePadding when the window is resized
+  window.addEventListener("resize", updatePadding);
+});

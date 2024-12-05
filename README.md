@@ -31,8 +31,8 @@ Update your package.json file with the following scripts for watching, building 
 ```json
 {
   "scripts": {
-    "watch": "npx parcel watch src/main/resources/static/js/app.js src/main/resources/static/scss/main.scss --dist-dir src/main/resources/static/dist --public-url /dist",
-    "build-assets": "npx parcel build src/main/resources/static/js/app.js src/main/resources/static/scss/main.scss --dist-dir src/main/resources/static/dist --public-url /dist",
+    "watch": "npx parcel watch src/main/resources/static/js/app.js src/main/resources/static/js/pages/*.js src/main/resources/static/scss/main.scss --dist-dir src/main/resources/static/dist --public-url /dist",
+    "build-assets": "npx parcel build src/main/resources/static/js/app.js src/main/resources/static/js/pages/*.js src/main/resources/static/scss/main.scss --dist-dir src/main/resources/static/dist --public-url /dist",
     "build": "npm run build-assets && ./mvnw clean package",
     "dev": "concurrently -k \"npm run watch\" \"./mvnw spring-boot:run\""
   }
