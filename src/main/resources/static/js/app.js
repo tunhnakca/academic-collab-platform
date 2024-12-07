@@ -1,18 +1,23 @@
-import { toggleDropdown } from "./pages/header.js";
-import { updatePadding, init } from "./pages/courses.js";
+import { toggleDropdownHeader } from "./pages/header.js";
+import { updatePadding, showEmptyMessageCourses } from "./pages/courses.js";
 import "./pages/add-course.js"; // Load the add-course module
 
 ///////////////////////////
 // Header
-toggleDropdown();
+document.addEventListener("DOMContentLoaded", (e) => {
+  toggleDropdownHeader();
+});
 
 ///////////////////////////
 // Courses
 
-// When the document is fully loaded, start calculating padding
+// When the document is fully loaded
 document.addEventListener("DOMContentLoaded", function (e) {
-  init();
+  //Start calculating padding
+  updatePadding();
 
   // Call updatePadding when the window is resized
   window.addEventListener("resize", updatePadding);
+
+  showEmptyMessageCourses();
 });

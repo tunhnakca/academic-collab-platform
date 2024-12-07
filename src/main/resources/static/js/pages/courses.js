@@ -1,3 +1,5 @@
+import { showEmptyMessage } from "../common/helpers.js";
+
 // The updatePadding function calculates the padding-right for the .course elements (Because the course title was behind the course code)
 export function updatePadding() {
   const courses = document.querySelectorAll(".course");
@@ -13,7 +15,6 @@ export function updatePadding() {
   });
 }
 
-// Initial call to calculate the padding-right
-export function init() {
-  updatePadding();
+export function showEmptyMessageCourses() {
+  showEmptyMessage(".courses", "No courses yet.");
 }
