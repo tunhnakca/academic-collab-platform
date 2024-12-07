@@ -1,0 +1,49 @@
+@use '../abstracts/base' as *;
+@use '../abstracts/mixins' as *;
+@use '../abstracts/utilities' as *;
+@use '../components' as *;
+
+.alert {
+    &-bar {
+        position: fixed;
+        top: 3.2rem;
+        right: 3.2rem;
+        z-index: 9999;
+        background-color: #fff;
+        padding: 2rem 2.8rem;
+        border-radius: 0.6rem;
+        display: flex;
+        align-items: flex-start;  
+        justify-content: flex-start;
+        @include box-shadow(rgba(0, 0, 0, 0.1));
+        @extend .transition-hover-effect;
+        max-width: 60rem;
+    }
+    &-message {
+        font-size: 1.6rem;
+        color: $color-grey-dark-2;
+        flex-grow: 1; 
+    }
+
+    &-icon {
+        display: inline-block;
+        margin-right: 1.4rem;
+        width: 32px;
+        height: 32px;
+        align-self: flex-start;
+    }
+
+    &-close {
+        display: inline-block;
+        margin-left: 2rem;
+        width: 32px;
+        height: 32px;
+        align-self: flex-start; 
+        cursor: pointer;
+        @extend .transition-hover-effect;
+        
+        &:hover {
+            transform: scale(1.2);
+        }
+    }
+}

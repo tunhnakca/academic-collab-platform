@@ -2,6 +2,7 @@
 @use 'abstracts/mixins';
 @use 'abstracts/utilities';
 @use 'components';
+@use 'components/alert';
 @use 'views/header';
 @use 'views/courses';
 @use 'views/add-course';

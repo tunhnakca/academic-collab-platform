@@ -34,5 +34,23 @@
   <body>
     <div th:replace="~{fragments/header :: header}"></div>
     <div layout:fragment="content"></div>
+
+    <div class="alert-bar alert-bar--success">
+      <ion-icon name="alert-circle-outline" class="alert-icon"></ion-icon>
+      <span class="alert-message"
+        >Successfuly logined saodhsaodjhsaoıdjsoaıjdıosad saodhsaodjhsaoıdjso
+        asdsad
+      </span>
+      <ion-icon name="close-outline" class="alert-close"></ion-icon>
+    </div>
+
+    <!--
+    Alert Bar
+
+    <div th:if="${message}" th:class="'alert-bar ' + ${alertClass}">
+      <div th:text="${message}" class="alert-message"></div>
+    </div>
+
+    -->
   </body>
 </html>
