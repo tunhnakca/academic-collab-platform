@@ -35,13 +35,13 @@
     <div th:replace="~{fragments/header :: header}"></div>
     <div layout:fragment="content"></div>
 
-    <div class="alert-bar alert-bar--success">
+    <div class="alert-bar alert-bar--error">
       <ion-icon name="alert-circle-outline" class="alert-icon"></ion-icon>
       <span class="alert-message"
-        >Successfuly logined saodhsaodjhsaoıdjsoaıjdıosad saodhsaodjhsaoıdjso
-        asdsad
-      </span>
+        >Incorrect username or password. Please try again!</span
+      >
       <ion-icon name="close-outline" class="alert-close"></ion-icon>
+      <div class="alert-progress-bar"></div>
     </div>
 
     <!--

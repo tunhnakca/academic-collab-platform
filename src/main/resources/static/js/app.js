@@ -1,6 +1,7 @@
 import { toggleDropdownHeader } from "./pages/header.js";
 import { updatePadding, showEmptyMessageCourses } from "./pages/courses.js";
 import "./pages/add-course.js"; // Load the add-course module
+import "./components/alert-bar.js";
 
 ///////////////////////////
 // Header
