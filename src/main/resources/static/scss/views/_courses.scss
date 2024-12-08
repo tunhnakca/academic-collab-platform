@@ -123,3 +123,36 @@
         }
     }
 }
+
+.delete-mode {
+    .course {
+        cursor: pointer;
+        background-color: rgba(255, 0, 0, 0.1);
+
+        &:hover {
+            background-color: rgba(255, 0, 0, 0.2); 
+        }
+    }
+}
+
+.modal-delete-course {
+    @extend .modal;
+    display: flex;
+    flex-direction: column;
+    gap: 2.4rem;
+    align-items: center;
+
+    p {
+        font-size: 1.6rem;
+    }
+
+    &__buttons {
+        display: flex;
+        gap: 1.2rem;
+
+        button {
+            font-size: 1.8rem;
+            padding: 1.2rem 3.6rem;
+        }
+    }
+}

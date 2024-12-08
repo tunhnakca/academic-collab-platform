@@ -1,0 +1,53 @@
+<!--
+    Alert Bar
+
+    <div th:if="${message}" th:class="'alert-bar ' + ${alertClass}">
+      <div th:text="${message}" class="alert-message"></div>
+    </div>
+
+    -->
+
+<!--
+<div class="alert-bar alert-bar--error">
+  <ion-icon name="alert-circle-outline" class="alert-icon"></ion-icon>
+  <span class="alert-message"
+    >Incorrect username or password. Please try again!</span
+  >
+  <ion-icon name="close-outline" class="alert-close"></ion-icon>
+  <div class="alert-progress-bar"></div>
+</div>
+-->
+
+<!--
+<div class="alert-bar alert-bar--error" th:fragment="alert-bar">
+  <ion-icon name="alert-circle-outline" class="alert-icon"></ion-icon>
+  <span class="alert-message"
+    >Incorrect username or password. Please try again!</span
+  >
+  <ion-icon name="close-outline" class="alert-close"></ion-icon>
+  <div class="alert-progress-bar"></div>
+</div>
+-->
+
+<!--
+<div
+  th:if="${message}"
+  th:class="'alert-bar ' + ${alertClass}"
+  th:fragment="alert-bar(message, alertClass)"
+>
+  <ion-icon
+    class="alert-icon"
+    th:attr="name=${alertClass.contains('error') ? 'alert-circle-outline' : 'checkmark-circle-outline'}"
+  ></ion-icon>
+  <span class="alert-message" th:text="${message}">Default message</span>
+  <ion-icon name="close-outline" class="alert-close"></ion-icon>
+  <div class="alert-progress-bar"></div>
+</div>
+-->
+
+<div th:fragment="alert-bar" class="alert-bar alert-bar--error">
+  <ion-icon name="alert-circle-outline" class="alert-icon"></ion-icon>
+  <span class="alert-message" th:text="${message}">Default error message</span>
+  <ion-icon name="close-outline" class="alert-close"></ion-icon>
+  <div class="alert-progress-bar"></div>
+</div>

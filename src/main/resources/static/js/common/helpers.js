@@ -32,7 +32,6 @@ export function showEmptyMessage(containerSelector, message) {
   const container = document.querySelector(containerSelector);
 
   if (!container) {
-    console.error(`Container not found: ${containerSelector}`);
     return;
   }
 

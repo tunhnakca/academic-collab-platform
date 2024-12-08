@@ -10,7 +10,12 @@
     <section class="section-courses" layout:fragment="content">
       <div class="container container-courses">
         <div class="courses">
-          <a href="#" class="course" th:each="course : ${courses}">
+          <a
+            href="#"
+            class="course"
+            th:each="course : ${courses}"
+            th:data-course-id="${course.id}"
+          >
             <span class="course__code" th:text="${course.code}">SWE000</span>
             <p class="course__title" th:text="${course.title}">Course Title</p>
             <p class="course__instructor" th:text="${course.owner}">
@@ -193,11 +198,13 @@
           class="courses-buttons"
           th:if="${#strings.toLowerCase(loggedUser.role).replace('ı', 'i') == 'admin' or #strings.toLowerCase(loggedUser.role).replace('ı', 'i') == 'instructor'}"
         >
-          <a class="courses-buttons__link link-btn link-btn--danger" href="#"
+          <a
+            class="courses-buttons__link courses-buttons__link--delete link-btn link-btn--danger"
+            href="#"
             >Delete Course</a
           >
           <a
-            class="courses-buttons__link link-btn link-btn--success"
+            class="courses-buttons__link courses-buttons__link--add link-btn link-btn--success"
             th:href="@{/courses/add}"
             >Add Course</a
           >

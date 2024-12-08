@@ -33,24 +33,8 @@
   </head>
   <body>
     <div th:replace="~{fragments/header :: header}"></div>
+    <div th:replace="~{fragments/alert-bar :: alert-bar}"></div>
     <div layout:fragment="content"></div>
-
-    <div class="alert-bar alert-bar--error">
-      <ion-icon name="alert-circle-outline" class="alert-icon"></ion-icon>
-      <span class="alert-message"
-        >Incorrect username or password. Please try again!</span
-      >
-      <ion-icon name="close-outline" class="alert-close"></ion-icon>
-      <div class="alert-progress-bar"></div>
-    </div>
-
-    <!--
-    Alert Bar
-
-    <div th:if="${message}" th:class="'alert-bar ' + ${alertClass}">
-      <div th:text="${message}" class="alert-message"></div>
-    </div>
-
-    -->
+    <div class="overlay d-none"></div>
   </body>
 </html>
