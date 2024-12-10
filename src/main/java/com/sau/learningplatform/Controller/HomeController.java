@@ -42,4 +42,12 @@ public class HomeController {
 
         return "add-course";
     }
+
+    @GetMapping("/profile")
+    public String profilePage(Model model) {
+        User user = userService.findById(12);
+        model.addAttribute("loggedUser", user);
+
+        return "profile";
+    }
 }

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{layout}"
+>
+  <head>
+    <title>Profile</title>
+  </head>
+  <body>
+    <section class="section-profile" layout:fragment="content">
+      <div class="container container-profile">
+        <h3 class="profile__heading">My Account</h3>
+        <p class="profile__description">
+          View and manage your account information.
+        </p>
+        <div class="profile__informations">
+          <div class="profile__information">
+            <p class="profile__information-heading">Role</p>
+            <p class="profile__information-value">Admin</p>
+          </div>
+          <div class="profile__information">
+            <p class="profile__information-heading">Name and Surname</p>
+            <p class="profile__information-value">Tunahan Akça</p>
+          </div>
+          <div class="profile__information">
+            <p class="profile__information-heading">Username</p>
+            <p class="profile__information-value">B201202056</p>
+          </div>
+          <div class="profile__information">
+            <p class="profile__information-heading">Number</p>
+            <p class="profile__information-value">B201202056</p>
+          </div>
+          <div class="profile__information">
+            <p class="profile__information-heading">Change Password</p>
+            <form
+              action="profile/change-password"
+              method="post"
+              class="change-password-form"
+            >
+              <input
+                type="password"
+                name="currentPassword"
+                id="currentPassword"
+                placeholder="Current password"
+                required
+              />
+              <input
+                type="password"
+                name="newPassword"
+                id="newPassword"
+                placeholder="New password"
+                required
+              />
+              <input
+                type="password"
+                name="confirmNewPassword"
+                id="confirmNewPassword"
+                placeholder="Confirm new password"
+                required
+              />
+              <button
+                type="submit"
+                class="btn btn--primary change-password-button"
+              >
+                Update Password
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+  </body>
+</html>
+
+<!--
+              <form th:action="@{/profile/change-password}" th:object="${passwordForm}" method="post">
+                <div>
+                    <label for="currentPassword">Current Password:</label>
+                    <input type="password" id="currentPassword" th:field="*{currentPassword}" required />
+                </div>
+                <div>
+                    <label for="newPassword">New Password:</label>
+                    <input type="password" id="newPassword" th:field="*{newPassword}" required />
+                </div>
+                <div>
+                    <label for="confirmNewPassword">Confirm New Password:</label>
+                    <input type="password" id="confirmNewPassword" th:field="*{confirmNewPassword}" required />
+                </div>
+                <button type="submit">Update Password</button>
+            </form>
+-->

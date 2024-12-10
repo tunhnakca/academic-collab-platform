@@ -1,5 +1,6 @@
 import { showLoginInfoModal } from "./pages/login.js";
 import { toggleDropdownHeader } from "./pages/header.js";
+import { setupPasswordValidation } from "./pages/profile";
 import {
   updatePadding,
   showEmptyMessageCourses,
@@ -21,6 +22,14 @@ if (window.location.pathname.includes("login")) {
 document.addEventListener("DOMContentLoaded", (e) => {
   toggleDropdownHeader();
 });
+
+///////////////////////////
+// Profile Page
+if (window.location.pathname.includes("profile")) {
+  document.addEventListener("DOMContentLoaded", (e) => {
+    setupPasswordValidation();
+  });
+}
 
 ///////////////////////////
 // Courses Page
