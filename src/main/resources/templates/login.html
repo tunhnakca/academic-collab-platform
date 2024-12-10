@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Lexend+Deca:wght@100..900&family=Lexend:wght@100..900&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" th:href="@{/dist/scss/main.css}" />
+
+    <script
+      type="module"
+      src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"
+    ></script>
+    <script
+      nomodule
+      src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"
+    ></script>
+
+    <script type="module" defer th:src="@{/dist/js/app.js}"></script>
+
+    <title>Login</title>
+  </head>
+  <body>
+    <div class="container-login">
+      <h4 class="login__heading">Log In</h4>
+      <form action="/login" method="post" class="login-form" name="login">
+        <div class="login-input-group">
+          <label for="username">Username</label>
+          <input
+            type="text"
+            name="username"
+            id="username"
+            placeholder="Enter your username (e.g., B201...)"
+            required
+          />
+        </div>
+        <div class="login-input-group">
+          <label for="password">Password</label>
+          <input
+            type="password"
+            name="password"
+            id="password"
+            placeholder="Enter your password"
+            required
+          />
+        </div>
+        <div class="login-links">
+          <a href="" class="login-link__forgot-password">Forgot password?</a>
+          <button class="btn btn--primary login-button" type="submit">
+            Sign In
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <p class="login-info">First time here? <span>Click</span> for info!</p>
+
+    <div class="overlay d-none"></div>
+
+    <div class="modal-login d-none">
+      <button class="modal-close">&times;</button>
+      <h2 class="modal-login__heading">How to Log In</h2>
+      <div class="modal-login__informations">
+        <div class="modal-login__info">
+          <ion-icon
+            name="information-circle-outline"
+            class="modal-login__icon"
+          ></ion-icon>
+          <span
+            >The username is a unique ID provided by the university specifically
+            for you, and it cannot be changed.
+          </span>
+        </div>
+        <div class="modal-login__info">
+          <ion-icon name="key-outline" class="modal-login__icon"></ion-icon>
+          <span
+            >For your first login, your default username and password will be
+            your number.
+          </span>
+        </div>
+        <div class="modal-login__info">
+          <ion-icon
+            name="lock-closed-outline"
+            class="modal-login__icon"
+          ></ion-icon>
+          <span>You should change your password after your first login. </span>
+        </div>
+      </div>
+    </div>
+    <div th:replace="~{fragments/alert-bar :: alert-bar}"></div>
+  </body>
+</html>

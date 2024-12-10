@@ -1,3 +1,4 @@
+import { showLoginInfoModal } from "./pages/login.js";
 import { toggleDropdownHeader } from "./pages/header.js";
 import {
   updatePadding,
@@ -8,13 +9,21 @@ import "./pages/add-course.js"; // Load the add-course module
 import "./components/alert-bar.js";
 
 ///////////////////////////
+// Login Page
+if (window.location.pathname.includes("login")) {
+  document.addEventListener("DOMContentLoaded", (e) => {
+    showLoginInfoModal();
+  });
+}
+
+///////////////////////////
 // Header
 document.addEventListener("DOMContentLoaded", (e) => {
   toggleDropdownHeader();
 });
 
 ///////////////////////////
-// Courses
+// Courses Page
 
 // When the document is fully loaded
 document.addEventListener("DOMContentLoaded", function (e) {

@@ -50,11 +50,19 @@
 /* Headings */
 /***********************/
 
-.heading-secondary {
+.heading-secondary, h2 {
   color: $color-grey-dark-1;
   font-size: 3.2rem;
   font-weight: 600;
   margin-bottom: 3.2rem;
+  letter-spacing: -0.1rem;
+}
+
+h4 {
+  color: $color-grey-dark-1;
+  font-size: 2rem;
+  font-weight: 500;
+  margin-bottom: 2rem;
   letter-spacing: -0.1rem;
 }
 
@@ -105,6 +113,11 @@
     background-color: $color-info;
     color: $color-grey-dark-1;
   }
+
+  &--primary {
+    background-color: $color-primary;
+  }
+
 }
 
 /***********************/
@@ -127,7 +140,6 @@
   @extend %link-btn-base;
   padding: 0.8rem 1.6rem;
   font-size: 1.6rem;
-  @include box-shadow(rgba(0, 0, 0, 0.15));
   color: #fff;
 
   .link-btn:visited,
@@ -135,7 +147,6 @@
     @extend %link-btn-base;
     padding: 0.8rem 1.6rem;
     font-size: 1.6rem;
-    @include box-shadow(rgba(0, 0, 0, 0.15));
     color: #fff;
   }
 
@@ -203,7 +214,7 @@
 }
 
 /***********************/
-/* Form */
+/* Modal window */
 /***********************/
 
 .modal {
