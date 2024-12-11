@@ -11,7 +11,7 @@
       <div class="container container-add-course container-form">
         <h2 class="heading-secondary add-course__heading">Add Course</h2>
         <form
-          action="/courses/add"
+          th:action="@{/courses/add}"
           method="post"
           class="form form-add-course"
           enctype="multipart/form-data"
@@ -38,14 +38,8 @@
             />
           </div>
           <div class="form-group">
-            <label for="studentFile">Upload Student File</label>
-            <input
-              type="file"
-              id="studentFile"
-              name="studentFile"
-              accept=".xlsx, .xls"
-              required
-            />
+            <label for="file">Upload Student File</label>
+            <input type="file" id="file" name="file" accept=".xlsx" required />
             <small class="file-hint"
               >Accepted formats: .xlsx <br />
               &#9432; File format should be Name | Surname | Number

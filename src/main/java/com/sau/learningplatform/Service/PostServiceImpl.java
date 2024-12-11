@@ -27,11 +27,17 @@ public class PostServiceImpl implements PostService{
         return posts.stream().map(this::postToResponse).toList();
     }
 
+    @Override
+    public void deleteById(int id) {
+        postRepository.deleteById(id);
+    }
+
+
     private PostResponse postToResponse(Post post){
 
         return PostResponse.builder().
                 text(post.getText()).
-                username(post.getUser().getUsername()).
+                nameAndSurname(post.getUser().getName()+" "+post.getUser().getSurname()).
                 dateCreated(post.getDateCreated()).
                 build();
     }

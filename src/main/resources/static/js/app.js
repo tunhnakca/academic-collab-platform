@@ -6,7 +6,7 @@ import {
   showEmptyMessageCourses,
   deleteCourse,
 } from "./pages/courses.js";
-import "./pages/add-course.js"; // Load the add-course module
+// import "./pages/add-course.js"; // Load the add-course module
 import "./components/alert-bar.js";
 
 ///////////////////////////

@@ -3,15 +3,16 @@ package com.sau.learningplatform.EntityResponse;
 import lombok.Builder;
 import lombok.Data;
 
-import java.util.Date;
+import java.time.LocalDateTime;
+
 
 @Data
 @Builder
 public class PostResponse {
-    private String username;
+    private String nameAndSurname;
 
     private String text;
 
-    private Date dateCreated;
+    private LocalDateTime dateCreated;
 
 }

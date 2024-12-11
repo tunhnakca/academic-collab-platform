@@ -33,18 +33,11 @@
         </li>
         <li>
           <form
-            action="/logout"
+            th:action="@{/logout}"
             method="POST"
             class="logout-form"
             name="logout"
           >
-            <!--
-          <input
-            type="hidden"
-            th:name="${_csrf.parameterName}"
-            th:value="${_csrf.token}"
-          />          
-          -->
             <button
               type="submit"
               class="user-info__dropdown__link user-info__dropdown__link--logout"

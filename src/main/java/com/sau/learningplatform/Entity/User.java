@@ -1,15 +1,16 @@
 package com.sau.learningplatform.Entity;
 
 import jakarta.persistence.*;
-import jdk.jfr.Name;
 
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @Table(name = "users")
+@SQLDelete(sql = "UPDATE users SET is_deleted=true WHERE id = ?")
+@Where(clause = "is_deleted = false")
 public class User {
 
     @Id
@@ -17,7 +18,7 @@ public class User {
     @Column(name = "id")
     private int id;
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.LAZY,cascade = {CascadeType.MERGE,CascadeType.PERSIST,CascadeType.REFRESH,CascadeType.DETACH})
     @JoinTable(name="course_users",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "course_id"))
@@ -32,9 +33,6 @@ public class User {
     @Column(name = "surname")
     private String surname;
 
-    @Column(name = "username")
-    private String username;
-
     @Column(name = "password")
     private String password;
 
@@ -42,7 +40,18 @@ public class User {
     private String role;
 
     @Column(name = "is_deleted")
-    private Boolean isDeleted;
+    private Boolean isDeleted=Boolean.FALSE;
+
+    public User(String number, String name, String surname, String password, String role) {
+        this.number = number;
+        this.name = name;
+        this.surname = surname;
+        this.password = password;
+        this.role = role;
+    }
+
+    public User() {
+    }
 
     public int getId() {
         return id;
@@ -84,14 +93,6 @@ public class User {
         this.surname = surname;
     }
 
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
     public String getPassword() {
         return password;
     }
@@ -115,4 +116,10 @@ public class User {
     public void setDeleted(Boolean deleted) {
         isDeleted = deleted;
     }
+
+    public void addCourse(Course course){
+        courses.add(course);
+
+    }
+
 }

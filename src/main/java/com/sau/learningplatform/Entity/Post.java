@@ -2,12 +2,16 @@ package com.sau.learningplatform.Entity;
 
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
 @Table(name = "posts")
+@SQLDelete(sql = "UPDATE posts SET is_deleted=true WHERE id = ?")
+@Where(clause = "is_deleted = false")
 public class Post {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,9 +36,9 @@ public class Post {
     private String status;
     @Column(name = "date_created")
     @CreationTimestamp
-    private Date dateCreated;
+    private LocalDateTime dateCreated;
     @Column(name = "is_deleted")
-    private Boolean isDeleted;
+    private Boolean isDeleted=Boolean.FALSE;
 
     public int getId() {
         return id;
@@ -84,11 +88,11 @@ public class Post {
         this.status = status;
     }
 
-    public Date getDateCreated() {
+    public LocalDateTime getDateCreated() {
         return dateCreated;
     }
 
-    public void setDateCreated(Date dateCreated) {
+    public void setDateCreated(LocalDateTime dateCreated) {
         this.dateCreated = dateCreated;
     }
 

@@ -10,4 +10,9 @@ import java.util.List;
 @Repository
 public interface CourseRepository extends JpaRepository<Course,Integer> {
     List<Course>findCoursesByUsers(User user);
+
+    List<Course> findByCode(String code);
+
+    boolean existsByCode(String code);
+
 }

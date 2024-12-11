@@ -1,10 +1,11 @@
 package com.sau.learningplatform.Service;
 
 import com.sau.learningplatform.Entity.Project;
+import com.sau.learningplatform.EntityResponse.ProjectResponse;
 import com.sau.learningplatform.Repository.ProjectRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -28,7 +29,7 @@ public class ProjectServiceImpl implements ProjectService{
     }
 
     @Override
-    public List<Project> getProjectsByCourseId(int courseId) {
+    public List<ProjectResponse> getProjectsByCourseId(int courseId) {
 
         List<Project>projects=projectRepository.findByCourseId(courseId);
 
@@ -36,7 +37,25 @@ public class ProjectServiceImpl implements ProjectService{
             log.info("No projects found for the given course!");
         }
 
-        return projects;
+        return projects.stream().map(this::mapToResponse).toList();
+
+    }
+
+    @Override
+    public void deleteById(int id) {
+        projectRepository.deleteById(id);
+    }
+
+
+    ProjectResponse mapToResponse(Project project){
+
+        return ProjectResponse
+                .builder()
+                .id(project.getId())
+                .title(project.getTitle())
+                .description(project.getDescription())
+                .isValid(project.getDateEnd().isAfter(LocalDateTime.now()))
+                .build();
 
     }
 

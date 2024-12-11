@@ -4,10 +4,17 @@ import com.sau.learningplatform.Entity.User;
 import com.sau.learningplatform.EntityResponse.CourseResponse;
 import com.sau.learningplatform.Service.CourseService;
 import com.sau.learningplatform.Service.UserService;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.lang.ProcessBuilder.Redirect;
+import java.security.Principal;
 import java.util.List;
 
 @Controller
@@ -23,31 +30,37 @@ public class HomeController {
     }
 
     @GetMapping("/courses")
-    public String homepage(Model model) {
-        // mock user
-        User user = userService.findById(12);
-        model.addAttribute("loggedUser", user);
-        List<CourseResponse> courses = courseService.getCoursesByUser(user);
+    public String homepage(Principal principal, Model model) {
+        String number = principal.getName();
+        User user = userService.findByNumber(number);
 
+        List<CourseResponse> courses = courseService.getCoursesByUser(user);
         model.addAttribute("courses", courses);
+        model.addAttribute("loggedUser", user);
 
         return "courses";
-
     }
 
     @GetMapping("/courses/add")
-    public String addCoursePage(Model model) {
-        User user = userService.findById(12);
+    public String loginPage(Principal principal, Model model) {
+        String number = principal.getName();
+        User user = userService.findByNumber(number);
         model.addAttribute("loggedUser", user);
-
         return "add-course";
+
     }
 
-    @GetMapping("/profile")
-    public String profilePage(Model model) {
-        User user = userService.findById(12);
-        model.addAttribute("loggedUser", user);
+    @PostMapping("/courses/add")
+    public String addCourse(Principal principal,
+            @RequestParam("courseName") String courseName,
+            @RequestParam("courseCode") String courseCode,
+            @RequestParam("file") MultipartFile studentFile,
+            Model model) throws IOException {
 
-        return "profile";
+        courseService.addCourseWithStudentsByExcel(principal.getName(), courseName, courseCode, studentFile);
+
+        return "redirect:/courses";
+
     }
+
 }

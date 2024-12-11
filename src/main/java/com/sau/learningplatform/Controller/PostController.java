@@ -3,7 +3,6 @@ package com.sau.learningplatform.Controller;
 import com.sau.learningplatform.Entity.Post;
 import com.sau.learningplatform.EntityResponse.PostResponse;
 import com.sau.learningplatform.Service.PostService;
-import com.sau.learningplatform.Service.ProjectService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,15 +19,18 @@ public class PostController {
     }
 
     @GetMapping("/posts")
-    public String postsByProject(Model model) {
-        // mock project
-        int projectId = 7;
-        List<PostResponse> posts = postService.getPostResponsesByProjectId(projectId);
-        model.addAttribute("posts", posts);
+    public String postsByProject(Model model){
+        //mock project
+       int projectId=2;
+       List<PostResponse> posts= postService.getPostResponsesByProjectId(projectId);
+       model.addAttribute("posts",posts);
 
-        return "home/posts";
-        // return "home/posts";
+       return "home/posts";
+       //return "home/posts";
 
     }
+
+
+
 
 }

@@ -30,7 +30,12 @@
   <body>
     <div class="container-login">
       <h4 class="login__heading">Log In</h4>
-      <form action="/login" method="post" class="login-form" name="login">
+      <form
+        th:action="@{/authenticate}"
+        method="post"
+        class="login-form"
+        name="login"
+      >
         <div class="login-input-group">
           <label for="username">Username</label>
           <input
@@ -94,6 +99,6 @@
         </div>
       </div>
     </div>
-    <div th:replace="~{fragments/alert-bar :: alert-bar}"></div>
+    <div th:replace="~{fragments/alert-bar-login :: alert-bar-login}"></div>
   </body>
 </html>

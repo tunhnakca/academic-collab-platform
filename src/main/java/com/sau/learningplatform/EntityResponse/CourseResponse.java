@@ -5,7 +5,7 @@ import com.sau.learningplatform.Entity.User;
 import lombok.Builder;
 import lombok.Data;
 
-import java.util.List;
+
 
 @Data
 @Builder
@@ -18,6 +18,7 @@ public class CourseResponse {
     private String title;
 
     private String code;
+
 
 
 }
