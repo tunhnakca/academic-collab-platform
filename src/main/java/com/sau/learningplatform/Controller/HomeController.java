@@ -63,4 +63,13 @@ public class HomeController {
 
     }
 
+    @GetMapping("/profile")
+    public String profilePage(Principal principal, Model model) {
+        String number = principal.getName();
+        User user = userService.findByNumber(number);
+        model.addAttribute("loggedUser", user);
+        return "profile";
+
+    }
+
 }
