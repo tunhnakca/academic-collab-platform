@@ -1,3 +1,4 @@
+import { async } from "regenerator-runtime";
 import { showEmptyMessage } from "../common/helpers.js";
 import { overlay } from "../common/config";
 
@@ -35,6 +36,7 @@ export function deleteCourse() {
 
   coursesContainer.addEventListener("click", function (event) {
     if (deleteMode && event.target.closest(".course")) {
+      event.preventDefault();
       const selectedCourse = event.target.closest(".course");
       const courseId = selectedCourse.dataset.courseId;
 
