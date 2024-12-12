@@ -19,7 +19,6 @@ import java.lang.ProcessBuilder.Redirect;
 import java.security.Principal;
 import java.util.List;
 
-
 @Controller
 public class HomeController {
 
@@ -67,7 +66,8 @@ public class HomeController {
     }
 
     @GetMapping("/profile")
-    public String profilePage(Principal principal, Model model, @ModelAttribute("messageResponse")MessageResponse messageResponse) {
+    public String profilePage(Principal principal, Model model,
+            @ModelAttribute("messageResponse") MessageResponse messageResponse) {
         String number = principal.getName();
         User user = userService.findByNumber(number);
         model.addAttribute("loggedUser", user);
@@ -76,14 +76,14 @@ public class HomeController {
     }
 
     @PostMapping("/courses/remove/{courseId}")
-    public String profilePage(Principal principal, @PathVariable("courseId")int courseId) {
+    public String profilePage(Principal principal, @PathVariable("courseId") int courseId) {
 
-        Course course=courseService.findById(courseId);
+        Course course = courseService.findById(courseId);
 
         String number = principal.getName();
         User user = userService.findByNumber(number);
 
-        List<Course>courses=user.getCourses();
+        List<Course> courses = user.getCourses();
         courses.remove(course);
 
         user.setCourses(courses);
@@ -95,18 +95,17 @@ public class HomeController {
 
     @PostMapping("/password/change")
     public RedirectView changePassword(Principal principal,
-                                       Model model,
-                                       RedirectAttributes attributes,
-                                       @RequestParam("currentPassword") String currentPassword,
-                                       @RequestParam("newPassword") String newPassword) {
+            Model model,
+            RedirectAttributes attributes,
+            @RequestParam("currentPassword") String currentPassword,
+            @RequestParam("newPassword") String newPassword) {
 
         String number = principal.getName();
         User user = userService.findByNumber(number);
 
-        MessageResponse messageResponse=userService.updatePassword(user,currentPassword,newPassword);
+        MessageResponse messageResponse = userService.updatePassword(user, currentPassword, newPassword);
 
-        attributes.addFlashAttribute("messageResponse",messageResponse);
-
+        attributes.addFlashAttribute("messageResponse", messageResponse);
 
         return new RedirectView("/profile");
 

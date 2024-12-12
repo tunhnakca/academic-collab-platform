@@ -16,24 +16,41 @@
         <div class="profile__informations">
           <div class="profile__information">
             <p class="profile__information-heading">Role</p>
-            <p class="profile__information-value">Admin</p>
+            <p th:text="${loggedUser.role}" class="profile__information-value">
+              Role
+            </p>
           </div>
           <div class="profile__information">
             <p class="profile__information-heading">Name and Surname</p>
-            <p class="profile__information-value">Tunahan Akça</p>
+            <p
+              th:text="${loggedUser.name} + ' ' + ${loggedUser.surname}"
+              class="profile__information-value"
+            >
+              Name and Surname
+            </p>
           </div>
           <div class="profile__information">
             <p class="profile__information-heading">Username</p>
-            <p class="profile__information-value">B201202056</p>
+            <p
+              th:text="${loggedUser.number}"
+              class="profile__information-value"
+            >
+              B*********
+            </p>
           </div>
           <div class="profile__information">
             <p class="profile__information-heading">Number</p>
-            <p class="profile__information-value">B201202056</p>
+            <p
+              th:text="${loggedUser.number}"
+              class="profile__information-value"
+            >
+              B*********
+            </p>
           </div>
           <div class="profile__information">
             <p class="profile__information-heading">Change Password</p>
             <form
-              action="/password/change"
+              th:action="@{/password/change}"
               method="post"
               class="change-password-form"
             >
@@ -68,24 +85,19 @@
           </div>
         </div>
       </div>
+      <div
+        th:if="${messageResponse.message}"
+        th:fragment="alert-bar"
+        class="alert-bar"
+        th:classappend="${messageResponse.status == T(org.springframework.http.HttpStatus).OK ? 'alert-bar--success' : 'alert-bar--error'}"
+      >
+        <ion-icon name="alert-circle-outline" class="alert-icon"></ion-icon>
+        <span class="alert-message" th:text="${messageResponse.message}">
+          Default error message
+        </span>
+        <ion-icon name="close-outline" class="alert-close"></ion-icon>
+        <div class="alert-progress-bar"></div>
+      </div>
     </section>
   </body>
 </html>
-
-<!--
-              <form th:action="@{/profile/change-password}" th:object="${passwordForm}" method="post">
-                <div>
-                    <label for="currentPassword">Current Password:</label>
-                    <input type="password" id="currentPassword" th:field="*{currentPassword}" required />
-                </div>
-                <div>
-                    <label for="newPassword">New Password:</label>
-                    <input type="password" id="newPassword" th:field="*{newPassword}" required />
-                </div>
-                <div>
-                    <label for="confirmNewPassword">Confirm New Password:</label>
-                    <input type="password" id="confirmNewPassword" th:field="*{confirmNewPassword}" required />
-                </div>
-                <button type="submit">Update Password</button>
-            </form>
--->

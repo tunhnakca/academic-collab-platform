@@ -18,13 +18,12 @@ public class User {
     @Column(name = "id")
     private int id;
 
-    @ManyToMany(fetch = FetchType.LAZY,cascade = {CascadeType.MERGE,CascadeType.PERSIST,CascadeType.REFRESH,CascadeType.DETACH})
-    @JoinTable(name="course_users",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "course_id"))
+    @ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH,
+            CascadeType.DETACH })
+    @JoinTable(name = "course_users", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "course_id"))
     private List<Course> courses = new ArrayList<>();
 
-    @Column(name = "number",unique = true)
+    @Column(name = "number", unique = true)
     private String number;
 
     @Column(name = "name")
@@ -40,7 +39,7 @@ public class User {
     private String role;
 
     @Column(name = "is_deleted")
-    private Boolean isDeleted=Boolean.FALSE;
+    private Boolean isDeleted = Boolean.FALSE;
 
     public User(String number, String name, String surname, String password, String role) {
         this.number = number;
@@ -117,7 +116,7 @@ public class User {
         isDeleted = deleted;
     }
 
-    public void addCourse(Course course){
+    public void addCourse(Course course) {
         courses.add(course);
 
     }
