@@ -29,7 +29,8 @@ export function deleteCourse() {
   const coursesContainer = document.querySelector(".courses");
   let deleteMode = false;
 
-  deleteCourseButton.addEventListener("click", function () {
+  deleteCourseButton.addEventListener("click", function (e) {
+    e.preventDefault();
     deleteMode = !deleteMode; // Toggle mode
     coursesContainer.classList.toggle("delete-mode", deleteMode);
   });
@@ -85,10 +86,8 @@ export function deleteCourse() {
       });
 
       if (response.ok) {
-        alert("Course deleted successfully");
-        location.reload(); // Optionally refresh the page
+        location.reload();
       } else {
-        alert("Failed to delete course");
       }
     } catch (error) {
       console.error("Error:", error);
