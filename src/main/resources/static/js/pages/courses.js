@@ -1,0 +1,95 @@
+import { showEmptyMessage } from "../common/helpers.js";
+import { overlay } from "../common/config";
+
+// The updatePadding function calculates the padding-right for the .course elements (Because the course title was behind the course code)
+export function updatePadding() {
+  const courses = document.querySelectorAll(".course");
+
+  courses.forEach((course) => {
+    const courseCode = course.querySelector(".course__code");
+    const courseTitle = course.querySelector(".course__title");
+
+    if (courseCode && courseTitle) {
+      const courseCodeWidth = courseCode.offsetWidth;
+      courseTitle.style.paddingRight = `${courseCodeWidth}px`;
+    }
+  });
+}
+
+export function showEmptyMessageCourses() {
+  showEmptyMessage(".courses", "No courses yet.");
+}
+
+// Deleting course
+export function deleteCourse() {
+  const deleteCourseButton = document.querySelector(
+    ".courses-buttons__link--delete"
+  );
+  const coursesContainer = document.querySelector(".courses");
+  let deleteMode = false;
+
+  deleteCourseButton.addEventListener("click", function () {
+    deleteMode = !deleteMode; // Toggle mode
+    coursesContainer.classList.toggle("delete-mode", deleteMode);
+  });
+
+  coursesContainer.addEventListener("click", function (event) {
+    if (deleteMode && event.target.closest(".course")) {
+      const selectedCourse = event.target.closest(".course");
+      const courseId = selectedCourse.dataset.courseId;
+
+      // Show modal with confirmation
+      showDeleteCourseModal(courseId);
+    }
+  });
+
+  const showDeleteCourseModal = function (courseId) {
+    const modal = document.createElement("div");
+    modal.classList.add("modal-delete-course");
+    modal.innerHTML = `
+      <p>Are you sure you want to delete this course?</p>
+      <div class="modal-delete-course__buttons">
+      <button class="btn btn--danger" id="confirm-delete">Yes</button>
+      <button class="btn btn--light" id="cancel-delete">No</button>
+      </div>
+    `;
+
+    document.body.appendChild(modal);
+    overlay.classList.remove("d-none");
+
+    document
+      .getElementById("confirm-delete")
+      .addEventListener("click", function () {
+        deleteCourse(courseId);
+        modal.remove();
+        overlay.classList.add("d-none");
+      });
+
+    document
+      .getElementById("cancel-delete")
+      .addEventListener("click", function () {
+        modal.remove();
+        overlay.classList.add("d-none");
+      });
+  };
+
+  async function deleteCourse(courseId) {
+    try {
+      const response = await fetch(`/courses/delete/${courseId}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (response.ok) {
+        alert("Course deleted successfully");
+        location.reload(); // Optionally refresh the page
+      } else {
+        alert("Failed to delete course");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  }
+}

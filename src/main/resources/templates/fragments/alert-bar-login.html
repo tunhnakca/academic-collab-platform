@@ -1,0 +1,34 @@
+<div
+  th:if="${param.error}"
+  th:fragment="alert-bar-login"
+  class="alert-bar alert-bar--error"
+>
+  <ion-icon name="alert-circle-outline" class="alert-icon"></ion-icon>
+  <span class="alert-message"
+    >Invalid username or password. Please try again.
+  </span>
+  <ion-icon name="close-outline" class="alert-close"></ion-icon>
+  <div class="alert-progress-bar"></div>
+</div>
+
+<div
+  th:if="${param.logout}"
+  th:fragment="alert-bar-login"
+  class="alert-bar alert-bar--success"
+>
+  <ion-icon name="alert-circle-outline" class="alert-icon"></ion-icon>
+  <span class="alert-message">You have logged out successfully</span>
+  <ion-icon name="close-outline" class="alert-close"></ion-icon>
+  <div class="alert-progress-bar"></div>
+</div>
+
+<div
+  th:if="${param.login}"
+  th:fragment="alert-bar-login"
+  class="alert-bar alert-bar--success"
+>
+  <ion-icon name="alert-circle-outline" class="alert-icon"></ion-icon>
+  <span class="alert-message">You have logged in successfully. </span>
+  <ion-icon name="close-outline" class="alert-close"></ion-icon>
+  <div class="alert-progress-bar"></div>
+</div>
