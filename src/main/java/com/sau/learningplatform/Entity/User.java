@@ -24,7 +24,7 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "course_id"))
     private List<Course> courses = new ArrayList<>();
 
-    @Column(name = "number")
+    @Column(name = "number",unique = true)
     private String number;
 
     @Column(name = "name")

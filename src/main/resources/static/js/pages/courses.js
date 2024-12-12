@@ -35,6 +35,7 @@ export function deleteCourse() {
 
   coursesContainer.addEventListener("click", function (event) {
     if (deleteMode && event.target.closest(".course")) {
+      event.preventDefault();
       const selectedCourse = event.target.closest(".course");
       const courseId = selectedCourse.dataset.courseId;
 
@@ -75,8 +76,8 @@ export function deleteCourse() {
 
   async function deleteCourse(courseId) {
     try {
-      const response = await fetch(`/courses/delete/${courseId}`, {
-        method: "DELETE",
+      const response = await fetch(`/courses/remove/${courseId}`, {
+        method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
