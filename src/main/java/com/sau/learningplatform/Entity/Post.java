@@ -3,10 +3,17 @@ package com.sau.learningplatform.Entity;
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
 
-import java.util.Date;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
+
+import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table(name = "posts")
+@SQLDelete(sql = "UPDATE posts SET is_deleted=true WHERE id = ?")
+@Where(clause = "is_deleted = false")
+
 public class Post {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,9 +28,10 @@ public class Post {
     @JoinColumn(name = "project_id",nullable = false)
     private Project project;
 
-    @OneToOne
-    @JoinColumn(name = "parent_post_id")
-    private Post post;
+    @OneToMany
+    @JoinColumn(name = "child_post_id")
+    private List<Post> childPost;
+
 
     @Column(name = "text")
     private String text;
@@ -31,11 +39,10 @@ public class Post {
     private String status;
     @Column(name = "date_created")
     @CreationTimestamp
-    private Date dateCreated;
-    @Column(name = "is_solved")
-    private Boolean isSolved;
+
+    private LocalDateTime dateCreated;
     @Column(name = "is_deleted")
-    private Boolean isDeleted;
+    private Boolean isDeleted=Boolean.FALSE;
 
     public int getId() {
         return id;
@@ -61,12 +68,13 @@ public class Post {
         this.project = project;
     }
 
-    public Post getPost() {
-        return post;
+    public List<Post> getChildPost() {
+        return childPost;
     }
 
-    public void setPost(Post post) {
-        this.post = post;
+    public void setChildPost(List<Post> childPost) {
+        this.childPost = childPost;
+
     }
 
     public String getText() {
@@ -85,20 +93,12 @@ public class Post {
         this.status = status;
     }
 
-    public Date getDateCreated() {
+    public LocalDateTime getDateCreated() {
         return dateCreated;
     }
 
-    public void setDateCreated(Date dateCreated) {
+    public void setDateCreated(LocalDateTime dateCreated) {
         this.dateCreated = dateCreated;
-    }
-
-    public Boolean getSolved() {
-        return isSolved;
-    }
-
-    public void setSolved(Boolean solved) {
-        isSolved = solved;
     }
 
     public Boolean getDeleted() {

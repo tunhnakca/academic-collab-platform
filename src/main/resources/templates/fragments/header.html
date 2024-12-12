@@ -1,0 +1,56 @@
+<header class="header" th:fragment="header">
+  <nav class="main-nav">
+    <ul class="main-nav__list">
+      <li>
+        <a class="main-nav__link" th:href="@{/courses}" title="Go to Courses"
+          >Courses</a
+        >
+      </li>
+    </ul>
+  </nav>
+  <div class="user-info">
+    <div class="user-info__name" title="Open profile menu">
+      <span th:text="${loggedUser.name} + ' ' + ${loggedUser.surname}"
+        >Name Surname</span
+      >
+      <span
+        class="user-info__tag"
+        th:classappend="' user-info__tag--' + ${#strings.toLowerCase(loggedUser.role).replace('ı', 'i')}"
+        th:text="${loggedUser.role}"
+        >Role</span
+      >
+    </div>
+    <nav class="user-info__dropdown d-none">
+      <ul>
+        <li>
+          <a href="#" class="user-info__dropdown__link">
+            <ion-icon
+              class="user-info__dropdown__link__icon"
+              name="person-outline"
+            ></ion-icon
+            ><span>View Profile</span></a
+          >
+        </li>
+        <li>
+          <form
+            th:action="@{/logout}"
+            method="POST"
+            class="logout-form"
+            name="logout"
+          >
+            <button
+              type="submit"
+              class="user-info__dropdown__link user-info__dropdown__link--logout"
+            >
+              <ion-icon
+                name="log-out-outline"
+                class="user-info__dropdown__link__icon"
+              ></ion-icon>
+              <span>Log Out</span>
+            </button>
+          </form>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</header>

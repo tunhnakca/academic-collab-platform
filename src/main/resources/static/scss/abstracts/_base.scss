@@ -1,0 +1,61 @@
+$color-primary: #4263EB;
+$color-primary--light: #339AF0;
+
+
+$color-grey-light-1: #F5F5F7; // Light background
+$color-grey-light-2: #ced4da; // Light lines
+$color-grey-light-3: #e9ecef; // Link hover gray background
+$color-grey-light-4: #aaa;
+$color-grey-light-5: rgb(156, 163, 175);
+$color-grey-light-6: rgb(107, 114, 128); 
+
+$color-grey-dark-1: #494949; //Normal text
+$color-grey-dark-2: #333; //Darker text
+
+
+/* User colors */
+$color-danger: #f44336;
+$color-success: #4CAF50;
+$color-info: #f1f3f5;
+$color-disable: #ccc;
+
+/* User colors */
+$color-admin: #000;
+$color-student: #2ecc71;
+$color-instructor: #3498db;
+$color-mediator: #9b59b6;
+
+
+$background-color: $color-grey-light-1;
+
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+
+html {
+  box-sizing: border-box;
+  font-size: 62.5%;
+}
+
+body {
+  font-family: 'Lexend', sans-serif;
+  font-weight: 400;
+  line-height: 1.6;
+  color: $color-grey-dark-1;
+  background-color: $background-color;
+}
+
+
+.container {
+  max-width: 120rem;
+  padding: 0 3.2rem;
+  margin: 0 auto;
+}

@@ -1,0 +1,14 @@
+@use '../abstracts/base' as *;
+@use '../abstracts/mixins' as *;
+@use '../abstracts/utilities' as *;
+@use '../components' as *;
+
+.section-add-course {
+    padding: 4.8rem 0 3.2rem 0;
+}
+
+
+.add-course__heading {
+    text-align: center;
+}
+

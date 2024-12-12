@@ -1,0 +1,251 @@
+@use 'abstracts/base' as *;
+@use 'abstracts/utilities' as *;
+@use 'abstracts/mixins' as *;
+
+/******* Hover effects ********/
+.transition-hover-effect {
+    transition: all 0.3s ease;
+}
+
+.scale-click-effect {
+    transform: scale(0.96)
+}
+
+/* Normal Sized Shadow */
+.shadow-normal {
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.15);  
+  }
+  
+  /* Medium Sized Shadow */
+  .shadow-medium {
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  }
+  
+  /* Smaller Sized Shadow */
+  .shadow-smaller {
+    box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.1); 
+  }
+
+/***********************/
+/* User badge */
+/***********************/
+.badge  {
+    @extend .transition-hover-effect;
+    @include box-shadow(rgba(0, 0, 0, 0.1));
+    font-size: 1rem;
+    letter-spacing: .15rem;
+    padding: 0.2rem 0.8rem;
+    border-radius: 1rem;
+    text-transform: uppercase;
+    font-weight: 600;
+    color: #fff;
+
+    &--admin { background-color: $color-admin; }
+    &--instructor { background-color: $color-instructor; }
+    &--mediator { background-color: $color-mediator; }
+    &--student { background-color: $color-student; }
+}
+
+/***********************/
+/* Headings */
+/***********************/
+
+.heading-secondary, h2 {
+  color: $color-grey-dark-1;
+  font-size: 3.2rem;
+  font-weight: 600;
+  margin-bottom: 3.2rem;
+  letter-spacing: -0.1rem;
+}
+
+h3 {
+  color: $color-grey-dark-1;
+  font-size: 2.8rem;
+  font-weight: 500;
+  letter-spacing: -0.1rem;
+}
+
+h4 {
+  color: $color-grey-dark-1;
+  font-size: 2.2rem;
+  font-weight: 500;
+  margin-bottom: 2rem;
+  letter-spacing: -0.1rem;
+}
+
+/***********************/
+/* Buttons */
+/***********************/
+
+%btn-base {
+  display: inline-block;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+  font-family: inherit;
+  text-align: center;
+  border-radius: 0.6rem;
+  @extend .shadow-normal;
+  @extend .transition-hover-effect;
+}
+
+.btn {
+  @extend %btn-base;
+  padding: 1.6rem 3.2rem;
+  font-size: 2rem;
+  @include box-shadow(rgba(0, 0, 0, 0.15));
+  color: #fff;
+
+
+  align-self: end;
+
+  &:hover {
+    @extend .shadow-medium;
+  }
+
+  &:active {
+    @extend .shadow-smaller;
+    transform: scale(0.98);
+  }
+
+  &--success {
+    background-color: $color-success;
+  }
+
+  &--danger {
+    background-color: $color-danger;
+  }
+
+  &--light {
+    background-color: $color-info;
+    color: $color-grey-dark-1;
+  }
+
+  &--primary {
+    background-color: $color-primary;
+  }
+
+}
+
+/***********************/
+/* Link Buttons */
+/***********************/
+
+%link-btn-base {
+  display: inline-block;
+  text-decoration: none;
+  font-family: inherit;
+  font-weight: 500;
+  text-align: center;
+  border-radius: 0.6rem;
+  @extend .shadow-normal;
+  @extend .transition-hover-effect;
+  cursor: pointer;
+}
+
+.link-btn {
+  @extend %link-btn-base;
+  padding: 0.8rem 1.6rem;
+  font-size: 1.6rem;
+  color: #fff;
+
+  .link-btn:visited,
+  .link-btn:link {
+    @extend %link-btn-base;
+    padding: 0.8rem 1.6rem;
+    font-size: 1.6rem;
+    color: #fff;
+  }
+
+
+  &:hover {
+    @extend .shadow-medium;
+  }
+
+  &:active {
+    @extend .shadow-smaller;
+    transform: scale(0.98);
+  }
+
+  &--success {
+    background-color: $color-success;
+  }
+
+  &--danger {
+    background-color: $color-danger;
+  }
+}
+
+/***********************/
+/* Form */
+/***********************/
+
+.container-form {
+  background-color: #fff;
+  padding: 2.4rem 4.8rem;
+  overflow: hidden;
+  border-radius: 1rem;
+  @include box-shadow(rgba(0, 0, 0, 0.06));
+  @extend .transition-hover-effect;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 2.4rem;
+
+  &-group {
+
+    label {
+      display: block;
+      font-size: 1.6rem;
+      font-weight: 500;
+      margin-bottom: 1.2rem;
+      color: #495057;
+    }
+
+    input {
+      width: 100%;
+      padding: 1.2rem;
+      font-size: 1.6rem;
+      font-family: inherit;
+      font-weight: 300;
+      border-radius: 0.6rem;
+      border: 1px solid $color-grey-light-2;
+
+      &::placeholder {
+        color: $color-grey-light-4;
+      }
+    }
+  }
+}
+
+/***********************/
+/* Modal window */
+/***********************/
+
+.modal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  background-color: #fff;
+  padding: 2.4rem 4.8rem;
+  overflow: hidden;
+  border-radius: 1rem;
+  @include box-shadow(rgba(0, 0, 0, 0.06));
+  @extend .transition-hover-effect;
+  z-index: 9000;
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(2px);
+  z-index: 8000;
+}
