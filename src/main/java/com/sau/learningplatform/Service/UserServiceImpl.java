@@ -71,6 +71,8 @@ public class UserServiceImpl implements UserService{
         userRepository.deleteById(id);
     }
 
+
+
     @Override
     public MessageResponse updatePassword(User user, String currentPassword, String newPassword) {
 
@@ -99,6 +101,11 @@ public class UserServiceImpl implements UserService{
         return new MessageResponse( "Your password has been updated successfully!", HttpStatus.OK);
 
 
+    }
+
+    @Override
+    public void saveUser(User user) {
+        userRepository.save(user);
     }
 
 

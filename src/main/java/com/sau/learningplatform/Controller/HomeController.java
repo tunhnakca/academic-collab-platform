@@ -1,5 +1,6 @@
 package com.sau.learningplatform.Controller;
 
+import com.sau.learningplatform.Entity.Course;
 import com.sau.learningplatform.Entity.User;
 import com.sau.learningplatform.EntityResponse.CourseResponse;
 import com.sau.learningplatform.EntityResponse.MessageResponse;
@@ -8,10 +9,7 @@ import com.sau.learningplatform.Service.UserService;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
@@ -74,6 +72,24 @@ public class HomeController {
         model.addAttribute("loggedUser", user);
         model.addAttribute(messageResponse);
         return "profile";
+    }
+
+    @PostMapping("/courses/remove/{courseId}")
+    public String profilePage(Principal principal, @PathVariable("courseId")int courseId) {
+
+        Course course=courseService.findById(courseId);
+
+        String number = principal.getName();
+        User user = userService.findByNumber(number);
+
+        List<Course>courses=user.getCourses();
+        courses.remove(course);
+
+        user.setCourses(courses);
+
+        userService.saveUser(user);
+
+        return "redirect:/courses";
     }
 
     @PostMapping("/password/change")

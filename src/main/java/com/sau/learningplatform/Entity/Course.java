@@ -28,7 +28,7 @@ public class Course {
 
     @Column(name = "owner")
     private String owner;
-    @Column(name = "code")
+    @Column(name = "code",unique = true)
     private String code;
 
     @Column(name = "is_deleted")
@@ -92,5 +92,17 @@ public class Course {
 
     public void addUser(User user){
         users.add(user);
+    }
+
+    @Override
+    public String toString() {
+        return "Course{" +
+                "id=" + id +
+                ", users=" + users +
+                ", title='" + title + '\'' +
+                ", owner='" + owner + '\'' +
+                ", code='" + code + '\'' +
+                ", isDeleted=" + isDeleted +
+                '}';
     }
 }
