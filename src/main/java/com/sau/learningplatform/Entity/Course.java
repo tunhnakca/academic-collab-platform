@@ -3,7 +3,6 @@ package com.sau.learningplatform.Entity;
 import jakarta.persistence.*;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,7 +24,6 @@ public class Course {
 
     @Column(name = "title")
     private String title;
-
     @Column(name = "owner")
     private String owner;
     @Column(name = "code",unique = true)
@@ -94,6 +92,7 @@ public class Course {
         users.add(user);
     }
 
+
     @Override
     public String toString() {
         return "Course{" +
@@ -105,4 +104,5 @@ public class Course {
                 ", isDeleted=" + isDeleted +
                 '}';
     }
+
 }

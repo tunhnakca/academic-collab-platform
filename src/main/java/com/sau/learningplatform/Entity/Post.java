@@ -2,6 +2,7 @@ package com.sau.learningplatform.Entity;
 
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
+
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 
@@ -12,6 +13,7 @@ import java.util.List;
 @Table(name = "posts")
 @SQLDelete(sql = "UPDATE posts SET is_deleted=true WHERE id = ?")
 @Where(clause = "is_deleted = false")
+
 public class Post {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,12 +32,14 @@ public class Post {
     @JoinColumn(name = "child_post_id")
     private List<Post> childPost;
 
+
     @Column(name = "text")
     private String text;
     @Column(name = "status")
     private String status;
     @Column(name = "date_created")
     @CreationTimestamp
+
     private LocalDateTime dateCreated;
     @Column(name = "is_deleted")
     private Boolean isDeleted=Boolean.FALSE;
@@ -70,6 +74,7 @@ public class Post {
 
     public void setChildPost(List<Post> childPost) {
         this.childPost = childPost;
+
     }
 
     public String getText() {
