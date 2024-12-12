@@ -21,7 +21,6 @@ public class UserPrincipal implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         String role = user.getRole().toLowerCase();
-        log.info("role: {}", role);
         if (role.equals("student")) {
             return Collections.singleton(new SimpleGrantedAuthority("STUDENT"));
         }

@@ -1,7 +1,10 @@
 package com.sau.learningplatform.Service;
 
 import com.sau.learningplatform.Entity.User;
+import com.sau.learningplatform.EntityResponse.MessageResponse;
 import com.sau.learningplatform.Repository.UserRepository;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -9,6 +12,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@Slf4j
 public class UserServiceImpl implements UserService{
     private UserRepository userRepository;
 
@@ -65,6 +69,36 @@ public class UserServiceImpl implements UserService{
     @Override
     public void deleteById(int id) {
         userRepository.deleteById(id);
+    }
+
+    @Override
+    public MessageResponse updatePassword(User user, String currentPassword, String newPassword) {
+
+        if (!encoder.matches(currentPassword, user.getPassword())){
+
+            log.warn("Incorrect password, change request has been denied!");
+
+            return new MessageResponse( "incorrect current password!", HttpStatus.UNAUTHORIZED);
+
+        }
+
+        if (newPassword.equals(user.getNumber())){
+
+            log.warn("Your new password cannot be same as your number!");
+
+            return new MessageResponse( "new password cannot be same as your number!", HttpStatus.BAD_REQUEST);
+
+        }
+
+        user.setPassword(encoder.encode(newPassword));
+
+        userRepository.save(user);
+
+        log.info("password has been updated successfully! ");
+
+        return new MessageResponse( "Your password has been updated successfully!", HttpStatus.OK);
+
+
     }
 
 
