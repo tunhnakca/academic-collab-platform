@@ -7,7 +7,6 @@ import org.hibernate.annotations.Where;
 
 import java.time.LocalDateTime;
 
-
 @Entity
 @Table(name = "projects")
 @SQLDelete(sql = "UPDATE projects SET is_deleted=true WHERE id = ?")
@@ -19,12 +18,12 @@ public class Project {
     private int id;
 
     @JoinColumn(name = "course_id")
-    @ManyToOne(cascade = {CascadeType.DETACH,CascadeType.MERGE,CascadeType.PERSIST,CascadeType.REFRESH},fetch = FetchType.LAZY)
+    @ManyToOne(cascade = { CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST,
+            CascadeType.REFRESH }, fetch = FetchType.LAZY)
     private Course course;
 
     @Column(name = "title")
     private String title;
-
 
     @Column(name = "date_created")
     @CreationTimestamp
@@ -37,7 +36,7 @@ public class Project {
     private String description;
 
     @Column(name = "is_deleted")
-    private Boolean isDeleted=Boolean.FALSE;
+    private Boolean isDeleted = Boolean.FALSE;
 
     public int getId() {
         return id;

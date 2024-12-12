@@ -1,4 +1,7 @@
+<<<<<<< HEAD
 import { async } from "regenerator-runtime";
+=======
+>>>>>>> main
 import { showEmptyMessage } from "../common/helpers.js";
 import { overlay } from "../common/config";
 
@@ -77,8 +80,13 @@ export function deleteCourse() {
 
   async function deleteCourse(courseId) {
     try {
+<<<<<<< HEAD
       const response = await fetch(`/courses/delete/${courseId}`, {
         method: "DELETE",
+=======
+      const response = await fetch(`/courses/remove/${courseId}`, {
+        method: "POST",
+>>>>>>> main
         headers: {
           "Content-Type": "application/json",
         },

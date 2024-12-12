@@ -15,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Slf4j
@@ -85,6 +86,17 @@ public class CourseServiceImpl implements CourseService {
     @Override
     public void deleteById(int id) {
         courseRepository.deleteById(id);
+    }
+
+    @Override
+    public Course findById(int courseId) {
+        Optional<Course> course = courseRepository.findById(courseId);
+
+        if (course.isEmpty()) {
+            log.error("there is no course with given id !");
+        }
+
+        return course.get();
     }
 
     private List<User> saveStudentsByFile(MultipartFile file) throws IOException {

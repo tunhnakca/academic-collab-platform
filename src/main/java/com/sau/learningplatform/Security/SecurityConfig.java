@@ -26,7 +26,7 @@ public class SecurityConfig {
         return http
                 .csrf(customizer -> customizer.disable())
                 .authorizeHttpRequests(request -> request
-                        .requestMatchers("/login", "/dist/js/**", "/dist/scss/**").permitAll()
+                        .requestMatchers("/login", "dist/scss/**", "dist/js/**").permitAll()
                         .requestMatchers("/courses/add").hasAnyAuthority("ADMIN", "INSTRUCTOR")
                         .anyRequest().authenticated())
                 .formLogin(form -> form
