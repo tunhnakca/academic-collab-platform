@@ -1,9 +1,5 @@
 package com.sau.learningplatform.Controller;
 
-<<<<<<< HEAD
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-=======
 import com.sau.learningplatform.Entity.User;
 import com.sau.learningplatform.EntityResponse.CourseResponse;
 import com.sau.learningplatform.Service.CourseService;
@@ -20,18 +16,11 @@ import java.io.IOException;
 import java.lang.ProcessBuilder.Redirect;
 import java.security.Principal;
 import java.util.List;
->>>>>>> mergedProject
+
 
 @Controller
 public class HomeController {
 
-<<<<<<< HEAD
-    @GetMapping("/home")
-    public void homepage(){
-
-
-    }
-=======
     private CourseService courseService;
 
     private UserService userService;
@@ -75,5 +64,4 @@ public class HomeController {
 
     }
 
->>>>>>> mergedProject
 }
