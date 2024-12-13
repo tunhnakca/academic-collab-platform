@@ -21,17 +21,16 @@ public class Post {
     private int id;
 
     @ManyToOne
-    @JoinColumn(name = "user_id",nullable = false)
+    @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
     @ManyToOne
-    @JoinColumn(name = "project_id",nullable = false)
+    @JoinColumn(name = "project_id", nullable = false)
     private Project project;
 
     @OneToMany
     @JoinColumn(name = "child_post_id")
     private List<Post> childPost;
-
 
     @Column(name = "text")
     private String text;
@@ -42,7 +41,7 @@ public class Post {
 
     private LocalDateTime dateCreated;
     @Column(name = "is_deleted")
-    private Boolean isDeleted=Boolean.FALSE;
+    private Boolean isDeleted = Boolean.FALSE;
 
     public int getId() {
         return id;

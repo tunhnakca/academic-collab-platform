@@ -16,24 +16,24 @@ public class Course {
     @Column(name = "id")
     private int id;
 
-    @ManyToMany(fetch = FetchType.LAZY,cascade = {CascadeType.MERGE,CascadeType.PERSIST,CascadeType.REFRESH,CascadeType.DETACH})
-    @JoinTable(name="course_users",
-            joinColumns = @JoinColumn(name = "course_id"),
-            inverseJoinColumns = @JoinColumn(name = "user_id"))
+    @ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH,
+            CascadeType.DETACH })
+    @JoinTable(name = "course_users", joinColumns = @JoinColumn(name = "course_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
     private List<User> users = new ArrayList<>();
 
     @Column(name = "title")
     private String title;
     @Column(name = "owner")
     private String owner;
-    @Column(name = "code",unique = true)
+    @Column(name = "code", unique = true)
     private String code;
 
     @Column(name = "is_deleted")
-    private Boolean isDeleted=Boolean.FALSE;
+    private Boolean isDeleted = Boolean.FALSE;
 
     public Course() {
     }
+
     public Course(String title, String owner, String code) {
         this.title = title;
         this.owner = owner;
@@ -88,10 +88,9 @@ public class Course {
         isDeleted = deleted;
     }
 
-    public void addUser(User user){
+    public void addUser(User user) {
         users.add(user);
     }
-
 
     @Override
     public String toString() {

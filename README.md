@@ -77,4 +77,7 @@ spring.resources.chain.strategy.content.paths=/**
 ```
 
 These settings append a hash to your static asset filenames, ensuring browsers always fetch the latest versions of your files after updates.
+<<<<<<< HEAD
+=======
 
+>>>>>>> main

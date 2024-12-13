@@ -16,7 +16,8 @@ public interface CourseService {
 
     Course getCourseByCode(String courseCode);
 
-    void addCourseWithStudentsByExcel(String ownerNumber, String courseName, String courseCode, MultipartFile studentFile) throws IOException;
+    void addCourseWithStudentsByExcel(String ownerNumber, String courseName, String courseCode,
+            MultipartFile studentFile) throws IOException;
 
     void deleteById(int id);
 

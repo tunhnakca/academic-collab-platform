@@ -60,8 +60,6 @@ public class CourseServiceImpl implements CourseService {
 
     }
 
-
-
     @Override
     public void addCourseWithStudentsByExcel(String ownerNumber, String courseName, String courseCode,
             MultipartFile studentFile) throws IOException {
@@ -92,9 +90,9 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     public Course findById(int courseId) {
-        Optional<Course> course=courseRepository.findById(courseId);
+        Optional<Course> course = courseRepository.findById(courseId);
 
-        if (course.isEmpty()){
+        if (course.isEmpty()) {
             log.error("there is no course with given id !");
         }
 
