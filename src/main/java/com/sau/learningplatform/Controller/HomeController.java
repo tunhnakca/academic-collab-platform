@@ -80,20 +80,10 @@ public class HomeController {
         return "profile";
     }
 
-    @PostMapping("/courses/remove/{courseId}")
+    @PostMapping("/courses/delete/{courseId}")
     public String profilePage(Principal principal, @PathVariable("courseId") int courseId) {
 
-        Course course = courseService.findById(courseId);
-
-        String number = principal.getName();
-        User user = userService.findByNumber(number);
-
-        List<Course> courses = user.getCourses();
-        courses.remove(course);
-
-        user.setCourses(courses);
-
-        userService.saveUser(user);
+        courseService.deleteById(courseId);
 
         return "redirect:/courses";
     }
