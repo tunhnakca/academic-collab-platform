@@ -60,6 +60,8 @@ public class CourseServiceImpl implements CourseService {
 
     }
 
+
+
     @Override
     public void addCourseWithStudentsByExcel(String ownerNumber, String courseName, String courseCode,
             MultipartFile studentFile) throws IOException {
@@ -97,6 +99,11 @@ public class CourseServiceImpl implements CourseService {
         }
 
         return course.get();
+    }
+
+    @Override
+    public List<CourseResponse> getAllCourseResponses() {
+        return courseRepository.findAll().stream().map(this::courseToResponse).toList();
     }
 
     private List<User> saveStudentsByFile(MultipartFile file) throws IOException {

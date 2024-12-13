@@ -22,4 +22,6 @@ public interface CourseService {
     void deleteById(int id);
 
     Course findById(int courseId);
+
+    List<CourseResponse>getAllCourseResponses();
 }
