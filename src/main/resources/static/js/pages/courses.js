@@ -87,10 +87,12 @@ export function deleteCourse() {
 
       if (response.ok) {
         location.reload();
+        console.info("Course deleted successfuly");
       } else {
+        throw new Error("Problem deleting course");
       }
     } catch (error) {
-      console.error("Error:", error);
+      console.error(error.message);
     }
   }
 }
