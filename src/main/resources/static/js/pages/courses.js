@@ -1,6 +1,9 @@
 import { async } from "regenerator-runtime";
 import { showEmptyMessage } from "../common/helpers.js";
 import { overlay } from "../common/config";
+export const deleteCourseButton = document.querySelector(
+  ".courses-buttons__link--delete"
+);
 
 // The updatePadding function calculates the padding-right for the .course elements (Because the course title was behind the course code)
 export function updatePadding() {
@@ -23,9 +26,6 @@ export function showEmptyMessageCourses() {
 
 // Deleting course
 export function deleteCourse() {
-  const deleteCourseButton = document.querySelector(
-    ".courses-buttons__link--delete"
-  );
   const coursesContainer = document.querySelector(".courses");
   let deleteMode = false;
 
