@@ -28,7 +28,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(request -> request
                         .requestMatchers("/login", "dist/scss/**", "dist/js/**", "/html/**").permitAll()
                         .requestMatchers("/courses/add").hasAnyAuthority("ADMIN", "INSTRUCTOR")
-                        .requestMatchers("/courses/delete/**").hasAnyAuthority("ADMIN")
+                        .requestMatchers("/courses/delete/**").hasAnyAuthority("ADMIN", "INSTRUCTOR")
                         .anyRequest().authenticated())
                 .formLogin(form -> form
                         .loginPage("/login")

@@ -28,6 +28,7 @@ public class ProjectServiceImpl implements ProjectService{
         return result.get();
     }
 
+
     @Override
     public List<ProjectResponse> getProjectsByCourseId(int courseId) {
 
@@ -44,6 +45,24 @@ public class ProjectServiceImpl implements ProjectService{
     @Override
     public void deleteById(int id) {
         projectRepository.deleteById(id);
+    }
+
+    @Override
+    public List<ProjectResponse> searchByCourseIdAndProjectTitle(int courseId,String title) {
+       List<Project>projects=projectRepository.findByCourseIdAndTitleContainingIgnoreCase(courseId,title);
+       if (projects.isEmpty()){
+           log.info("Any project related with search keyword is not found!");
+       }
+       return projects.stream().map(this::mapToResponse).toList();
+    }
+
+    @Override
+    public List<ProjectResponse> getAllByResponse() {
+        List<Project> projects=projectRepository.findAll();
+        if (projects.isEmpty()){
+            log.info("There is no any project!");
+        }
+        return projects.stream().map(this::mapToResponse).toList();
     }
 
 
