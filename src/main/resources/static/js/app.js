@@ -1,3 +1,4 @@
+import "./components/alert-bar.js";
 import { showLoginInfoModal } from "./pages/login.js";
 import { toggleDropdownHeader } from "./pages/header.js";
 import { setupPasswordValidation } from "./pages/profile";
@@ -6,8 +7,8 @@ import {
   showEmptyMessageCourses,
   deleteCourse,
 } from "./pages/courses.js";
+import { showEmptyMessageProjects } from "./pages/projects";
 // import "./pages/add-course.js"; // Load the add-course module
-import "./components/alert-bar.js";
 
 ///////////////////////////
 // Login Page
@@ -47,4 +48,13 @@ document.addEventListener("DOMContentLoaded", function (e) {
 
   // Deleting Course
   deleteCourse();
+});
+
+///////////////////////////
+// Projects Page
+
+// When the document is fully loaded
+document.addEventListener("DOMContentLoaded", function (e) {
+  // If no projects, show empty message
+  showEmptyMessageProjects();
 });

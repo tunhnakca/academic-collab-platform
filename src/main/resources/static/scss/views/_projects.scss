@@ -9,81 +9,139 @@
     overflow: hidden;
     border-radius: 1rem;
     @include box-shadow(rgba(0, 0, 0, 0.06));
-}
 
-.projects {
+    .projects {
 
-    &-header {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        padding: 2.4rem 4.8rem;
-    }
-}
-
-.search {
-    display: flex;
-    align-items: center;
-    gap: 1.2rem;
-
-    border: 1px solid $color-grey-light-2;
-    border-radius: 1rem;
-    padding: 0.8rem 2.4rem;
-    @extend .transition-hover-effect;
-
-    &:focus-within {
-        transform: translateY(-2px);
-    }
-
-    &__field {
-        border: none;
-        background: none;
-        font-family: inherit;
-        color: inherit;
-        font-size: 1.6rem;
-        
-        width: 30rem;
+        &-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 2.4rem 4.8rem;
+            border-bottom: 1px solid $color-grey-light-2;
     
-        &:focus {
-          outline: none;
+            .search {
+                display: flex;
+                align-items: center;
+                gap: 1.2rem;
+            
+                border: 1px solid $color-grey-light-2;
+                border-radius: 1rem;
+                padding: 0.8rem 2.4rem;
+                @extend .transition-hover-effect;
+            
+                &:focus-within {
+                    transform: translateY(-2px);
+                }
+            
+                &__field {
+                    border: none;
+                    background: none;
+                    font-family: inherit;
+                    color: inherit;
+                    font-size: 1.6rem;
+                    
+                    width: 30rem;
+                
+                    &:focus {
+                      outline: none;
+                    }
+                
+                    &::placeholder {
+                        color: $color-grey-light-4;
+                        font-weight: 300;
+                    }
+                }
+            
+                &__btn {
+                    display: inline-block;
+                    border: none;
+                    cursor: pointer;
+                    background: none;
+                    @extend .transition-hover-effect;
+            
+                    &:hover {
+                        transform: scale(1.1);
+                    }
+            
+                    &:active {
+                        transform: scale(1);
+                    }
+                }
+            
+                &__icon {
+                    width: 2.4rem;
+                    height: 2.4rem;
+                    color: $color-grey-light-6;
+                }
+            }
+            
+            .filter__dropdown {
+                border: 1px solid $color-grey-light-2;
+                border-radius: 1rem;
+                padding: 0.8rem 2.4rem;
+                @extend .transition-hover-effect;
+                font-family: inherit;
+                font-size: 1.6rem;
+                font-weight: 300;
+                color: inherit;
+            }
         }
-    
-        &::placeholder {
-            color: $color-grey-light-4;
-            font-weight: 300;
+
+        &-main {
+            display: flex;
+            align-items: stretch;
+
+            &__list {
+                flex: 3;
+                border-right: 1px solid $color-grey-light-2;
+            }
+
+            &__sidebar {
+                flex: 1;
+                padding: 1.2rem 2.4rem;
+
+                &-course__informations{
+                    display: flex;
+                    flex-direction: column;
+                    gap: 1.2rem;
+                }
+
+                &-course__information{
+                    display: flex;
+                    flex-direction: column;
+                    gap: 0.2rem;
+
+                    &__heading{
+                        font-size: 1.4rem;
+                    }
+            
+                    &__value{
+                        font-size: 1.4rem;
+                        color: $color-grey-light-5;
+                        font-weight: 300;
+
+                        a:link,
+                        a:visited {
+                            text-decoration: none;
+                            display: inline-block;
+                            font-family: inherit;
+                            font-weight: 400;
+                            @extend .transition-hover-effect;
+                            cursor: pointer;
+                            color: $color-primary;
+                            border-bottom: 1px solid  transparent;
+                        }
+
+                        a:hover,
+                        a:active {
+                            border-bottom: 1px solid currentColor;
+                        }
+                    }
+                }
+            }
         }
-    }
-
-    &__btn {
-        display: inline-block;
-        border: none;
-        cursor: pointer;
-        background: none;
-        @extend .transition-hover-effect;
-
-        &:hover {
-            transform: scale(1.1);
-        }
-
-        &:active {
-            transform: scale(1);
-        }
-    }
-
-    &__icon {
-        width: 2.4rem;
-        height: 2.4rem;
-        color: $color-grey-light-6;
     }
 }
 
-.filter__dropdown {
-    border: 1px solid $color-grey-light-2;
-    border-radius: 1rem;
-    padding: 0.8rem 2.4rem;
-    @extend .transition-hover-effect;
-    font-family: inherit;
-    font-size: 1.6rem;
-    font-weight: 300;
-    color: inherit;
-}
+
+
