@@ -7,7 +7,7 @@
     <title>Profile</title>
   </head>
   <body>
-    <section class="section-profile" layout:fragment="content">
+    <section class="section section-profile" layout:fragment="content">
       <div class="container container-profile">
         <h3 class="profile__heading">My Account</h3>
         <p class="profile__description">
@@ -85,6 +85,7 @@
           </div>
         </div>
       </div>
+      <!--Alert Bar-->
       <div
         th:if="${messageResponse.message}"
         th:fragment="alert-bar"

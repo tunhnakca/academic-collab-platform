@@ -4,7 +4,7 @@
 @use '../components' as *;
 
 .section-add-course {
-    padding: 4.8rem 0 3.2rem 0;
+    
 }
 
 
@@ -12,3 +12,6 @@
     text-align: center;
 }
 
+.btn__add-course {
+    align-self: end;
+}
