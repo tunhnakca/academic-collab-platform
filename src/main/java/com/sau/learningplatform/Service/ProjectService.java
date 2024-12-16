@@ -11,4 +11,8 @@ public interface ProjectService {
     List<ProjectResponse> getProjectsByCourseId(int courseId);
 
     void deleteById(int id);
+
+    List<ProjectResponse> searchByCourseIdAndProjectTitle(int courseId,String title);
+
+    List<ProjectResponse> getAllByResponse();
 }
