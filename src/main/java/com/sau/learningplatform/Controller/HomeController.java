@@ -105,13 +105,5 @@ public class HomeController {
 
     }
 
-    @GetMapping("/projectss")
-    public String projectPage(Principal principal, Model model) {
-        String number = principal.getName();
-        User user = userService.findByNumber(number);
-        model.addAttribute("loggedUser", user);
-        return "projects";
-
-    }
 
 }

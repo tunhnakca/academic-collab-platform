@@ -15,10 +15,10 @@
           <form th:action="@{/projects/search}" method="GET" class="search">
             <input
               type="text"
-              name="query"
+              name="keyword"
               class="search__field"
               placeholder="Search by Project Title"
-              th:value="${query}"
+              th:value="${keyword}"
             />
             <button type="submit" class="search__btn">
               <ion-icon class="search__icon" name="search-outline"></ion-icon>
