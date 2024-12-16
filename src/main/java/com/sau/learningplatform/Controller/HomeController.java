@@ -36,10 +36,9 @@ public class HomeController {
         String number = principal.getName();
         User user = userService.findByNumber(number);
         List<CourseResponse> courses;
-        if(user.getRole().toLowerCase().equals("admin")||user.getRole().toLowerCase().equals("admın")){
-            courses=courseService.getAllCourseResponses();
-        }
-        else {
+        if (user.getRole().toLowerCase().equals("admin") || user.getRole().toLowerCase().equals("admın")) {
+            courses = courseService.getAllCourseResponses();
+        } else {
             courses = courseService.getCoursesByUser(user);
         }
         model.addAttribute("courses", courses);
@@ -49,7 +48,7 @@ public class HomeController {
     }
 
     @GetMapping("/courses/add")
-    public String loginPage(Principal principal, Model model) {
+    public String addCoursePage(Principal principal, Model model) {
         String number = principal.getName();
         User user = userService.findByNumber(number);
         model.addAttribute("loggedUser", user);
@@ -103,6 +102,15 @@ public class HomeController {
         attributes.addFlashAttribute("messageResponse", messageResponse);
 
         return new RedirectView("/profile");
+
+    }
+
+    @GetMapping("/projectss")
+    public String projectPage(Principal principal, Model model) {
+        String number = principal.getName();
+        User user = userService.findByNumber(number);
+        model.addAttribute("loggedUser", user);
+        return "projects";
 
     }
 

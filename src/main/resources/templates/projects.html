@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{layout}"
+>
+  <head>
+    <title>Projects</title>
+  </head>
+  <body>
+    <section class="section section-projects" layout:fragment="content">
+      <div class="container container-projects">
+        <!-- Search and Filters -->
+        <!-- Search Bar -->
+        <div class="projects-header">
+          <form th:action="@{/projects/search}" method="GET" class="search">
+            <input
+              type="text"
+              name="query"
+              class="search__field"
+              placeholder="Search by Project Title"
+              th:value="${query}"
+            />
+            <button type="submit" class="search__btn">
+              <ion-icon class="search__icon" name="search-outline"></ion-icon>
+            </button>
+          </form>
+
+          <!-- Filter Dropdown -->
+          <form th:action="@{/projects/filter}" method="GET" class="filter">
+            <select
+              name="filter"
+              class="filter__dropdown"
+              onchange="this.form.submit()"
+            >
+              <option value="" disabled selected>Filter by</option>
+              <option th:value="new" th:selected="${filter == 'new'}">
+                Newest to Oldest
+              </option>
+              <option th:value="old" th:selected="${filter == 'old'}">
+                Oldest to Newest
+              </option>
+              <option th:value="open" th:selected="${filter == 'open'}">
+                Open Projects
+              </option>
+              <option th:value="closed" th:selected="${filter == 'closed'}">
+                Closed Projects
+              </option>
+            </select>
+          </form>
+        </div>
+
+        <!-- Main Content -->
+        <div class="projects-main">
+          <!-- Left: Project List -->
+          <div class="project-list">
+            <!-- Project Items -->
+            <!-- Pagination -->
+          </div>
+          <!-- Right: Sidebar -->
+        </div>
+      </div>
+    </section>
+  </body>
+</html>
+
+<!--
+
+    
+    <div class="projects-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+        
+        <form th:action="@{/projects/search}" method="GET" style="flex: 1; margin-right: 1rem;">
+          <input 
+            type="text" 
+            name="query" 
+            placeholder="Search projects..." 
+            style="width: 100%; padding: 0.5rem; border: 1px solid #ccc; border-radius: 4px;" 
+            th:value="${query}">
+        </form>
+
+        
+        <form th:action="@{/projects/filter}" method="GET">
+          <select 
+            name="filter" 
+            style="padding: 0.5rem; border: 1px solid #ccc; border-radius: 4px;"
+            th:onchange="this.form.submit()"
+          >
+            <option value="" disabled selected>Filter by</option>
+            <option value="new" th:selected="${filter == 'new'}">Newest to Oldest</option>
+            <option value="old" th:selected="${filter == 'old'}">Oldest to Newest</option>
+            <option value="open" th:selected="${filter == 'open'}">Open Projects</option>
+            <option value="closed" th:selected="${filter == 'closed'}">Closed Projects</option>
+          </select>
+        </form>
+      </div>
+
+      
+      <div class="projects-main" style="display: flex; gap: 2rem;">
+
+        
+        <div class="projects-list" style="flex: 2;">
+          <div th:each="project : ${projects}" style="margin-bottom: 1.5rem; padding: 1rem; border: 1px solid #ccc; border-radius: 4px;">
+            <h3 th:text="${project.name}" style="margin-bottom: 0.5rem;"></h3>
+            <p th:text="${project.description}" style="margin-bottom: 0.5rem;"></p>
+            <span th:text="${project.status}" style="font-size: 0.9rem; color: #555;"></span>
+          </div>
+
+          
+          <div class="pagination" style="display: flex; justify-content: center; margin-top: 2rem;">
+            <a th:each="page, iter : ${#numbers.sequence(1, totalPages)}"
+               th:href="@{/projects(page=${page})}"
+               th:text="${page}"
+               style="margin: 0 0.5rem; padding: 0.5rem 1rem; text-decoration: none; border: 1px solid #ccc; border-radius: 4px; color: #333;"></a>
+          </div>
+        </div>
+
+        
+        <div class="projects-sidebar" style="flex: 1; padding: 1rem; border: 1px solid #ccc; border-radius: 4px;">
+          <h4 style="margin-bottom: 1rem;">Course Info</h4>
+          <ul>
+            <li th:each="course : ${courses}" th:text="${course.name}" style="margin-bottom: 0.5rem;"></li>
+          </ul>
+        </div>
+
+      </div>
+    
+-->

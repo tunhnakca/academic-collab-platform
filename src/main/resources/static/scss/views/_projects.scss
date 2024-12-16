@@ -1,0 +1,89 @@
+@use '../abstracts/base' as *;
+@use '../abstracts/mixins' as *;
+@use '../abstracts/utilities' as *;
+@use '../components' as *;
+
+.container-projects {
+    padding: 0;
+    background-color: #fff;
+    overflow: hidden;
+    border-radius: 1rem;
+    @include box-shadow(rgba(0, 0, 0, 0.06));
+}
+
+.projects {
+
+    &-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 2.4rem 4.8rem;
+    }
+}
+
+.search {
+    display: flex;
+    align-items: center;
+    gap: 1.2rem;
+
+    border: 1px solid $color-grey-light-2;
+    border-radius: 1rem;
+    padding: 0.8rem 2.4rem;
+    @extend .transition-hover-effect;
+
+    &:focus-within {
+        transform: translateY(-2px);
+    }
+
+    &__field {
+        border: none;
+        background: none;
+        font-family: inherit;
+        color: inherit;
+        font-size: 1.6rem;
+        
+        width: 30rem;
+    
+        &:focus {
+          outline: none;
+        }
+    
+        &::placeholder {
+            color: $color-grey-light-4;
+            font-weight: 300;
+        }
+    }
+
+    &__btn {
+        display: inline-block;
+        border: none;
+        cursor: pointer;
+        background: none;
+        @extend .transition-hover-effect;
+
+        &:hover {
+            transform: scale(1.1);
+        }
+
+        &:active {
+            transform: scale(1);
+        }
+    }
+
+    &__icon {
+        width: 2.4rem;
+        height: 2.4rem;
+        color: $color-grey-light-6;
+    }
+}
+
+.filter__dropdown {
+    border: 1px solid $color-grey-light-2;
+    border-radius: 1rem;
+    padding: 0.8rem 2.4rem;
+    @extend .transition-hover-effect;
+    font-family: inherit;
+    font-size: 1.6rem;
+    font-weight: 300;
+    color: inherit;
+}
