@@ -26,6 +26,7 @@ public class ProjectController {
     }
 
     //it will be changed by taking courseId and will give related projects
+    // it behaves like clicked into course with id=1
     @GetMapping("/projects")
     public String projectPage(Principal principal, Model model) {
         String number = principal.getName();
@@ -33,6 +34,7 @@ public class ProjectController {
         model.addAttribute("loggedUser", user);
         //mock projects for testing !!!
         List<ProjectResponse> projectResponses=projectService.getAllByResponse();
+        model.addAttribute("courseId", 1);
         model.addAttribute("projects", projectResponses);
         return "projects";
 
@@ -47,6 +49,7 @@ public class ProjectController {
         model.addAttribute("loggedUser", user);
 
         List<ProjectResponse>foundProjects=projectService.searchByCourseIdAndProjectTitle(courseId,keyword);
+        model.addAttribute("projects", foundProjects);
         //it could be redirect maybe
         return "projects";
     }
