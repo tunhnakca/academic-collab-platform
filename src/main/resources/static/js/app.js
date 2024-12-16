@@ -3,11 +3,15 @@ import { showLoginInfoModal } from "./pages/login.js";
 import { toggleDropdownHeader } from "./pages/header.js";
 import { setupPasswordValidation } from "./pages/profile";
 import {
+  deleteCourseButton,
   updatePadding,
   showEmptyMessageCourses,
   deleteCourse,
 } from "./pages/courses.js";
-import { showEmptyMessageProjects } from "./pages/projects";
+import {
+  showEmptyMessageProjects,
+  updateSectionProjectsHeight,
+} from "./pages/projects";
 // import "./pages/add-course.js"; // Load the add-course module
 
 ///////////////////////////
@@ -47,7 +51,9 @@ document.addEventListener("DOMContentLoaded", function (e) {
   showEmptyMessageCourses();
 
   // Deleting Course
-  deleteCourse();
+  if (deleteCourseButton) {
+    deleteCourse();
+  }
 });
 
 ///////////////////////////
@@ -55,6 +61,12 @@ document.addEventListener("DOMContentLoaded", function (e) {
 
 // When the document is fully loaded
 document.addEventListener("DOMContentLoaded", function (e) {
+  //Start calculating header height
+  updateSectionProjectsHeight();
+
+  // Call updateSectionProjectsHeight when the window is resized
+  window.addEventListener("resize", updateSectionProjectsHeight);
+
   // If no projects, show empty message
   showEmptyMessageProjects();
 });
