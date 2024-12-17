@@ -1,18 +1,15 @@
 package com.sau.learningplatform.Controller;
 
-import com.sau.learningplatform.Entity.Course;
 import com.sau.learningplatform.Entity.User;
 import com.sau.learningplatform.EntityResponse.CourseResponse;
 import com.sau.learningplatform.EntityResponse.ProjectResponse;
 import com.sau.learningplatform.Service.CourseService;
 import com.sau.learningplatform.Service.ProjectService;
 import com.sau.learningplatform.Service.UserService;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
 
 import java.security.Principal;
 import java.util.List;
@@ -44,17 +41,21 @@ public class ProjectController {
 
         model.addAttribute("course",course);
         model.addAttribute("projects", projectResponses);
+
+        System.out.println("course: "+course);
+
         return "projects";
     }
 
     // it requires courseId
     @GetMapping("/projects/search")
-    public String projectPage(Principal principal, Model model, @RequestParam("keyword") String keyword, @RequestParam("courseId") int courseId) {
+    public String searchProjectByTitle(Principal principal, Model model, @RequestParam("keyword") String keyword, @RequestParam("courseCode") String courseCode) {
         String number = principal.getName();
         User user = userService.findByNumber(number);
         model.addAttribute("loggedUser", user);
-
-        List<ProjectResponse> foundProjects = projectService.searchByCourseIdAndProjectTitle(courseId, keyword);
+        CourseResponse course=courseService.getCourseResponseByCode(courseCode);
+        model.addAttribute("course",course);
+        List<ProjectResponse> foundProjects = projectService.searchByCourseCodeAndProjectTitle(courseCode, keyword);
         model.addAttribute("projects", foundProjects);
         // it could be redirect maybe
         return "projects";

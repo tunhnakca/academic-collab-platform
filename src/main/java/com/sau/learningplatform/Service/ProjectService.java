@@ -12,7 +12,7 @@ public interface ProjectService {
 
     void deleteById(int id);
 
-    List<ProjectResponse> searchByCourseIdAndProjectTitle(int courseId,String title);
+    List<ProjectResponse> searchByCourseCodeAndProjectTitle(String courseCode, String title);
 
     List<ProjectResponse> getAllByResponse();
 }

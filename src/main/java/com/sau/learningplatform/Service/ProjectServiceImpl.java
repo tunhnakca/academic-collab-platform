@@ -37,6 +37,9 @@ public class ProjectServiceImpl implements ProjectService{
         if (projects.isEmpty()){
             log.info("No projects found for the given course!");
         }
+        else{
+            log.info("{} project found related with given keyword",projects.size());
+        }
 
         return projects.stream().map(this::mapToResponse).toList();
 
@@ -48,8 +51,8 @@ public class ProjectServiceImpl implements ProjectService{
     }
 
     @Override
-    public List<ProjectResponse> searchByCourseIdAndProjectTitle(int courseId,String title) {
-       List<Project>projects=projectRepository.findByCourseIdAndTitleContainingIgnoreCase(courseId,title);
+    public List<ProjectResponse> searchByCourseCodeAndProjectTitle(String courseCode, String title) {
+       List<Project>projects=projectRepository.findByCourseCodeAndTitleContainingIgnoreCase(courseCode,title);
        if (projects.isEmpty()){
            log.info("Any project related with search keyword is not found!");
        }
@@ -66,7 +69,7 @@ public class ProjectServiceImpl implements ProjectService{
     }
 
 
-    ProjectResponse mapToResponse(Project project){
+   private ProjectResponse mapToResponse(Project project){
 
         return ProjectResponse
                 .builder()
