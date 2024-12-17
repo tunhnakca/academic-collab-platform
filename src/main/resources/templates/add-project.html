@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{layout}"
+>
+  <head>
+    <title>Add Project</title>
+  </head>
+  <body>
+    <section class="section section-add-project" layout:fragment="content">
+      <div class="container container-add-project container-form">
+        <h2 class="heading-secondary add-project__heading">Add Project</h2>
+        <form
+          th:action="@{/projects/add}"
+          method="post"
+          class="form form-add-project"
+          enctype="multipart/form-data"
+          name="add-project"
+        >
+          <!--!!!!! Course Id göndermeyi sonradan yap !!!!!-->
+          <div class="form-group">
+            <label for="projectName">Project Name</label>
+            <input
+              type="text"
+              id="projectName"
+              name="projectName"
+              placeholder="Enter project name"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="projectDescription">Description</label>
+            <textarea
+              id="projectDescription"
+              name="projectDescription"
+              placeholder="Enter project description"
+              rows="12"
+              required
+            ></textarea>
+          </div>
+          <div class="form-group">
+            <label for="projectDateEnd">End Date</label>
+            <input
+              type="datetime-local"
+              id="projectDateEnd"
+              name="projectDateEnd"
+              required
+            />
+          </div>
+          <button type="submit" class="btn btn__add-project btn--success">
+            Add Project
+          </button>
+        </form>
+      </div>
+    </section>
+  </body>
+</html>

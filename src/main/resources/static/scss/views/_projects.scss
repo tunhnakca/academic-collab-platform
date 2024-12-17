@@ -59,6 +59,10 @@
                 border-bottom: 1px solid currentColor;
             }
         }
+
+        &--project-management {
+            gap: 1rem;
+        }
     }
 }
 
@@ -69,6 +73,7 @@
     align-items: flex-start; 
     padding: 4.8rem 0 3.2rem 0;
     overflow: hidden;
+    overflow-y: auto;
 }
 
 .container-projects {
@@ -83,6 +88,87 @@
     @include box-shadow(rgba(0, 0, 0, 0.06));
 
     .projects {
+
+        .project {
+            padding: 2rem 3.2rem;
+
+            &:not(:last-child){
+                border-bottom: 1px solid $color-grey-light-2;
+            }
+
+            &--opened {
+                background-color: #e7f7e7; 
+                border-left: 5px solid $color-success; 
+            }
+
+            &--closed {
+                background-color: $color-disable-light; 
+                border-left: 5px solid #6C757D;
+
+                .project__date-range {
+                    .project__date-range--start,
+                    .project__date-range--end {
+                        text-decoration: line-through; 
+                        color: $color-grey-light-4; 
+                    }
+                }
+            }
+
+            &__heading {
+                &:link,
+                &:visited {
+                    @extend .transition-hover-effect;
+                    display: inline-block;
+                    text-decoration: none;
+                    color: $color-grey-dark-2;
+                    font-weight: 600;
+                    font-size: 2.4rem;
+                    margin-bottom: 0.4rem;
+
+                    display: -webkit-box;
+                    -webkit-box-orient: vertical;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    -webkit-line-clamp: 1;  /* Only shows two lines */
+                }
+
+                &:hover,
+                &:active {
+                    transform: translateX(6px);
+                }
+            }
+
+            &__date-range {
+                display: flex;
+                align-items: center;
+                gap: 1rem;
+                margin-bottom: 1.6rem;
+
+                &--to {
+                    
+                }
+
+                &--start {
+                    @extend .badge;
+                    background-color: #007bff;
+                }
+
+                &--end {
+                    @extend .badge;
+                    background-color: #6c757d;
+                }
+            }
+
+            &__description {
+                font-size: 1.6rem;
+
+                display: -webkit-box;
+                -webkit-box-orient: vertical;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                -webkit-line-clamp: 4;  /* Only shows 4 lines */
+            }
+        }
         
         &-header {
             display: flex;
@@ -160,154 +246,3 @@
         }
     }
 }
-
-/*
-.container-projects {
-    padding: 0;
-
-
-    .projects {
-
-        &-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 2.4rem 4.8rem;
-            background-color: #fff;
-            overflow: hidden;
-            border-radius: 1rem;
-            @include box-shadow(rgba(0, 0, 0, 0.06));
-            margin-bottom: 2rem;
-    
-            .search {
-                display: flex;
-                align-items: center;
-                gap: 1.2rem;
-            
-                border: 1px solid $color-grey-light-2;
-                border-radius: 1rem;
-                padding: 0.8rem 2.4rem;
-                @extend .transition-hover-effect;
-            
-                &:focus-within {
-                    transform: translateY(-2px);
-                }
-            
-                &__field {
-                    border: none;
-                    background: none;
-                    font-family: inherit;
-                    color: inherit;
-                    font-size: 1.6rem;
-                    
-                    width: 30rem;
-                
-                    &:focus {
-                      outline: none;
-                    }
-                
-                    &::placeholder {
-                        color: $color-grey-light-4;
-                        font-weight: 300;
-                    }
-                }
-            
-                &__btn {
-                    display: inline-block;
-                    border: none;
-                    cursor: pointer;
-                    background: none;
-                    @extend .transition-hover-effect;
-            
-                    &:hover {
-                        transform: scale(1.1);
-                    }
-            
-                    &:active {
-                        transform: scale(1);
-                    }
-                }
-            
-                &__icon {
-                    width: 2.4rem;
-                    height: 2.4rem;
-                    color: $color-grey-light-6;
-                }
-            }
-            
-            .filter__dropdown {
-                border: 1px solid $color-grey-light-2;
-                border-radius: 1rem;
-                padding: 0.8rem 2.4rem;
-                @extend .transition-hover-effect;
-                font-family: inherit;
-                font-size: 1.6rem;
-                font-weight: 300;
-                color: inherit;
-            }
-        }
-
-        &-main {
-            display: flex;
-            gap: 2rem;
-            align-items: flex-start;
-
-            &__list {
-                flex: 3;
-                background-color: #fff;
-                overflow: hidden;
-                border-radius: 1rem;
-                @include box-shadow(rgba(0, 0, 0, 0.06));
-            }
-
-            &__sidebar {
-                flex: 1;
-                padding: 1.2rem 2.4rem;
-                background-color: #fff;
-                overflow: hidden;
-                border-radius: 1rem;
-                @include box-shadow(rgba(0, 0, 0, 0.06));
-
-                &-course__informations{
-                    display: flex;
-                    flex-direction: column;
-                    gap: 1.2rem;
-                }
-
-                &-course__information{
-                    display: flex;
-                    flex-direction: column;
-                    gap: 0.2rem;
-
-                    &__heading{
-                        font-size: 1.4rem;
-                    }
-            
-                    &__value{
-                        font-size: 1.4rem;
-                        color: $color-grey-light-5;
-                        font-weight: 300;
-
-                        a:link,
-                        a:visited {
-                            text-decoration: none;
-                            display: inline-block;
-                            font-family: inherit;
-                            font-weight: 400;
-                            @extend .transition-hover-effect;
-                            cursor: pointer;
-                            color: $color-primary;
-                            border-bottom: 1px solid  transparent;
-                        }
-
-                        a:hover,
-                        a:active {
-                            border-bottom: 1px solid currentColor;
-                        }
-                    }
-                }
-            }
-        }
-    }
-}
-*/

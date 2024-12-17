@@ -36,7 +36,7 @@ public class ProjectController {
         List<ProjectResponse> projectResponses = projectService.getAllByResponse();
         model.addAttribute("courseId", 1);
         model.addAttribute("projects", projectResponses);
-        return "projects-new";
+        return "projects";
 
     }
 
@@ -54,4 +54,12 @@ public class ProjectController {
         return "projects";
     }
 
+    @GetMapping("/projects/add")
+    public String addProjectPage(Principal principal, Model model) {
+        String number = principal.getName();
+        User user = userService.findByNumber(number);
+        model.addAttribute("loggedUser", user);
+        return "add-project";
+
+    }
 }
