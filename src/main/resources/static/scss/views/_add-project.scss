@@ -1,0 +1,28 @@
+@use '../abstracts/base' as *;
+@use '../abstracts/mixins' as *;
+@use '../abstracts/utilities' as *;
+@use '../components' as *;
+
+.section-add-project {
+    
+}
+
+
+.add-project__heading {
+    text-align: center;
+}
+
+.btn__add-project {
+    align-self: end;
+}
+
+.form-add-project {
+
+    .form-group {
+
+        textarea {
+            resize: vertical; 
+            overflow-x: hidden;
+        }
+    }
+}
