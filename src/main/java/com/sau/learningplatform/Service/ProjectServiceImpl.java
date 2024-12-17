@@ -74,6 +74,8 @@ public class ProjectServiceImpl implements ProjectService{
                 .title(project.getTitle())
                 .description(project.getDescription())
                 .isValid(project.getDateEnd().isAfter(LocalDateTime.now()))
+                .startDate(project.getDateCreated())
+                .endDate(project.getDateEnd())
                 .build();
 
     }
