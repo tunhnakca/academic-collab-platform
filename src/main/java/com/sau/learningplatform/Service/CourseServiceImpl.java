@@ -45,7 +45,7 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public Course getCourseByCode(String courseCode) {
+    public CourseResponse getCourseResponseByCode(String courseCode) {
         List<Course> courses = courseRepository.findByCode(courseCode);
 
         if (courses.size() > 1) {
@@ -56,7 +56,7 @@ public class CourseServiceImpl implements CourseService {
             throw new RuntimeException("there is no course with given code !");
         }
 
-        return courses.get(0);
+        return courseToResponse(courses.get(0));
 
     }
 
