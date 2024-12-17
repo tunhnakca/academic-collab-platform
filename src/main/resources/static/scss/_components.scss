@@ -73,6 +73,13 @@ h4 {
   letter-spacing: -0.1rem;
 }
 
+h5 {
+  color: $color-grey-dark-1;
+  font-size: 2rem;
+  font-weight: 400;
+  margin-bottom: 1.8rem;
+  letter-spacing: -0.1rem;
+}
 /***********************/
 /* Buttons */
 /***********************/
@@ -201,7 +208,7 @@ h4 {
       color: #495057;
     }
 
-    input {
+    input, textarea {
       width: 100%;
       padding: 1.2rem;
       font-size: 1.6rem;

@@ -25,37 +25,41 @@ public class ProjectController {
         this.userService = userService;
     }
 
-    //it will be changed by taking courseId and will give related projects
+    // it will be changed by taking courseId and will give related projects
     // it behaves like clicked into course with id=1
     @GetMapping("/projects")
     public String projectPage(Principal principal, Model model) {
         String number = principal.getName();
         User user = userService.findByNumber(number);
         model.addAttribute("loggedUser", user);
-        //mock projects for testing !!!
-        List<ProjectResponse> projectResponses=projectService.getAllByResponse();
+        // mock projects for testing !!!
+        List<ProjectResponse> projectResponses = projectService.getAllByResponse();
         model.addAttribute("courseId", 1);
         model.addAttribute("projects", projectResponses);
         return "projects";
 
     }
 
-
-    //it requires courseId
+    // it requires courseId
     @GetMapping("/projects/search")
-    public String projectPage(Principal principal, Model model, @RequestParam("keyword") String keyword,@RequestParam("courseId") int courseId) {
+    public String projectPage(Principal principal, Model model, @RequestParam("keyword") String keyword,
+            @RequestParam("courseId") int courseId) {
         String number = principal.getName();
         User user = userService.findByNumber(number);
         model.addAttribute("loggedUser", user);
 
-        List<ProjectResponse>foundProjects=projectService.searchByCourseIdAndProjectTitle(courseId,keyword);
+        List<ProjectResponse> foundProjects = projectService.searchByCourseIdAndProjectTitle(courseId, keyword);
         model.addAttribute("projects", foundProjects);
-        //it could be redirect maybe
+        // it could be redirect maybe
         return "projects";
     }
 
+    @GetMapping("/projects/add")
+    public String addProjectPage(Principal principal, Model model) {
+        String number = principal.getName();
+        User user = userService.findByNumber(number);
+        model.addAttribute("loggedUser", user);
+        return "add-project";
 
-
-
-
+    }
 }

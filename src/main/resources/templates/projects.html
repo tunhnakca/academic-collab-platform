@@ -7,58 +7,218 @@
     <title>Projects</title>
   </head>
   <body>
-    <section class="section section-projects" layout:fragment="content">
-      <div class="container container-projects">
-        <!-- Search and Filters -->
-        <!-- Search Bar -->
-        <div class="projects-header">
-          <form th:action="@{/projects/search}" method="GET" class="search">
-            <input
-              type="text"
-              name="keyword"
-              class="search__field"
-              placeholder="Search by Project Title"
-              th:value="${keyword}"
-            />
-            <input type="hidden" name="courseId" th:value="${courseId}" />
-            <button type="submit" class="search__btn">
-              <ion-icon class="search__icon" name="search-outline"></ion-icon>
-            </button>
-          </form>
-
-          <!-- Filter Dropdown -->
-          <form th:action="@{/projects/filter}" method="GET" class="filter">
-            <select
-              name="filter"
-              class="filter__dropdown"
-              onchange="this.form.submit()"
-            >
-              <option value="" disabled selected>Filter by</option>
-              <option th:value="new" th:selected="${filter == 'new'}">
-                Newest to Oldest
-              </option>
-              <option th:value="old" th:selected="${filter == 'old'}">
-                Oldest to Newest
-              </option>
-              <option th:value="open" th:selected="${filter == 'open'}">
-                Open Projects
-              </option>
-              <option th:value="closed" th:selected="${filter == 'closed'}">
-                Closed Projects
-              </option>
-            </select>
-            <input type="hidden" name="courseId" th:value="${courseId}" />
-          </form>
-        </div>
-
-        <!-- Main Content -->
-        <div class="projects-main">
-          <!-- Left: Project List -->
-          <div class="project-list">
-            <!-- Project Items -->
-            <!-- Pagination -->
+    <section class="section-projects" layout:fragment="content">
+      <!-- Left: Sidebar -->
+      <div class="projects__sidebar">
+        <!-- <h5 class="text-center">Course Info</h5> -->
+        <div class="projects__sidebar-course__informations">
+          <div class="projects__sidebar-course__information">
+            <p class="projects__sidebar-course__information__heading">
+              Course Code:
+            </p>
+            <p class="projects__sidebar-course__information__value">SWE101</p>
           </div>
-          <!-- Right: Sidebar -->
+          <div class="projects__sidebar-course__information">
+            <p class="projects__sidebar-course__information__heading">
+              Course Title:
+            </p>
+            <p class="projects__sidebar-course__information__value">
+              Natural Language Processing
+            </p>
+          </div>
+          <div class="projects__sidebar-course__information">
+            <p class="projects__sidebar-course__information__heading">
+              Course Owner:
+            </p>
+            <p class="projects__sidebar-course__information__value">
+              Beyza Eken
+            </p>
+          </div>
+          <div
+            th:if="${#strings.toLowerCase(loggedUser.role).replace('ı', 'i') == 'admin' or #strings.toLowerCase(loggedUser.role).replace('ı', 'i') == 'instructor'}"
+            class="projects__sidebar-course__information"
+          >
+            <p class="projects__sidebar-course__information__heading">
+              Course Users:
+            </p>
+            <p class="projects__sidebar-course__information__value">
+              <a href="#" target="_blank">Go to users</a>
+            </p>
+          </div>
+          <div
+            th:if="${#strings.toLowerCase(loggedUser.role).replace('ı', 'i') == 'admin' or #strings.toLowerCase(loggedUser.role).replace('ı', 'i') == 'instructor'}"
+            class="projects__sidebar-course__information projects__sidebar-course__information--project-management"
+          >
+            <p class="projects__sidebar-course__information__heading">
+              Project Management:
+            </p>
+            <a class="link-btn link-btn--success" th:href="@{/projects/add}"
+              >Add Project</a
+            >
+            <a class="link-btn link-btn--danger" href="">Delete Project</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="projects-wrapper">
+        <div class="container-projects">
+          <!-- Search and Filters -->
+          <!-- Search Bar -->
+          <div class="projects-header">
+            <form th:action="@{/projects/search}" method="GET" class="search">
+              <input
+                type="text"
+                name="keyword"
+                class="search__field"
+                placeholder="Search by Project Title"
+                th:value="${keyword}"
+              />
+              <input type="hidden" name="courseId" th:value="${courseId}" />
+              <button type="submit" class="search__btn">
+                <ion-icon class="search__icon" name="search-outline"></ion-icon>
+              </button>
+            </form>
+
+            <!-- Filter Dropdown -->
+            <form th:action="@{/projects/filter}" method="GET" class="filter">
+              <select
+                name="filter"
+                class="filter__dropdown"
+                onchange="this.form.submit()"
+              >
+                <option value="" disabled selected>Filter by</option>
+                <option th:value="new" th:selected="${filter == 'new'}">
+                  Newest to Oldest
+                </option>
+                <option th:value="old" th:selected="${filter == 'old'}">
+                  Oldest to Newest
+                </option>
+                <option th:value="open" th:selected="${filter == 'open'}">
+                  Open Projects
+                </option>
+                <option th:value="closed" th:selected="${filter == 'closed'}">
+                  Closed Projects
+                </option>
+              </select>
+              <input type="hidden" name="courseId" th:value="${courseId}" />
+            </form>
+          </div>
+
+          <!-- Main Content -->
+          <div class="projects-main">
+            <div class="projects-main__list">
+              <!-- Project Items -->
+              <div class="projects">
+                <div class="project project--opened">
+                  <a href="#" class="project__heading">
+                    Big Data Log Analysis with Hadoop
+                  </a>
+                  <div class="project__date-range">
+                    <p class="project__date-range--start">
+                      January 15, 2024, 09:00
+                    </p>
+                    <span class="project__date-range--to">to</span>
+                    <p class="project__date-range--end">
+                      March 30, 2024, 23:59
+                    </p>
+                  </div>
+                  <p class="project__description">
+                    Developed a distributed system to process and analyze
+                    large-scale server log data using Hadoop. The project
+                    involved setting up a Hadoop cluster, storing logs in HDFS,
+                    and utilizing MapReduce to extract meaningful insights such
+                    as user behavior patterns and system error trends.
+                  </p>
+                </div>
+
+                <div class="project project--opened">
+                  <a href="#" class="project__heading">
+                    E-commerce Platform Development with MERN Stack
+                  </a>
+                  <div class="project__date-range">
+                    <p class="project__date-range--start">May 1, 2024, 10:00</p>
+                    <span class="project__date-range--to">to</span>
+                    <p class="project__date-range--end">July 31, 2024, 18:00</p>
+                  </div>
+                  <p class="project__description">
+                    Led the development of an e-commerce platform using the MERN
+                    stack (MongoDB, Express.js, React, Node.js). The platform
+                    supports user authentication, product management, and
+                    payment integration. I was responsible for designing and
+                    implementing the back-end API, building the front-end UI,
+                    and ensuring the platform is scalable and secure. The
+                    project also incorporated advanced features like real-time
+                    order tracking and admin dashboards for monitoring product
+                    stock and sales.
+                  </p>
+                </div>
+
+                <div class="project project--opened">
+                  <a href="#" class="project__heading">
+                    Mobile App Development with Flutter
+                  </a>
+                  <div class="project__date-range">
+                    <p class="project__date-range--start">
+                      April 1, 2024, 09:00
+                    </p>
+                    <span class="project__date-range--to">to</span>
+                    <p class="project__date-range--end">May 15, 2024, 18:00</p>
+                  </div>
+                  <p class="project__description">
+                    Developed a cross-platform mobile app using Flutter for a
+                    local restaurant, providing features like order placement,
+                    payment, and delivery tracking.
+                  </p>
+                </div>
+
+                <div class="project project--closed">
+                  <a href="#" class="project__heading">
+                    Inventory Management System
+                  </a>
+                  <div class="project__date-range">
+                    <p class="project__date-range--start">
+                      August 10, 2023, 08:30
+                    </p>
+                    <span class="project__date-range--to">to</span>
+                    <p class="project__date-range--end">
+                      October 5, 2023, 17:00
+                    </p>
+                  </div>
+                  <p class="project__description">
+                    Developed a web-based inventory management system for a
+                    retail company, including features for real-time stock
+                    tracking, order management, and reporting. The system was
+                    deployed successfully and helped the client reduce stockouts
+                    and overstock situations, streamlining their supply chain
+                    process.
+                  </p>
+                </div>
+
+                <div class="project project--closed">
+                  <a href="#" class="project__heading">
+                    Retail Data Analytics using Hadoop Ecosystem
+                  </a>
+                  <div class="project__date-range">
+                    <p class="project__date-range--start">
+                      February 1, 2024, 10:00
+                    </p>
+                    <span class="project__date-range--to">to</span>
+                    <p class="project__date-range--end">
+                      April 15, 2024, 18:30
+                    </p>
+                  </div>
+                  <p class="project__description">
+                    Implemented a Hadoop-based solution to analyze retail
+                    transactions. Leveraged HDFS for data storage, Hive for
+                    querying, and Pig for ETL processes. Delivered insights on
+                    customer purchasing behavior and sales trends, enabling
+                    data-driven decision-making for promotions and inventory
+                    management.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -66,63 +226,11 @@
 </html>
 
 <!--
+<div class="pagination" style="display: flex; justify-content: center; margin-top: 2rem;">
+    <a th:each="page, iter : ${#numbers.sequence(1, totalPages)}"
+       th:href="@{/projects(page=${page})}"
+       th:text="${page}"
+       style="margin: 0 0.5rem; padding: 0.5rem 1rem; text-decoration: none; border: 1px solid #ccc; border-radius: 4px; color: #333;"></a>
+  </div>
 
-    
-    <div class="projects-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
-        
-        <form th:action="@{/projects/search}" method="GET" style="flex: 1; margin-right: 1rem;">
-          <input 
-            type="text" 
-            name="query" 
-            placeholder="Search projects..." 
-            style="width: 100%; padding: 0.5rem; border: 1px solid #ccc; border-radius: 4px;" 
-            th:value="${query}">
-        </form>
-
-        
-        <form th:action="@{/projects/filter}" method="GET">
-          <select 
-            name="filter" 
-            style="padding: 0.5rem; border: 1px solid #ccc; border-radius: 4px;"
-            th:onchange="this.form.submit()"
-          >
-            <option value="" disabled selected>Filter by</option>
-            <option value="new" th:selected="${filter == 'new'}">Newest to Oldest</option>
-            <option value="old" th:selected="${filter == 'old'}">Oldest to Newest</option>
-            <option value="open" th:selected="${filter == 'open'}">Open Projects</option>
-            <option value="closed" th:selected="${filter == 'closed'}">Closed Projects</option>
-          </select>
-        </form>
-      </div>
-
-      
-      <div class="projects-main" style="display: flex; gap: 2rem;">
-
-        
-        <div class="projects-list" style="flex: 2;">
-          <div th:each="project : ${projects}" style="margin-bottom: 1.5rem; padding: 1rem; border: 1px solid #ccc; border-radius: 4px;">
-            <h3 th:text="${project.name}" style="margin-bottom: 0.5rem;"></h3>
-            <p th:text="${project.description}" style="margin-bottom: 0.5rem;"></p>
-            <span th:text="${project.status}" style="font-size: 0.9rem; color: #555;"></span>
-          </div>
-
-          
-          <div class="pagination" style="display: flex; justify-content: center; margin-top: 2rem;">
-            <a th:each="page, iter : ${#numbers.sequence(1, totalPages)}"
-               th:href="@{/projects(page=${page})}"
-               th:text="${page}"
-               style="margin: 0 0.5rem; padding: 0.5rem 1rem; text-decoration: none; border: 1px solid #ccc; border-radius: 4px; color: #333;"></a>
-          </div>
-        </div>
-
-        
-        <div class="projects-sidebar" style="flex: 1; padding: 1rem; border: 1px solid #ccc; border-radius: 4px;">
-          <h4 style="margin-bottom: 1rem;">Course Info</h4>
-          <ul>
-            <li th:each="course : ${courses}" th:text="${course.name}" style="margin-bottom: 0.5rem;"></li>
-          </ul>
-        </div>
-
-      </div>
-    
--->
+  -->
