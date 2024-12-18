@@ -17,4 +17,6 @@ public interface ProjectService {
     List<ProjectResponse> getAllByResponse();
 
     List<ProjectResponse> filterOrSort(String queryParam);
+
+    void saveProject(Project project, String courseCode);
 }

@@ -1,7 +1,9 @@
 package com.sau.learningplatform.Service;
 
+import com.sau.learningplatform.Entity.Course;
 import com.sau.learningplatform.Entity.Project;
 import com.sau.learningplatform.EntityResponse.ProjectResponse;
+import com.sau.learningplatform.Repository.CourseRepository;
 import com.sau.learningplatform.Repository.ProjectRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -14,9 +16,11 @@ import java.util.Optional;
 @Slf4j
 public class ProjectServiceImpl implements ProjectService{
     private ProjectRepository projectRepository;
+    private CourseRepository courseRepository;
 
-    public ProjectServiceImpl(ProjectRepository projectRepository) {
+    public ProjectServiceImpl(ProjectRepository projectRepository, CourseRepository courseRepository) {
         this.projectRepository = projectRepository;
+        this.courseRepository = courseRepository;
     }
 
     @Override
@@ -85,6 +89,21 @@ public class ProjectServiceImpl implements ProjectService{
             projects=projectRepository.findByDateEndBefore(LocalDateTime.now());
         }
         return projects.stream().map(this::mapToResponse).toList();
+    }
+
+    @Override
+    public void saveProject(Project project, String courseCode) {
+        Optional<Course> course=courseRepository.findByCode(courseCode);
+
+        if (course.isEmpty()){
+            throw new RuntimeException("No course found with given code !");
+        }
+
+        project.setCourse(course.get());
+
+        projectRepository.save(project);
+
+        log.info("new project has been saved successfully!");
     }
 
 

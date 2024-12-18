@@ -24,4 +24,8 @@ public interface CourseService {
     Course findById(int courseId);
 
     List<CourseResponse>getAllCourseResponses();
+
+    Course getByCode(String code);
+
+
 }
