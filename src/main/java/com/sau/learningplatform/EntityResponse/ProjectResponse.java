@@ -4,7 +4,8 @@ import com.sau.learningplatform.Entity.Course;
 import lombok.Builder;
 import lombok.Data;
 
-
+import java.sql.Time;
+import java.time.LocalDateTime;
 
 
 @Data
@@ -16,6 +17,10 @@ public class ProjectResponse {
     private Course course;
 
     private String title;
+
+    private LocalDateTime startDate;
+
+    private LocalDateTime endDate;
 
     private boolean isValid;
 

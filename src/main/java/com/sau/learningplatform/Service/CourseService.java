@@ -14,7 +14,7 @@ public interface CourseService {
 
     void save(Course course);
 
-    Course getCourseByCode(String courseCode);
+    CourseResponse getCourseResponseByCode(String courseCode);
 
     void addCourseWithStudentsByExcel(String ownerNumber, String courseName, String courseCode,
             MultipartFile studentFile) throws IOException;
@@ -24,4 +24,8 @@ public interface CourseService {
     Course findById(int courseId);
 
     List<CourseResponse>getAllCourseResponses();
+
+    Course getByCode(String code);
+
+
 }
