@@ -15,4 +15,6 @@ public interface ProjectService {
     List<ProjectResponse> searchByCourseCodeAndProjectTitle(String courseCode, String title);
 
     List<ProjectResponse> getAllByResponse();
+
+    List<ProjectResponse> filterOrSort(String queryParam);
 }

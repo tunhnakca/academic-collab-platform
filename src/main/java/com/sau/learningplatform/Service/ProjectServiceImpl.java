@@ -6,6 +6,7 @@ import com.sau.learningplatform.Repository.ProjectRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -68,8 +69,26 @@ public class ProjectServiceImpl implements ProjectService{
         return projects.stream().map(this::mapToResponse).toList();
     }
 
+    @Override
+    public List<ProjectResponse> filterOrSort(String queryParam) {
+        List<Project>projects=new ArrayList<>();
+        if (queryParam.equals("new")){
+            projects=projectRepository.findByOrderByDateCreatedDesc();
+        }
+        if (queryParam.equals("old")){
+            projects=projectRepository.findByOrderByDateCreatedAsc();
+        }
+        if (queryParam.equals("open")){
+            projects=projectRepository.findByDateEndAfter(LocalDateTime.now());
+        }
+        if (queryParam.equals("closed")){
+            projects=projectRepository.findByDateEndBefore(LocalDateTime.now());
+        }
+        return projects.stream().map(this::mapToResponse).toList();
+    }
 
-   private ProjectResponse mapToResponse(Project project){
+
+    private ProjectResponse mapToResponse(Project project){
 
         return ProjectResponse
                 .builder()

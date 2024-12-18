@@ -42,8 +42,6 @@ public class ProjectController {
         model.addAttribute("course",course);
         model.addAttribute("projects", projectResponses);
 
-        System.out.println("course: "+course);
-
         return "projects";
     }
 
@@ -67,6 +65,20 @@ public class ProjectController {
         User user = userService.findByNumber(number);
         model.addAttribute("loggedUser", user);
         return "add-project";
+
+    }
+
+    @GetMapping("/projects/filter")
+    public String addProjectPage(Principal principal, Model model,@RequestParam("courseCode") String courseCode,@RequestParam("filter") String queryParam) {
+        String number = principal.getName();
+        User user = userService.findByNumber(number);
+        model.addAttribute("loggedUser", user);
+        CourseResponse course=courseService.getCourseResponseByCode(courseCode);
+        model.addAttribute("course",course);
+        List<ProjectResponse>projects=projectService.filterOrSort(queryParam);
+        model.addAttribute("projects", projects);
+
+        return "projects";
 
     }
 }
