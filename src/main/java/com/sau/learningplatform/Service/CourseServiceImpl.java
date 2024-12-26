@@ -45,20 +45,17 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public Course getCourseByCode(String courseCode) {
-        List<Course> courses = courseRepository.findByCode(courseCode);
+    public CourseResponse getCourseResponseByCode(String courseCode) {
+        Optional<Course>course = courseRepository.findByCode(courseCode);
 
-        if (courses.size() > 1) {
-            log.error("Multiple courses with same code exists!");
-        }
-
-        if (courses.isEmpty()) {
+        if (course.isEmpty()) {
             throw new RuntimeException("there is no course with given code !");
         }
 
-        return courses.get(0);
-
+        return courseToResponse(course.get());
     }
+
+
 
 
 
@@ -104,6 +101,17 @@ public class CourseServiceImpl implements CourseService {
     @Override
     public List<CourseResponse> getAllCourseResponses() {
         return courseRepository.findAll().stream().map(this::courseToResponse).toList();
+    }
+
+    @Override
+    public Course getByCode(String code) {
+        Optional<Course>course=courseRepository.findByCode(code);
+
+        if (course.isEmpty()){
+            log.error("there is no course with given code!");
+        }
+        return course.get();
+
     }
 
     private List<User> saveStudentsByFile(MultipartFile file) throws IOException {

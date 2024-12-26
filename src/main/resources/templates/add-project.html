@@ -14,16 +14,17 @@
           th:action="@{/projects/add}"
           method="post"
           class="form form-add-project"
-          enctype="multipart/form-data"
+          th:object="${project}"
           name="add-project"
         >
-          <!--!!!!! Course Id göndermeyi sonradan yap !!!!!-->
+          <input type="hidden" name="courseCode" th:value="${courseCode}"/>
+
           <div class="form-group">
             <label for="projectName">Project Name</label>
             <input
               type="text"
               id="projectName"
-              name="projectName"
+              th:field="*{title}"
               placeholder="Enter project name"
               required
             />
@@ -32,7 +33,7 @@
             <label for="projectDescription">Description</label>
             <textarea
               id="projectDescription"
-              name="projectDescription"
+              th:field="*{description}"
               placeholder="Enter project description"
               rows="12"
               required
@@ -43,7 +44,7 @@
             <input
               type="datetime-local"
               id="projectDateEnd"
-              name="projectDateEnd"
+              th:field="*{dateEnd}"
               required
             />
           </div>
