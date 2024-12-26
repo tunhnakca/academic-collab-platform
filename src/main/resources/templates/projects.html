@@ -52,7 +52,7 @@
             <p class="projects__sidebar-course__information__heading">
               Project Management:
             </p>
-            <a class="link-btn link-btn--success" th:href="@{/projects/add}"
+            <a class="link-btn link-btn--success" th:href="@{/projects/add(courseCode=${course.getCode()})}"
               >Add Project</a
             >
             <a class="link-btn link-btn--danger" href="">Delete Project</a>
@@ -73,7 +73,7 @@
                 placeholder="Search by Project Title"
                 th:value="${keyword}"
               />
-              <input type="hidden" name="courseId" th:value="${courseId}" />
+              <input type="hidden" name="courseCode" th:value="${course.getCode()}" />
               <button type="submit" class="search__btn">
                 <ion-icon class="search__icon" name="search-outline"></ion-icon>
               </button>
@@ -100,7 +100,7 @@
                   Closed Projects
                 </option>
               </select>
-              <input type="hidden" name="courseId" th:value="${courseId}" />
+              <input type="hidden" name="courseCode" th:value="${course.getCode()}" />
             </form>
           </div>
 
