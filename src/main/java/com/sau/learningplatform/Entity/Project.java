@@ -26,7 +26,6 @@ public class Project {
     private String title;
 
     @Column(name = "date_created")
-    @CreationTimestamp
     private LocalDateTime dateCreated;
 
     @Column(name = "date_end")

@@ -15,7 +15,7 @@
       >
       <span
         class="user-info__tag"
-        th:classappend="' user-info__tag--' + ${#strings.toLowerCase(loggedUser.role).replace('ı', 'i')}"
+        th:classappend="'user-info__tag--' + ${#strings.toLowerCase(loggedUser.role).replace('ı', 'i')}"
         th:text="${loggedUser.role}"
         >Role</span
       >

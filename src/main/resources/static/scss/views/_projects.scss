@@ -91,6 +91,7 @@
 
         .project {
             padding: 2rem 3.2rem;
+            @extend .transition-hover-effect;
 
             &:not(:last-child){
                 border-bottom: 1px solid $color-grey-light-2;
@@ -243,6 +244,41 @@
                 font-weight: 300;
                 color: inherit;
             }
+        }
+    }
+}
+
+.delete-mode {
+    .project {
+        cursor: pointer;
+        background-color: rgba(255, 0, 0, 0.1) !important;
+        border-left: 5px solid $color-danger !important; 
+
+        &:hover {
+            background-color: rgba(255, 0, 0, 0.2) !important; 
+            transform: translateX(5px);
+        }
+    }
+}
+
+.modal-delete-project {
+    @extend .modal;
+    display: flex;
+    flex-direction: column;
+    gap: 2.4rem;
+    align-items: center;
+
+    p {
+        font-size: 1.6rem;
+    }
+
+    &__buttons {
+        display: flex;
+        gap: 1.2rem;
+
+        button {
+            font-size: 1.8rem;
+            padding: 1.2rem 3.6rem;
         }
     }
 }
