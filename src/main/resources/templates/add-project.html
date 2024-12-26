@@ -17,7 +17,7 @@
           th:object="${project}"
           name="add-project"
         >
-          <input type="hidden" name="courseCode" th:value="${courseCode}"/>
+          <input type="hidden" name="courseCode" th:value="${courseCode}" />
 
           <div class="form-group">
             <label for="projectName">Project Name</label>
@@ -38,6 +38,15 @@
               rows="12"
               required
             ></textarea>
+          </div>
+          <div class="form-group">
+            <label for="projectDateCreated">Start Date</label>
+            <input
+              type="datetime-local"
+              id="projectDateCreated"
+              th:field="*{dateCreated}"
+              required
+            />
           </div>
           <div class="form-group">
             <label for="projectDateEnd">End Date</label>

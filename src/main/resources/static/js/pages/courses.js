@@ -52,8 +52,8 @@ export function deleteCourse() {
     modal.innerHTML = `
       <p>Are you sure you want to delete this course?</p>
       <div class="modal-delete-course__buttons">
-      <button class="btn btn--danger" id="confirm-delete">Yes</button>
-      <button class="btn btn--light" id="cancel-delete">No</button>
+      <button class="btn btn--danger" id="confirm-delete__course">Yes</button>
+      <button class="btn btn--light" id="cancel-delete__course">No</button>
       </div>
     `;
 
@@ -61,7 +61,7 @@ export function deleteCourse() {
     overlay.classList.remove("d-none");
 
     document
-      .getElementById("confirm-delete")
+      .getElementById("confirm-delete__course")
       .addEventListener("click", function () {
         deleteCourse(courseId);
         modal.remove();
@@ -69,7 +69,7 @@ export function deleteCourse() {
       });
 
     document
-      .getElementById("cancel-delete")
+      .getElementById("cancel-delete__course")
       .addEventListener("click", function () {
         modal.remove();
         overlay.classList.add("d-none");

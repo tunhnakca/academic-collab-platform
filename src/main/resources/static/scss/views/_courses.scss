@@ -127,10 +127,10 @@
 .delete-mode {
     .course {
         cursor: pointer;
-        background-color: rgba(255, 0, 0, 0.1);
+        background-color: rgba(255, 0, 0, 0.1) !important;
 
         &:hover {
-            background-color: rgba(255, 0, 0, 0.2); 
+            background-color: rgba(255, 0, 0, 0.2) !important; 
         }
     }
 }

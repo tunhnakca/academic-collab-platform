@@ -43,3 +43,23 @@ export function showEmptyMessage(containerSelector, message) {
     parentEl.prepend(messageEl.cloneNode(true));
   }
 }
+
+////////////////////////////////////////
+// Updating DateTimeFormat
+export function formatDateTime(
+  classNames,
+  locale = navigator.language,
+  options = {}
+) {
+  const formatter = new Intl.DateTimeFormat(locale, options);
+  classNames.forEach((className) => {
+    const elements = document.querySelectorAll(`.${className}`);
+    elements.forEach((el) => {
+      const dateStr = el.dataset.date;
+      if (dateStr) {
+        const date = new Date(dateStr);
+        el.textContent = formatter.format(date);
+      }
+    });
+  });
+}
