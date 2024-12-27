@@ -4,7 +4,18 @@
 @use '../components' as *;
 
 .section-add-project {
+    .error-message {
+        color: $color-danger;
+        margin-top: 1rem;
+    }
     
+    .input-error {
+        border-color: $color-danger !important;
+    
+        &::placeholder {
+            color: $color-danger !important;
+        }
+    }
 }
 
 
@@ -14,6 +25,12 @@
 
 .btn__add-project {
     align-self: end;
+
+    &:disabled {
+        background-color: $color-disable; 
+        color: $color-grey-light-6; 
+        cursor: not-allowed; 
+    }
 }
 
 .form-add-project {

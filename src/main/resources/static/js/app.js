@@ -11,8 +11,11 @@ import {
 import {
   showEmptyMessageProjects,
   updateSectionProjectsHeight,
+  updateProjectDateTime,
+  deleteProjectButton,
+  deleteProject,
 } from "./pages/projects";
-// import "./pages/add-course.js"; // Load the add-course module
+import { setupDateValidation } from "./pages/add-project";
 
 ///////////////////////////
 // Login Page
@@ -69,4 +72,18 @@ document.addEventListener("DOMContentLoaded", function (e) {
 
   // If no projects, show empty message
   showEmptyMessageProjects();
+
+  // Update Date Formats
+  updateProjectDateTime();
+
+  // Deleting Project
+  if (deleteProjectButton) {
+    deleteProject();
+  }
+});
+
+///////////////////////////
+// Add Project Page
+document.addEventListener("DOMContentLoaded", function () {
+  setupDateValidation();
 });

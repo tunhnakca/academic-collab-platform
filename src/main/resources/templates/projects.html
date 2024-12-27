@@ -16,22 +16,33 @@
             <p class="projects__sidebar-course__information__heading">
               Course Code:
             </p>
-            <p class="projects__sidebar-course__information__value">SWE101</p>
+            <p
+              class="projects__sidebar-course__information__value"
+              th:text="${course.code}"
+            >
+              SWE000
+            </p>
           </div>
           <div class="projects__sidebar-course__information">
             <p class="projects__sidebar-course__information__heading">
               Course Title:
             </p>
-            <p class="projects__sidebar-course__information__value">
-              Natural Language Processing
+            <p
+              class="projects__sidebar-course__information__value"
+              th:text="${course.title}"
+            >
+              Course Title
             </p>
           </div>
           <div class="projects__sidebar-course__information">
             <p class="projects__sidebar-course__information__heading">
               Course Owner:
             </p>
-            <p class="projects__sidebar-course__information__value">
-              Beyza Eken
+            <p
+              class="projects__sidebar-course__information__value"
+              th:text="${course.owner}"
+            >
+              Name Surname
             </p>
           </div>
           <div
@@ -52,10 +63,16 @@
             <p class="projects__sidebar-course__information__heading">
               Project Management:
             </p>
-            <a class="link-btn link-btn--success" th:href="@{/projects/add(courseCode=${course.getCode()})}"
+            <a
+              class="link-btn link-btn--success"
+              th:href="@{/projects/add(courseCode=${course.getCode()})}"
               >Add Project</a
             >
-            <a class="link-btn link-btn--danger" href="">Delete Project</a>
+            <a
+              class="link-btn link-btn--danger project__sidebar-course-buttons__delete--project"
+              href=""
+              >Delete Project</a
+            >
           </div>
         </div>
       </div>
@@ -73,7 +90,11 @@
                 placeholder="Search by Project Title"
                 th:value="${keyword}"
               />
-              <input type="hidden" name="courseCode" th:value="${course.getCode()}" />
+              <input
+                type="hidden"
+                name="courseCode"
+                th:value="${course.getCode()}"
+              />
               <button type="submit" class="search__btn">
                 <ion-icon class="search__icon" name="search-outline"></ion-icon>
               </button>
@@ -100,7 +121,11 @@
                   Closed Projects
                 </option>
               </select>
-              <input type="hidden" name="courseCode" th:value="${course.getCode()}" />
+              <input
+                type="hidden"
+                name="courseCode"
+                th:value="${course.getCode()}"
+              />
             </form>
           </div>
 
@@ -109,111 +134,39 @@
             <div class="projects-main__list">
               <!-- Project Items -->
               <div class="projects">
-                <div class="project project--opened">
-                  <a href="#" class="project__heading">
-                    Big Data Log Analysis with Hadoop
+                <div
+                  class="project"
+                  th:each="project : ${projects}"
+                  th:data-project-id="${project.id}"
+                  th:classappend="${project.isValid} ? 'project--opened' : 'project--closed'"
+                >
+                  <a
+                    href="#"
+                    class="project__heading"
+                    th:text="${project.title}"
+                  >
+                    Project Title
                   </a>
                   <div class="project__date-range">
-                    <p class="project__date-range--start">
-                      January 15, 2024, 09:00
+                    <p
+                      class="project__date-range--start"
+                      th:data-date="${project.startDate}"
+                    >
+                      Start Date
                     </p>
                     <span class="project__date-range--to">to</span>
-                    <p class="project__date-range--end">
-                      March 30, 2024, 23:59
+                    <p
+                      class="project__date-range--end"
+                      th:data-date="${project.endDate}"
+                    >
+                      End Date
                     </p>
                   </div>
-                  <p class="project__description">
-                    Developed a distributed system to process and analyze
-                    large-scale server log data using Hadoop. The project
-                    involved setting up a Hadoop cluster, storing logs in HDFS,
-                    and utilizing MapReduce to extract meaningful insights such
-                    as user behavior patterns and system error trends.
-                  </p>
-                </div>
-
-                <div class="project project--opened">
-                  <a href="#" class="project__heading">
-                    E-commerce Platform Development with MERN Stack
-                  </a>
-                  <div class="project__date-range">
-                    <p class="project__date-range--start">May 1, 2024, 10:00</p>
-                    <span class="project__date-range--to">to</span>
-                    <p class="project__date-range--end">July 31, 2024, 18:00</p>
-                  </div>
-                  <p class="project__description">
-                    Led the development of an e-commerce platform using the MERN
-                    stack (MongoDB, Express.js, React, Node.js). The platform
-                    supports user authentication, product management, and
-                    payment integration. I was responsible for designing and
-                    implementing the back-end API, building the front-end UI,
-                    and ensuring the platform is scalable and secure. The
-                    project also incorporated advanced features like real-time
-                    order tracking and admin dashboards for monitoring product
-                    stock and sales.
-                  </p>
-                </div>
-
-                <div class="project project--opened">
-                  <a href="#" class="project__heading">
-                    Mobile App Development with Flutter
-                  </a>
-                  <div class="project__date-range">
-                    <p class="project__date-range--start">
-                      April 1, 2024, 09:00
-                    </p>
-                    <span class="project__date-range--to">to</span>
-                    <p class="project__date-range--end">May 15, 2024, 18:00</p>
-                  </div>
-                  <p class="project__description">
-                    Developed a cross-platform mobile app using Flutter for a
-                    local restaurant, providing features like order placement,
-                    payment, and delivery tracking.
-                  </p>
-                </div>
-
-                <div class="project project--closed">
-                  <a href="#" class="project__heading">
-                    Inventory Management System
-                  </a>
-                  <div class="project__date-range">
-                    <p class="project__date-range--start">
-                      August 10, 2023, 08:30
-                    </p>
-                    <span class="project__date-range--to">to</span>
-                    <p class="project__date-range--end">
-                      October 5, 2023, 17:00
-                    </p>
-                  </div>
-                  <p class="project__description">
-                    Developed a web-based inventory management system for a
-                    retail company, including features for real-time stock
-                    tracking, order management, and reporting. The system was
-                    deployed successfully and helped the client reduce stockouts
-                    and overstock situations, streamlining their supply chain
-                    process.
-                  </p>
-                </div>
-
-                <div class="project project--closed">
-                  <a href="#" class="project__heading">
-                    Retail Data Analytics using Hadoop Ecosystem
-                  </a>
-                  <div class="project__date-range">
-                    <p class="project__date-range--start">
-                      February 1, 2024, 10:00
-                    </p>
-                    <span class="project__date-range--to">to</span>
-                    <p class="project__date-range--end">
-                      April 15, 2024, 18:30
-                    </p>
-                  </div>
-                  <p class="project__description">
-                    Implemented a Hadoop-based solution to analyze retail
-                    transactions. Leveraged HDFS for data storage, Hive for
-                    querying, and Pig for ETL processes. Delivered insights on
-                    customer purchasing behavior and sales trends, enabling
-                    data-driven decision-making for promotions and inventory
-                    management.
+                  <p
+                    class="project__description"
+                    th:text="${project.description}"
+                  >
+                    Description
                   </p>
                 </div>
               </div>
@@ -232,5 +185,120 @@
        th:text="${page}"
        style="margin: 0 0.5rem; padding: 0.5rem 1rem; text-decoration: none; border: 1px solid #ccc; border-radius: 4px; color: #333;"></a>
   </div>
+-->
 
-  -->
+<!--
+  <div class="projects-main">
+    <div class="projects-main__list">
+      <div class="projects">
+        <div class="project project--opened">
+          <a href="#" class="project__heading">
+            Big Data Log Analysis with Hadoop
+          </a>
+          <div class="project__date-range">
+            <p class="project__date-range--start">
+              January 15, 2024, 09:00
+            </p>
+            <span class="project__date-range--to">to</span>
+            <p class="project__date-range--end">
+              March 30, 2024, 23:59
+            </p>
+          </div>
+          <p class="project__description">
+            Developed a distributed system to process and analyze
+            large-scale server log data using Hadoop. The project
+            involved setting up a Hadoop cluster, storing logs in HDFS,
+            and utilizing MapReduce to extract meaningful insights such
+            as user behavior patterns and system error trends.
+          </p>
+        </div>
+
+        <div class="project project--opened">
+          <a href="#" class="project__heading">
+            E-commerce Platform Development with MERN Stack
+          </a>
+          <div class="project__date-range">
+            <p class="project__date-range--start">May 1, 2024, 10:00</p>
+            <span class="project__date-range--to">to</span>
+            <p class="project__date-range--end">July 31, 2024, 18:00</p>
+          </div>
+          <p class="project__description">
+            Led the development of an e-commerce platform using the MERN
+            stack (MongoDB, Express.js, React, Node.js). The platform
+            supports user authentication, product management, and
+            payment integration. I was responsible for designing and
+            implementing the back-end API, building the front-end UI,
+            and ensuring the platform is scalable and secure. The
+            project also incorporated advanced features like real-time
+            order tracking and admin dashboards for monitoring product
+            stock and sales.
+          </p>
+        </div>
+
+        <div class="project project--opened">
+          <a href="#" class="project__heading">
+            Mobile App Development with Flutter
+          </a>
+          <div class="project__date-range">
+            <p class="project__date-range--start">
+              April 1, 2024, 09:00
+            </p>
+            <span class="project__date-range--to">to</span>
+            <p class="project__date-range--end">May 15, 2024, 18:00</p>
+          </div>
+          <p class="project__description">
+            Developed a cross-platform mobile app using Flutter for a
+            local restaurant, providing features like order placement,
+            payment, and delivery tracking.
+          </p>
+        </div>
+
+        <div class="project project--closed">
+          <a href="#" class="project__heading">
+            Inventory Management System
+          </a>
+          <div class="project__date-range">
+            <p class="project__date-range--start">
+              August 10, 2023, 08:30
+            </p>
+            <span class="project__date-range--to">to</span>
+            <p class="project__date-range--end">
+              October 5, 2023, 17:00
+            </p>
+          </div>
+          <p class="project__description">
+            Developed a web-based inventory management system for a
+            retail company, including features for real-time stock
+            tracking, order management, and reporting. The system was
+            deployed successfully and helped the client reduce stockouts
+            and overstock situations, streamlining their supply chain
+            process.
+          </p>
+        </div>
+
+        <div class="project project--closed">
+          <a href="#" class="project__heading">
+            Retail Data Analytics using Hadoop Ecosystem
+          </a>
+          <div class="project__date-range">
+            <p class="project__date-range--start">
+              February 1, 2024, 10:00
+            </p>
+            <span class="project__date-range--to">to</span>
+            <p class="project__date-range--end">
+              April 15, 2024, 18:30
+            </p>
+          </div>
+          <p class="project__description">
+            Implemented a Hadoop-based solution to analyze retail
+            transactions. Leveraged HDFS for data storage, Hive for
+            querying, and Pig for ETL processes. Delivered insights on
+            customer purchasing behavior and sales trends, enabling
+            data-driven decision-making for promotions and inventory
+            management.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+-->
