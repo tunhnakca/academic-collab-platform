@@ -26,7 +26,7 @@ public class SecurityConfig {
         return http
                 .csrf(customizer -> customizer.disable())
                 .authorizeHttpRequests(request -> request
-                        .requestMatchers("/login", "dist/scss/**", "dist/js/**").permitAll()
+                        .requestMatchers("/login", "dist/**").permitAll()
                         .requestMatchers("/courses/add").hasAnyAuthority("ADMIN", "INSTRUCTOR")
                         .requestMatchers("/projects/add").hasAnyAuthority("ADMIN", "INSTRUCTOR")
                         .requestMatchers("/courses/delete/**").hasAnyAuthority("ADMIN", "INSTRUCTOR")

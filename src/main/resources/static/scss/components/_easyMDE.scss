@@ -1,0 +1,247 @@
+// Import base styles and variables
+@use '../abstracts/base' as *;
+@use '../abstracts/mixins' as *;
+@use '../abstracts/utilities' as *;
+@use '../components' as *;
+
+.EasyMDEContainer {
+    // Main editor container
+    .CodeMirror {
+        font-size: 1.6rem;
+        line-height: 1.6;
+        font-family: inherit;
+        font-weight: 400;
+        border-radius: 0.6rem;
+        border: 1px solid $color-grey-light-2;
+        padding: 1.2rem;
+    }
+
+    // Placeholder text style
+    .CodeMirror-placeholder {
+        color: $color-grey-light-4;
+        font-weight: 300;
+    }
+
+    // Toolbar styling
+    .editor-toolbar {
+        border: 1px solid $color-grey-light-2;
+        border-radius: 0.6rem;
+        margin-bottom: -1px;
+
+        // Toolbar buttons
+        button {
+            font-size: 1.6rem;
+            margin: 0 0.2rem;
+            border-radius: 0.4rem;
+            color: #495057;
+            transition: all 0.2s;
+
+            &:hover {
+                background-color: $color-grey-light-3;
+                color: #212529;
+            }
+
+            &.active {
+                background-color: $color-grey-light-3;
+                color: #212529;
+            }
+
+            &.disabled {
+                color: $color-grey-light-4;
+            }
+        }
+
+        // Separator in toolbar
+        i.separator {
+            border-left: 1px solid $color-grey-light-2;
+            margin: 0 0.6rem;
+        }
+    }
+
+    // Preview section styling
+    .editor-preview,
+    .editor-preview-side {
+        background-color: #fff;
+        padding: 2rem;
+        font-size: 1.6rem;
+        font-family: inherit;
+        color: #212529;
+
+        // Headings
+        h1, h2, h3, h4, h5, h6 {
+            margin-top: 2.4rem;
+            margin-bottom: 1.6rem;
+            font-weight: 600;
+            line-height: 1.3;
+        }
+
+        h1 { font-size: 2.4rem; }
+        h2 { font-size: 2rem; }
+        h3 { font-size: 1.8rem; }
+        h4 { font-size: 1.6rem; }
+        h5 { font-size: 1.4rem; }
+        h6 { font-size: 1.2rem; }
+
+        // Paragraphs and spacing
+        p {
+            margin-bottom: 1.6rem;
+            line-height: 1.6;
+        }
+
+        // Lists
+        ul, ol {
+            margin-bottom: 1.6rem;
+            padding-left: 2.4rem;
+
+            li {
+                margin-bottom: 0.8rem;
+            }
+        }
+
+        // Code blocks
+        pre {
+            margin: 1.6rem 0;
+            border-radius: 0.6rem;
+            overflow: hidden;
+            background: #1e1e1e; // VS Code dark theme background
+            position: relative;
+
+            // Language label
+            &::before {
+                content: attr(data-language);
+                position: absolute;
+                top: 0.4rem;
+                right: 1rem;
+                color: #888;
+                font-size: 1.2rem;
+                font-family: inherit;
+                z-index: 1;
+            }
+
+            code {
+                display: block;
+                padding: 1.6rem;
+                color: #d4d4d4; // VS Code default text color
+                font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+                font-size: 1.4rem;
+                line-height: 1.5;
+                overflow-x: auto;
+            }
+        }
+
+        // Inline code
+        :not(pre) > code {
+            background: #f3f4f6;
+            padding: 0.2rem 0.4rem;
+            border-radius: 0.4rem;
+            font-size: 1.4rem;
+            font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+            color: #374151;
+        }
+
+        // Blockquotes
+        blockquote {
+            margin: 1.6rem 0;
+            padding: 1.2rem 1.6rem;
+            border-left: 4px solid $color-grey-light-2;
+            background-color: #f8f9fa;
+            color: #495057;
+            font-style: italic;
+
+            p {
+                margin-bottom: 0;
+            }
+        }
+
+        // Links
+        a {
+            color: #2563eb;
+            text-decoration: none;
+            transition: all 0.2s;
+
+            &:hover {
+                text-decoration: underline;
+            }
+        }
+
+        // Images
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 0.6rem;
+            margin: 1.6rem 0;
+        }
+
+        // Tables
+        table {
+            width: 100%;
+            margin: 1.6rem 0;
+            border-collapse: collapse;
+
+            th, td {
+                padding: 0.8rem 1.2rem;
+                border: 1px solid $color-grey-light-2;
+                text-align: left;
+            }
+
+            th {
+                background-color: #f8f9fa;
+                font-weight: 600;
+            }
+
+            tr:nth-child(even) {
+                background-color: #f8f9fa;
+            }
+        }
+
+        // Horizontal rule
+        hr {
+            margin: 2.4rem 0;
+            border: 0;
+            border-top: 1px solid $color-grey-light-2;
+        }
+    }
+
+    // Fullscreen mode adjustments
+    &.sided--no-fullscreen {
+        .editor-preview-side {
+            width: 50%;
+        }
+    }
+
+    // Side by side mode
+    &.sided {
+        .CodeMirror-sided {
+            width: 50%;
+        }
+    }
+}
+
+// Editor focus state
+.CodeMirror-focused {
+    border-color: $color-grey-light-3;
+    box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.1);
+}
+
+// Scrollbar styling
+.CodeMirror-vscrollbar,
+.CodeMirror-hscrollbar {
+    &::-webkit-scrollbar {
+        width: 8px;
+        height: 8px;
+    }
+
+    &::-webkit-scrollbar-track {
+        background: #f1f1f1;
+        border-radius: 4px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background: #c1c1c1;
+        border-radius: 4px;
+
+        &:hover {
+            background: #a8a8a8;
+        }
+    }
+}
