@@ -2,6 +2,10 @@
   "name": "learningplatformfirstterm",
   "version": "1.0.0",
   "description": "This project is carried out in cooperation with Tunahan Akça and Mert Munar under the leadership of our teacher Ahmet Özmen for Seng students at Sakarya University",
+  "source": [
+    "src/main/resources/static/js/app.js",
+    "src/main/resources/static/scss/main.scss"
+  ],
   "scripts": {
     "watch": "npx parcel watch src/main/resources/static/js/app.js src/main/resources/static/scss/main.scss --dist-dir src/main/resources/static/dist --public-url /dist",
     "build-assets": "npx parcel build src/main/resources/static/js/app.js src/main/resources/static/scss/main.scss --dist-dir src/main/resources/static/dist --public-url /dist",
@@ -19,12 +23,15 @@
   },
   "homepage": "https://github.com/tunhnakca/LearningPlatformFirstTerm#readme",
   "devDependencies": {
+    "@parcel/transformer-css": "^2.13.3",
     "@parcel/transformer-sass": "^2.13.2",
     "parcel": "^2.13.2"
   },
   "dependencies": {
     "concurrently": "^9.1.0",
     "core-js": "^3.39.0",
+    "easymde": "^2.18.0",
+    "highlight.js": "^11.11.1",
     "regenerator-runtime": "^0.14.1"
   }
 }

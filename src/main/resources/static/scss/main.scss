@@ -3,6 +3,7 @@
 @use 'abstracts/utilities';
 @use 'components';
 @use 'components/alert';
+@use 'components/easyMDE';
 @use 'views/login';
 @use 'views/header';
 @use 'views/profile';
@@ -10,3 +11,6 @@
 @use 'views/add-course';
 @use 'views/projects';
 @use 'views/add-project';
+
+@import '../../../../../node_modules/easymde/dist/easymde.min.css';
+@import '../../../../../node_modules/highlight.js/styles/vs2015.css';
