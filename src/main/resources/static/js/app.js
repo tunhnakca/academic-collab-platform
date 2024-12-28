@@ -15,10 +15,14 @@ import {
   deleteProjectButton,
   deleteProject,
 } from "./pages/projects";
-import { setupDateValidation } from "./pages/add-project";
+import {
+  setupDateValidation,
+  initializeAddProjectMarkdownEditor,
+} from "./pages/add-project";
 
 ///////////////////////////
 // Login Page
+///////////////////////////
 if (window.location.pathname.includes("login")) {
   document.addEventListener("DOMContentLoaded", (e) => {
     showLoginInfoModal();
@@ -27,12 +31,14 @@ if (window.location.pathname.includes("login")) {
 
 ///////////////////////////
 // Header
+///////////////////////////
 document.addEventListener("DOMContentLoaded", (e) => {
   toggleDropdownHeader();
 });
 
 ///////////////////////////
 // Profile Page
+///////////////////////////
 if (window.location.pathname.includes("profile")) {
   document.addEventListener("DOMContentLoaded", (e) => {
     setupPasswordValidation();
@@ -41,6 +47,7 @@ if (window.location.pathname.includes("profile")) {
 
 ///////////////////////////
 // Courses Page
+///////////////////////////
 
 // When the document is fully loaded
 document.addEventListener("DOMContentLoaded", function (e) {
@@ -61,6 +68,7 @@ document.addEventListener("DOMContentLoaded", function (e) {
 
 ///////////////////////////
 // Projects Page
+///////////////////////////
 
 // When the document is fully loaded
 document.addEventListener("DOMContentLoaded", function (e) {
@@ -84,6 +92,13 @@ document.addEventListener("DOMContentLoaded", function (e) {
 
 ///////////////////////////
 // Add Project Page
+///////////////////////////
+
+// When the document is fully loaded
 document.addEventListener("DOMContentLoaded", function () {
+  // Initialize date validation for start and end date inputs
   setupDateValidation();
+
+  // Initialize markdown editor for project description
+  initializeAddProjectMarkdownEditor();
 });

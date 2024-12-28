@@ -1,3 +1,5 @@
+import { setupMarkdownEditor } from "../components/markdownEditor";
+
 export function setupDateValidation() {
   const startDate = document.getElementById("projectDateCreated");
   const endDate = document.getElementById("projectDateEnd");
@@ -91,4 +93,8 @@ export function setupDateValidation() {
 
   // Update minimum dates every minute
   setInterval(updateMinDates, 60000); // 60000 ms = 1 minute
+}
+
+export function initializeAddProjectMarkdownEditor() {
+  setupMarkdownEditor("projectDescription", "form-add-project");
 }
