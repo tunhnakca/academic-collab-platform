@@ -1,13 +1,13 @@
 import "./components/alert-bar.js";
-import { showLoginInfoModal } from "./pages/login.js";
-import { toggleDropdownHeader } from "./pages/header.js";
+import { showLoginInfoModal } from "./pages/login";
+import { toggleDropdownHeader } from "./pages/header";
 import { setupPasswordValidation } from "./pages/profile";
 import {
   deleteCourseButton,
   updatePadding,
   showEmptyMessageCourses,
   deleteCourse,
-} from "./pages/courses.js";
+} from "./pages/courses";
 import {
   showEmptyMessageProjects,
   updateSectionProjectsHeight,
