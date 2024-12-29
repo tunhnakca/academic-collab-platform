@@ -1,4 +1,5 @@
 import { setupMarkdownEditor } from "../components/markdownEditor";
+import { AlertService } from "../components/alert-bar-frontend";
 
 export function setupDateValidation() {
   const startDate = document.getElementById("projectDateCreated");
@@ -97,15 +98,28 @@ export function setupDateValidation() {
 
 export function initializeAddProjectMarkdownEditor() {
   const editor = setupMarkdownEditor("projectDescription");
+  const form = document.querySelector(".form-add-project");
 
   // Handle form submission
-  const form = document.querySelector(".form-add-project");
   if (form) {
-    form.addEventListener("submit", () => {
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+
       const textArea = document.getElementById("projectDescription");
+
+      // Validate description
+      if (!editor.value().trim()) {
+        console.warn("Project description is required");
+        AlertService.showAlert("Project description is required", "error");
+        editor.codemirror.focus();
+        return;
+      }
+
       if (textArea && editor) {
         textArea.value = editor.value();
       }
+
+      form.submit();
     });
   }
 }
