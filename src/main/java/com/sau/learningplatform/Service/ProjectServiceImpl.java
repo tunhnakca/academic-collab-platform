@@ -75,19 +75,19 @@ public class ProjectServiceImpl implements ProjectService{
     }
 
     @Override
-    public List<ProjectResponse> filterOrSort(String queryParam) {
+    public List<ProjectResponse> filterOrSort(String courseCode,String queryParam) {
         List<Project>projects=new ArrayList<>();
         if (queryParam.equals("new")){
-            projects=projectRepository.findByOrderByDateCreatedDesc();
+            projects=projectRepository.findByCourseCodeOrderByDateCreatedDesc(courseCode);
         }
         if (queryParam.equals("old")){
-            projects=projectRepository.findByOrderByDateCreatedAsc();
+            projects=projectRepository.findByCourseCodeOrderByDateCreatedAsc(courseCode);
         }
         if (queryParam.equals("open")){
-            projects=projectRepository.findByDateEndAfter(LocalDateTime.now());
+            projects=projectRepository.findByCourseCodeAndDateEndAfter(courseCode,LocalDateTime.now());
         }
         if (queryParam.equals("closed")){
-            projects=projectRepository.findByDateEndBefore(LocalDateTime.now());
+            projects=projectRepository.findByCourseCodeAndDateEndBefore(courseCode,LocalDateTime.now());
         }
         return projects.stream().map(this::mapToResponse).toList();
     }

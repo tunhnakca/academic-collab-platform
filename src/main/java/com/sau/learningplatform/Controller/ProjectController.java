@@ -30,8 +30,6 @@ public class ProjectController {
         this.userService = userService;
     }
 
-    // it will be changed by taking courseId and will give related projects
-    // it behaves like clicked into course with id=1
     @GetMapping("/projects")
     public String projectPage(Principal principal, Model model,@RequestParam("courseCode") String courseCode) {
         String number = principal.getName();
@@ -100,7 +98,7 @@ public class ProjectController {
         model.addAttribute("loggedUser", user);
         CourseResponse course=courseService.getCourseResponseByCode(courseCode);
         model.addAttribute("course",course);
-        List<ProjectResponse>projects=projectService.filterOrSort(queryParam);
+        List<ProjectResponse>projects=projectService.filterOrSort(courseCode,queryParam);
         model.addAttribute("projects", projects);
 
         return "projects";
