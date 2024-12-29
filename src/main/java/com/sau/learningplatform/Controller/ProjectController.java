@@ -8,12 +8,11 @@ import com.sau.learningplatform.EntityResponse.ProjectResponse;
 import com.sau.learningplatform.Service.CourseService;
 import com.sau.learningplatform.Service.ProjectService;
 import com.sau.learningplatform.Service.UserService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.util.List;
@@ -31,8 +30,6 @@ public class ProjectController {
         this.userService = userService;
     }
 
-    // it will be changed by taking courseId and will give related projects
-    // it behaves like clicked into course with id=1
     @GetMapping("/projects")
     public String projectPage(Principal principal, Model model,@RequestParam("courseCode") String courseCode) {
         String number = principal.getName();
@@ -81,6 +78,19 @@ public class ProjectController {
         return "redirect:/projects?courseCode=" + courseCode;
     }
 
+    @DeleteMapping("/projects/delete/{projectId}")
+    public ResponseEntity<String> deleteProject(@PathVariable("projectId") int id) {
+        try {
+            projectService.deleteById(id);
+            return ResponseEntity.ok("Project deleted successfully");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body("Failed to delete project: " + e.getMessage());
+        }
+    }
+
+
+
     @GetMapping("/projects/filter")
     public String addProjectPage(Principal principal, Model model,@RequestParam("courseCode") String courseCode,@RequestParam("filter") String queryParam) {
         String number = principal.getName();
@@ -88,7 +98,7 @@ public class ProjectController {
         model.addAttribute("loggedUser", user);
         CourseResponse course=courseService.getCourseResponseByCode(courseCode);
         model.addAttribute("course",course);
-        List<ProjectResponse>projects=projectService.filterOrSort(queryParam);
+        List<ProjectResponse>projects=projectService.filterOrSort(courseCode,queryParam);
         model.addAttribute("projects", projects);
 
         return "projects";

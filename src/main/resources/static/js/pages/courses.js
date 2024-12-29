@@ -79,7 +79,7 @@ export function deleteCourse() {
   async function deleteCourse(courseId) {
     try {
       const response = await fetch(`/courses/delete/${courseId}`, {
-        method: "POST",
+        method: "DELETE",
         headers: {
           "Content-Type": "application/json",
         },
@@ -87,7 +87,7 @@ export function deleteCourse() {
 
       if (response.ok) {
         location.reload();
-        console.info("Course deleted successfuly");
+        console.info("Course deleted successfully");
       } else {
         throw new Error("Problem deleting course");
       }
