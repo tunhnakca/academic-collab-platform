@@ -90,7 +90,7 @@ export function deleteProject() {
   async function deleteProject(projectId) {
     try {
       const response = await fetch(`/projects/delete/${projectId}`, {
-        method: "POST",
+        method: "DELETE",
         headers: {
           "Content-Type": "application/json",
         },
