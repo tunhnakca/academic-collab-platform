@@ -6,6 +6,8 @@ import com.sau.learningplatform.EntityResponse.ProjectResponse;
 import com.sau.learningplatform.Repository.CourseRepository;
 import com.sau.learningplatform.Repository.ProjectRepository;
 import lombok.extern.slf4j.Slf4j;
+import org.commonmark.parser.Parser;
+import org.commonmark.renderer.html.HtmlRenderer;
 import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -100,6 +102,9 @@ public class ProjectServiceImpl implements ProjectService{
             throw new RuntimeException("No course found with given code !");
         }
 
+        String htmlDescription=convertMarkdownToHtml(project.getDescription());
+
+        project.setDescription(htmlDescription);
         project.setCourse(course.get());
 
         projectRepository.save(project);
@@ -120,6 +125,12 @@ public class ProjectServiceImpl implements ProjectService{
                 .endDate(project.getDateEnd())
                 .build();
 
+    }
+
+    private String convertMarkdownToHtml(String markdown) {
+        Parser parser = Parser.builder().build();
+        HtmlRenderer renderer = HtmlRenderer.builder().build();
+        return renderer.render(parser.parse(markdown));
     }
 
 
