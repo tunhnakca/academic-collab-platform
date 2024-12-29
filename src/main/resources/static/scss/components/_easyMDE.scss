@@ -103,40 +103,46 @@
             margin: 1.6rem 0;
             border-radius: 0.6rem;
             overflow: hidden;
-            background: #1e1e1e; // VS Code dark theme background
+            background: #282c34 !important;
             position: relative;
 
             // Language label
             &::before {
                 content: attr(data-language);
-                position: absolute;
-                top: 0.4rem;
-                right: 1rem;
-                color: #888;
+                display: none;
+                background: #3f3f46;
+                padding: 0.8rem 1.2rem;
+                color: #f8f9fa;
                 font-size: 1.2rem;
                 font-family: inherit;
-                z-index: 1;
+                text-transform: uppercase;
             }
 
+            &[data-language]:not([data-language="undefined"]):not([data-language=""]) {        
+                &::before {
+                    display: block; // Sadece geçerli dil varsa göster
+                }
+            }
+        
             code {
                 display: block;
                 padding: 1.6rem;
-                color: #d4d4d4; // VS Code default text color
                 font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
                 font-size: 1.4rem;
                 line-height: 1.5;
                 overflow-x: auto;
+                color: #abb2bf !important; 
             }
         }
 
         // Inline code
         :not(pre) > code {
-            background: #f3f4f6;
-            padding: 0.2rem 0.4rem;
+            background: #282c34;
+            padding: 0.2rem 0.6rem;
             border-radius: 0.4rem;
             font-size: 1.4rem;
             font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
-            color: #374151;
+            color: #abb2bf;
         }
 
         // Blockquotes

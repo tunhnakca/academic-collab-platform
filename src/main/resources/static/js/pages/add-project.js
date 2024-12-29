@@ -96,5 +96,16 @@ export function setupDateValidation() {
 }
 
 export function initializeAddProjectMarkdownEditor() {
-  setupMarkdownEditor("projectDescription", "form-add-project");
+  const editor = setupMarkdownEditor("projectDescription");
+
+  // Handle form submission
+  const form = document.querySelector(".form-add-project");
+  if (form) {
+    form.addEventListener("submit", () => {
+      const textArea = document.getElementById("projectDescription");
+      if (textArea && editor) {
+        textArea.value = editor.value();
+      }
+    });
+  }
 }

@@ -72,7 +72,7 @@ hljs.registerLanguage("dockerfile", dockerfile);
 hljs.registerLanguage("nginx", nginx);
 hljs.registerLanguage("apache", apache);
 
-export function setupMarkdownEditor(textAreaId, formClass) {
+export function setupMarkdownEditor(textAreaId) {
   const textArea = document.getElementById(textAreaId);
   if (!textArea) {
     console.warn(`Textarea with id '${textAreaId}' not found`);
@@ -88,10 +88,10 @@ export function setupMarkdownEditor(textAreaId, formClass) {
       "italic",
       "heading",
       "|",
-      "quote",
       "code",
       "unordered-list",
       "ordered-list",
+      "table",
       "|",
       "link",
       "image",
@@ -99,37 +99,54 @@ export function setupMarkdownEditor(textAreaId, formClass) {
       "preview",
       "side-by-side",
       "fullscreen",
+      "|",
+      "undo",
+      "redo",
+      "|",
+      "guide",
     ],
+    autosave: {
+      enabled: true,
+      delay: 1000,
+      uniqueId: "projectDescription",
+    },
     previewRender: function (plainText, preview) {
-      // First convert markdown to HTML
       const htmlContent = this.parent.markdown(plainText);
       preview.innerHTML = htmlContent;
 
-      // Apply syntax highlighting to code blocks
       preview.querySelectorAll("pre code").forEach((block) => {
-        // Get language class
-        const language = block.className.replace("language-", "");
+        // First process with highlight.js
+        hljs.highlightElement(block);
 
-        // Add language label to parent
-        if (language) {
-          block.parentElement.setAttribute("data-language", language);
+        // Check classes after highlight.js processing
+        // Check both language- class and hljs language- class
+        const languageClass = Array.from(block.classList).find(
+          (className) =>
+            className.startsWith("language-") ||
+            (className.startsWith("hljs") && className !== "hljs")
+        );
+
+        // Extract language
+        let language = null;
+        if (languageClass) {
+          if (languageClass.startsWith("language-")) {
+            language = languageClass.split("-")[1];
+          } else if (languageClass.startsWith("hljs")) {
+            language = languageClass.replace("hljs", "").trim();
+          }
         }
 
-        // Apply highlighting
-        hljs.highlightElement(block);
+        // Show if language exists and is not undefined
+        if (language && language !== "undefined") {
+          block.parentElement.setAttribute("data-language", language);
+        } else {
+          block.parentElement.removeAttribute("data-language");
+        }
       });
 
       return preview.innerHTML;
     },
   });
-
-  // Handle form submission
-  const form = document.querySelector(`.${formClass}`);
-  if (form) {
-    form.addEventListener("submit", () => {
-      textArea.value = editor.value();
-    });
-  }
 
   return editor;
 }
