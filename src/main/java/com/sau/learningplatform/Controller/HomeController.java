@@ -7,6 +7,8 @@ import com.sau.learningplatform.EntityResponse.MessageResponse;
 import com.sau.learningplatform.Service.CourseService;
 import com.sau.learningplatform.Service.UserService;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -79,12 +81,15 @@ public class HomeController {
         return "profile";
     }
 
-    @PostMapping("/courses/delete/{courseId}")
-    public String profilePage(Principal principal, @PathVariable("courseId") int courseId) {
-
-        courseService.deleteById(courseId);
-
-        return "redirect:/courses";
+    @DeleteMapping("/courses/delete/{courseId}")
+    public ResponseEntity<String> deleteCourse(Principal principal, @PathVariable("courseId") int courseId) {
+        try {
+            courseService.deleteById(courseId);
+            return ResponseEntity.ok("Course deleted successfully");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body("Failed to delete project: " + e.getMessage());
+        }
     }
 
     @PostMapping("/password/change")

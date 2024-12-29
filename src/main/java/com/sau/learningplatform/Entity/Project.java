@@ -31,7 +31,8 @@ public class Project {
     @Column(name = "date_end")
     private LocalDateTime dateEnd;
 
-    @Column(name = "description")
+
+    @Column(columnDefinition = "TEXT", name = "description")
     private String description;
 
     @Column(name = "is_deleted")
