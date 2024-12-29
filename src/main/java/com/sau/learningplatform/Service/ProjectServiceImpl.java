@@ -53,6 +53,7 @@ public class ProjectServiceImpl implements ProjectService{
     @Override
     public void deleteById(int id) {
         projectRepository.deleteById(id);
+        log.info("project with id: {} is deleted!",id);
     }
 
     @Override
