@@ -82,7 +82,7 @@ export function setupMarkdownEditor(textAreaId) {
   const editor = new EasyMDE({
     element: textArea,
     spellChecker: false,
-    autofocus: true,
+    autofocus: false,
     toolbar: [
       "bold",
       "italic",
