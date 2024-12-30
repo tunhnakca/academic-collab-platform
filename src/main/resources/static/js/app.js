@@ -14,11 +14,18 @@ import {
   updateProjectDateTime,
   deleteProjectButton,
   deleteProject,
+  removeHTMLTags,
 } from "./pages/projects";
 import {
   setupDateValidation,
   initializeAddProjectMarkdownEditor,
 } from "./pages/add-project";
+
+import {
+  updateSectionUserListHeight,
+  deleteUser,
+  deleteUserButton,
+} from "./pages/user-list";
 
 ///////////////////////////
 // Login Page
@@ -76,13 +83,16 @@ document.addEventListener("DOMContentLoaded", function (e) {
   updateSectionProjectsHeight();
 
   // Call updateSectionProjectsHeight when the window is resized
-  window.addEventListener("resize", updateSectionProjectsHeight);
+  window.addEventListener("resize", updateSectionProjectsHeight());
 
   // If no projects, show empty message
   showEmptyMessageProjects();
 
   // Update Date Formats
   updateProjectDateTime();
+
+  // Removing HTML Tags
+  removeHTMLTags();
 
   // Deleting Project
   if (deleteProjectButton) {
@@ -101,4 +111,21 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Initialize markdown editor for project description
   initializeAddProjectMarkdownEditor();
+});
+
+///////////////////////////
+// User List Page
+///////////////////////////
+
+// When the document is fully loaded
+document.addEventListener("DOMContentLoaded", function () {
+  //Start calculating header height
+  updateSectionUserListHeight();
+
+  // Call updateSectionProjectsHeight when the window is resized
+  window.addEventListener("resize", updateSectionUserListHeight());
+
+  if (deleteUserButton) {
+    deleteUser();
+  }
 });
