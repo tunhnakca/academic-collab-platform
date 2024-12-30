@@ -181,6 +181,66 @@ h5 {
 }
 
 /***********************/
+/* Search Bar */
+/***********************/
+
+.search {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+
+  border: 1px solid $color-grey-light-2;
+  border-radius: 1rem;
+  padding: 0.8rem 2.4rem;
+  @extend .transition-hover-effect;
+
+  &:focus-within {
+      transform: translateY(-2px);
+  }
+
+  &__field {
+      border: none;
+      background: none;
+      font-family: inherit;
+      color: inherit;
+      font-size: 1.6rem;
+      
+      width: 100%;
+  
+      &:focus {
+        outline: none;
+      }
+  
+      &::placeholder {
+          color: $color-grey-light-4;
+          font-weight: 300;
+      }
+  }
+
+  &__btn {
+      display: inline-block;
+      border: none;
+      cursor: pointer;
+      background: none;
+      @extend .transition-hover-effect;
+
+      &:hover {
+          transform: scale(1.1);
+      }
+
+      &:active {
+          transform: scale(1);
+      }
+  }
+
+  &__icon {
+      width: 2.4rem;
+      height: 2.4rem;
+      color: $color-grey-light-6;
+  }
+}
+
+/***********************/
 /* Form */
 /***********************/
 

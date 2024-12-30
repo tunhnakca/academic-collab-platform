@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{layout}"
+>
+  <head>
+    <title>Add Course</title>
+  </head>
+  <body>
+    <section class="section section-user-list" layout:fragment="content">
+      <div class="container container-user-list">
+        <div class="users">
+          <div class="users-header">
+            <form method="GET" class="search">
+              <!--
+                th:action="@{/}"
+            -->
+              <input
+                type="text"
+                name="keyword"
+                class="search__field"
+                placeholder="Search..."
+                th:value="${keyword}"
+              />
+
+              <!--
+                th:value="${course.getCode()}"
+            -->
+              <input type="hidden" name="courseCode" />
+              <button type="submit" class="search__btn">
+                <ion-icon class="search__icon" name="search-outline"></ion-icon>
+              </button>
+            </form>
+          </div>
+
+          <div class="user-list">
+            <table>
+              <colgroup>
+                <col class="col-count" />
+                <col class="col-number" />
+                <col class="col-name" />
+                <col class="col-surname" />
+                <col class="col-role" />
+                <col class="col-actions" />
+              </colgroup>
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Number</th>
+                  <th>Name</th>
+                  <th>Surname</th>
+                  <th>Role</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>1</td>
+                  <td>B201202056</td>
+                  <td>Tunahan</td>
+                  <td>Akça</td>
+                  <td>Student</td>
+                  <td>
+                    <button class="delete-btn">
+                      <ion-icon
+                        class="delete-btn__icon"
+                        name="trash"
+                      ></ion-icon>
+                    </button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>2</td>
+                  <td>B201202051</td>
+                  <td>Enes</td>
+                  <td>Sefa</td>
+                  <td>Student</td>
+                  <td>
+                    <button class="delete-btn">
+                      <ion-icon
+                        class="delete-btn__icon"
+                        name="trash"
+                      ></ion-icon>
+                    </button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>3</td>
+                  <td>B201202052</td>
+                  <td>Mert</td>
+                  <td>Munar</td>
+                  <td>Student</td>
+                  <td>
+                    <button class="delete-btn">
+                      <ion-icon
+                        class="delete-btn__icon"
+                        name="trash"
+                      ></ion-icon>
+                    </button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>4</td>
+                  <td>B201202053</td>
+                  <td>Yiğit</td>
+                  <td>Bayramlı</td>
+                  <td>Student</td>
+                  <td>
+                    <button class="delete-btn">
+                      <ion-icon
+                        class="delete-btn__icon"
+                        name="trash"
+                      ></ion-icon>
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+  </body>
+</html>
+
+<!--
+<tbody>
+    <tr th:each="user, stat : ${users}">
+        <td th:text="${stat.count}"></td>  
+        <td th:text="${user.name}"></td>
+        <td th:text="${user.surname}"></td>
+        <td th:text="${user.role}"></td>
+        <td>
+            <button class="delete-btn" 
+                    th:onclick="'deleteUser(' + ${user.id} + ')'">
+                Delete
+            </button>
+        </td>
+    </tr>
+</tbody>
+-->

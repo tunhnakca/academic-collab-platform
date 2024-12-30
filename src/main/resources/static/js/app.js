@@ -106,3 +106,9 @@ document.addEventListener("DOMContentLoaded", function () {
   // Initialize markdown editor for project description
   initializeAddProjectMarkdownEditor();
 });
+
+///////////////////////////
+// Users Page
+///////////////////////////
+
+document.addEventListener("DOMContentLoaded", function () {});
