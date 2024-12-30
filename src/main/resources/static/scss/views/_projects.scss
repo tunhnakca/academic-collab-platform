@@ -71,13 +71,14 @@
     flex-grow: 1; 
     justify-content: center; 
     align-items: flex-start; 
-    padding: 4.8rem 0 3.2rem 0;
+    padding: 4.8rem 3.2rem 3.2rem 3.2rem;
     overflow: hidden;
     overflow-y: auto;
 }
 
 .container-projects {
-    max-width: calc(120rem - 30rem); //30rem is sidebar width
+    //max-width: calc(120rem - 30rem); //30rem is sidebar width
+    max-width: calc(102rem);
     width: 100%; 
     padding: 0;
     margin: 0 auto; 
@@ -182,10 +183,7 @@
             border-bottom: 1px solid $color-grey-light-2;
     
             .search {
-                
-                &__field {
-                    width: 30rem;
-                }
+                width: 50%;
             }
             
             .filter__dropdown {

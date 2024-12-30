@@ -1,5 +1,9 @@
 import { async } from "regenerator-runtime";
-import { showEmptyMessage, formatDateTime } from "../common/helpers.js";
+import {
+  showEmptyMessage,
+  formatDateTime,
+  updateSectionHeight,
+} from "../common/helpers.js";
 import { overlay } from "../common/config";
 export const deleteProjectButton = document.querySelector(
   ".project__sidebar-course-buttons__delete--project"
@@ -9,14 +13,9 @@ export function showEmptyMessageProjects() {
   showEmptyMessage(".projects", "No projects yet.");
 }
 
+// Updating section projects height
 export function updateSectionProjectsHeight() {
-  const header = document.querySelector("header");
-  const sectionProjects = document.querySelector(".section-projects");
-
-  if (!header || !sectionProjects) return;
-
-  const headerHeight = header.offsetHeight;
-  sectionProjects.style.height = `calc(100vh - ${headerHeight}px`;
+  updateSectionHeight("section-projects");
 }
 
 export function updateProjectDateTime() {
@@ -97,7 +96,7 @@ export function deleteProject() {
     document
       .getElementById("confirm-delete__project")
       .addEventListener("click", function () {
-        deleteProject(projectId);
+        deleteProjectFromServer(projectId);
         modal.remove();
         overlay.classList.add("d-none");
       });
@@ -110,7 +109,7 @@ export function deleteProject() {
       });
   };
 
-  async function deleteProject(projectId) {
+  async function deleteProjectFromServer(projectId) {
     try {
       const response = await fetch(`/projects/delete/${projectId}`, {
         method: "DELETE",

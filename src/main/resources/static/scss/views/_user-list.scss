@@ -3,12 +3,91 @@
 @use '../abstracts/utilities' as *;
 @use '../components' as *;
 
+.section-user-list {
+    display: flex;
+    overflow: hidden;
+}
+
+.user-list__sidebar {
+    width: 30rem;
+    padding: 1.2rem 2.4rem;
+    overflow: hidden;
+    background-color: #fff;
+    border-right: 1px solid $color-grey-light-2;
+    overflow-y: auto;
+    position: sticky;
+    top: 0;
+
+    &-course__informations{
+        display: flex;
+        flex-direction: column;
+    }
+
+    &-course__information{
+        display: flex;
+        flex-direction: column;
+        gap: 0.2rem;
+        padding: 2rem 0;
+
+        &:not(:last-child){
+            border-bottom: 1px solid #E2E5E9;
+        }
+
+        &__heading{
+            font-size: 1.4rem;
+        }
+
+        &__value{
+            font-size: 1.4rem;
+            color: $color-grey-light-5;
+            font-weight: 300;
+
+            a:link,
+            a:visited {
+                text-decoration: none;
+                display: inline-block;
+                font-family: inherit;
+                font-weight: 400;
+                @extend .transition-hover-effect;
+                cursor: pointer;
+                color: $color-primary;
+                border-bottom: 1px solid  transparent;
+            }
+
+            a:hover,
+            a:active {
+                border-bottom: 1px solid currentColor;
+            }
+        }
+
+        &--user-management {
+            gap: 1rem;
+        }
+    }
+}
+
+.user-list-wrapper {
+    display: flex; 
+    flex-grow: 1; 
+    justify-content: center; 
+    align-items: flex-start; 
+    padding: 4.8rem 3.2rem 3.2rem 3.2rem;
+    overflow: hidden;
+    overflow-y: auto;
+}
+
 .container-user-list {
+    max-width: calc(120rem);
+    width: 100%; 
+    padding: 4.8rem 4.8rem;
+    margin: 0 auto; 
+
+    background-color: #fff;
+    overflow: hidden;
+    border-radius: 1rem;
+    @include box-shadow(rgba(0, 0, 0, 0.06));
+
     .users {
-        background-color: #fff;
-        padding: 4.8rem 4.8rem;
-        border-radius: 1rem;
-        @include box-shadow(rgba(0, 0, 0, 0.06));
 
         .user-list {
             margin-top: 3.2rem;
@@ -68,7 +147,7 @@
                     }
                 }
 
-                .delete-btn {
+                .delete-user-btn {
                     display: inline-block;
                     border: none;
                     background: none;
@@ -83,13 +162,35 @@
                     }
 
                     &:hover {
-                        .delete-btn__icon {
+                        .delete-user-btn__icon {
                             fill: darken($color-danger, 10%);
                             transform: scale(1.1);
                         }
                     }
                 }
             }
+        }
+    }
+}
+
+.modal-delete-user {
+    @extend .modal;
+    display: flex;
+    flex-direction: column;
+    gap: 2.4rem;
+    align-items: center;
+
+    p {
+        font-size: 1.6rem;
+    }
+
+    &__buttons {
+        display: flex;
+        gap: 1.2rem;
+
+        button {
+            font-size: 1.8rem;
+            padding: 1.2rem 3.6rem;
         }
     }
 }
