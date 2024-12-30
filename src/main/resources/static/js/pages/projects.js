@@ -35,6 +35,29 @@ export function updateProjectDateTime() {
   });
 }
 
+// Removing HTML Tags
+export function removeHTMLTags() {
+  const description = document.querySelectorAll(".project__description");
+  description.forEach((desc) => {
+    // First process the pre and code block
+    let cleanText = desc.innerHTML
+      .replace(/<pre><code>([\s\S]*?)<\/code><\/pre>/gi, (match, p1) => {
+        return "\n" + p1 + "\n";
+      })
+      // Clean the other tags
+      .replace(/<[^>]*>/g, "")
+      .replace(/&nbsp;/g, " ")
+      .trim();
+
+    // Take each line to array
+    let lines = cleanText.split("\n");
+    // Filter and merge lines that not empty
+    cleanText = lines.filter((line) => line.trim() !== "").join("\n");
+
+    desc.textContent = cleanText;
+  });
+}
+
 // Deleting project
 export function deleteProject() {
   const projectsContainer = document.querySelector(".projects");

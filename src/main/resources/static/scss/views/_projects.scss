@@ -162,6 +162,8 @@
 
             &__description {
                 font-size: 1.6rem;
+                white-space: pre-wrap;
+                font-family: inherit;
 
                 display: -webkit-box;
                 -webkit-box-orient: vertical;

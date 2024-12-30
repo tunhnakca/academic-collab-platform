@@ -91,7 +91,6 @@ export function setupMarkdownEditor(textAreaId) {
       "code",
       "unordered-list",
       "ordered-list",
-      "table",
       "|",
       "link",
       "image",

@@ -14,6 +14,7 @@ import {
   updateProjectDateTime,
   deleteProjectButton,
   deleteProject,
+  removeHTMLTags,
 } from "./pages/projects";
 import {
   setupDateValidation,
@@ -83,6 +84,9 @@ document.addEventListener("DOMContentLoaded", function (e) {
 
   // Update Date Formats
   updateProjectDateTime();
+
+  // Removing HTML Tags
+  removeHTMLTags();
 
   // Deleting Project
   if (deleteProjectButton) {
