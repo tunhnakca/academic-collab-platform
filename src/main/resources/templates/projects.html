@@ -52,7 +52,7 @@
               Course Users:
             </p>
             <p class="projects__sidebar-course__information__value">
-              <a href="#" target="_blank">Go to users</a>
+              <a th:href="@{/student/list(courseCode=${course.code})}" target="_blank">Go to students</a>
             </p>
           </div>
           <div

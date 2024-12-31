@@ -42,18 +42,20 @@
               Add Student:
             </p>
             <form
-              action="/users/add"
+              th:action="@{/course/add/student}"
               method="post"
               class="form form-add-user"
+              th:object="${addStudent}"
               name="add-user"
             >
-              <input type="hidden" name="courseCode" value="" />
-              <input type="hidden" name="userRole" value="student" />
+              <input type="hidden" name="courseCode" th:value="${courseCode}" />
+              <!--<input type="hidden" name="userRole" value="student" /> -->
 
               <div class="form-group">
                 <input
                   type="text"
                   id="userNumber"
+                  th:field="${addStudent.number}"
                   name="number"
                   placeholder="Number (e.g., B201...)"
                   required
@@ -64,6 +66,7 @@
                 <input
                   type="text"
                   id="userName"
+                  th:field="${addStudent.name}"
                   name="name"
                   placeholder="Name"
                   required
@@ -74,6 +77,7 @@
                 <input
                   type="text"
                   id="userSurname"
+                  th:field="${addStudent.surname}"
                   name="surname"
                   placeholder="Surname"
                   required
