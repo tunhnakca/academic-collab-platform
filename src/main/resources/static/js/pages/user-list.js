@@ -69,8 +69,8 @@ export function deleteUser() {
 
   async function deleteUserFromServer(userNumber) {
     try {
-      const response = await fetch(`/users/delete/${userNumber}`, {
-        method: "DELETE",
+      const response = await fetch(`/course/remove/user/${userNumber}`, {
+        method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
@@ -78,9 +78,9 @@ export function deleteUser() {
 
       if (response.ok) {
         location.reload();
-        console.info("User deleted successfuly");
+        console.info("User removed from course successfully");
       } else {
-        throw new Error("Problem deleting user");
+        throw new Error("Problem removing user");
       }
     } catch (error) {
       console.error(error.message);

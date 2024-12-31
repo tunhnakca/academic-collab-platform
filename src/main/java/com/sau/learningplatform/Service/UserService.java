@@ -2,7 +2,7 @@ package com.sau.learningplatform.Service;
 
 import com.sau.learningplatform.Entity.User;
 import com.sau.learningplatform.EntityResponse.MessageResponse;
-import org.springframework.http.HttpStatus;
+import com.sau.learningplatform.EntityResponse.UserResponse;
 
 import java.util.List;
 
@@ -22,4 +22,8 @@ public interface UserService {
     MessageResponse updatePassword(User user, String currentPassword, String newPassword);
 
     void saveUser(User user);
+
+    List<UserResponse> getAllStudents();
+
+    void addStudentToCourseAndSaveNonExistingStudent(User student, String courseCode);
 }
