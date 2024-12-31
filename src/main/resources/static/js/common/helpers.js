@@ -63,3 +63,15 @@ export function formatDateTime(
     });
   });
 }
+
+////////////////////////////////////////
+// Updating Section Height
+export function updateSectionHeight(sectionClassName) {
+  const header = document.querySelector("header");
+  const sectionEl = document.querySelector(`.${sectionClassName}`);
+
+  if (!header || !sectionEl) return;
+
+  const headerHeight = header.offsetHeight;
+  sectionEl.style.height = `calc(100vh - ${headerHeight}px`;
+}

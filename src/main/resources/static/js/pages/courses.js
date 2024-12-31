@@ -63,7 +63,7 @@ export function deleteCourse() {
     document
       .getElementById("confirm-delete__course")
       .addEventListener("click", function () {
-        deleteCourse(courseId);
+        deleteCourseFromServer(courseId);
         modal.remove();
         overlay.classList.add("d-none");
       });
@@ -76,7 +76,7 @@ export function deleteCourse() {
       });
   };
 
-  async function deleteCourse(courseId) {
+  async function deleteCourseFromServer(courseId) {
     try {
       const response = await fetch(`/courses/delete/${courseId}`, {
         method: "DELETE",

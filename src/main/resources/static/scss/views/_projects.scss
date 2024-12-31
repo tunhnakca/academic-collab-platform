@@ -71,13 +71,14 @@
     flex-grow: 1; 
     justify-content: center; 
     align-items: flex-start; 
-    padding: 4.8rem 0 3.2rem 0;
+    padding: 4.8rem 3.2rem 3.2rem 3.2rem;
     overflow: hidden;
     overflow-y: auto;
 }
 
 .container-projects {
-    max-width: calc(120rem - 30rem); //30rem is sidebar width
+    //max-width: calc(120rem - 30rem); //30rem is sidebar width
+    max-width: calc(102rem);
     width: 100%; 
     padding: 0;
     margin: 0 auto; 
@@ -162,6 +163,8 @@
 
             &__description {
                 font-size: 1.6rem;
+                white-space: pre-wrap;
+                font-family: inherit;
 
                 display: -webkit-box;
                 -webkit-box-orient: vertical;
@@ -173,65 +176,14 @@
         
         &-header {
             display: flex;
+            gap: 2.4rem;
             align-items: center;
             justify-content: space-between;
             padding: 2.4rem 4.8rem;
             border-bottom: 1px solid $color-grey-light-2;
     
             .search {
-                display: flex;
-                align-items: center;
-                gap: 1.2rem;
-            
-                border: 1px solid $color-grey-light-2;
-                border-radius: 1rem;
-                padding: 0.8rem 2.4rem;
-                @extend .transition-hover-effect;
-            
-                &:focus-within {
-                    transform: translateY(-2px);
-                }
-            
-                &__field {
-                    border: none;
-                    background: none;
-                    font-family: inherit;
-                    color: inherit;
-                    font-size: 1.6rem;
-                    
-                    width: 30rem;
-                
-                    &:focus {
-                      outline: none;
-                    }
-                
-                    &::placeholder {
-                        color: $color-grey-light-4;
-                        font-weight: 300;
-                    }
-                }
-            
-                &__btn {
-                    display: inline-block;
-                    border: none;
-                    cursor: pointer;
-                    background: none;
-                    @extend .transition-hover-effect;
-            
-                    &:hover {
-                        transform: scale(1.1);
-                    }
-            
-                    &:active {
-                        transform: scale(1);
-                    }
-                }
-            
-                &__icon {
-                    width: 2.4rem;
-                    height: 2.4rem;
-                    color: $color-grey-light-6;
-                }
+                width: 50%;
             }
             
             .filter__dropdown {

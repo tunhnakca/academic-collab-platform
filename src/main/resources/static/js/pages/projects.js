@@ -1,5 +1,9 @@
 import { async } from "regenerator-runtime";
-import { showEmptyMessage, formatDateTime } from "../common/helpers.js";
+import {
+  showEmptyMessage,
+  formatDateTime,
+  updateSectionHeight,
+} from "../common/helpers.js";
 import { overlay } from "../common/config";
 export const deleteProjectButton = document.querySelector(
   ".project__sidebar-course-buttons__delete--project"
@@ -9,14 +13,9 @@ export function showEmptyMessageProjects() {
   showEmptyMessage(".projects", "No projects yet.");
 }
 
+// Updating section projects height
 export function updateSectionProjectsHeight() {
-  const header = document.querySelector("header");
-  const sectionProjects = document.querySelector(".section-projects");
-
-  if (!header || !sectionProjects) return;
-
-  const headerHeight = header.offsetHeight;
-  sectionProjects.style.height = `calc(100vh - ${headerHeight}px`;
+  updateSectionHeight("section-projects");
 }
 
 export function updateProjectDateTime() {
@@ -32,6 +31,29 @@ export function updateProjectDateTime() {
     hour: "2-digit",
     minute: "2-digit",
     hour12: false,
+  });
+}
+
+// Removing HTML Tags
+export function removeHTMLTags() {
+  const description = document.querySelectorAll(".project__description");
+  description.forEach((desc) => {
+    // First process the pre and code block
+    let cleanText = desc.innerHTML
+      .replace(/<pre><code>([\s\S]*?)<\/code><\/pre>/gi, (match, p1) => {
+        return "\n" + p1 + "\n";
+      })
+      // Clean the other tags
+      .replace(/<[^>]*>/g, "")
+      .replace(/&nbsp;/g, " ")
+      .trim();
+
+    // Take each line to array
+    let lines = cleanText.split("\n");
+    // Filter and merge lines that not empty
+    cleanText = lines.filter((line) => line.trim() !== "").join("\n");
+
+    desc.textContent = cleanText;
   });
 }
 
@@ -74,7 +96,7 @@ export function deleteProject() {
     document
       .getElementById("confirm-delete__project")
       .addEventListener("click", function () {
-        deleteProject(projectId);
+        deleteProjectFromServer(projectId);
         modal.remove();
         overlay.classList.add("d-none");
       });
@@ -87,7 +109,7 @@ export function deleteProject() {
       });
   };
 
-  async function deleteProject(projectId) {
+  async function deleteProjectFromServer(projectId) {
     try {
       const response = await fetch(`/projects/delete/${projectId}`, {
         method: "DELETE",

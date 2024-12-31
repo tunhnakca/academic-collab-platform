@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{layout}"
+>
+  <head>
+    <!--<title th:text="${course.code + ' | Users'}">Users</title>-->
+    <title>Users</title>
+  </head>
+  <body>
+    <section class="section-user-list" layout:fragment="content">
+      <!-- Left: Sidebar -->
+      <div class="user-list__sidebar">
+        <div class="user-list__sidebar-course__informations">
+          <div class="user-list__sidebar-course__information">
+            <p class="user-list__sidebar-course__information__heading">
+              Course Code:
+            </p>
+            <p class="user-list__sidebar-course__information__value">SWE000</p>
+          </div>
+          <div class="user-list__sidebar-course__information">
+            <p class="user-list__sidebar-course__information__heading">
+              Course Title:
+            </p>
+            <p class="user-list__sidebar-course__information__value">
+              Course Title
+            </p>
+          </div>
+          <div class="user-list__sidebar-course__information">
+            <p class="user-list__sidebar-course__information__heading">
+              Course Owner:
+            </p>
+            <p class="user-list__sidebar-course__information__value">
+              Name Surname
+            </p>
+          </div>
+          <div
+            th:if="${#strings.toLowerCase(loggedUser.role).replace('ı', 'i') == 'admin' or #strings.toLowerCase(loggedUser.role).replace('ı', 'i') == 'instructor'}"
+            class="user-list__sidebar-course__information user-list__sidebar-course__information--user-management"
+          >
+            <p class="user-list__sidebar-course__information__heading">
+              Add Student:
+            </p>
+            <form
+              action="/users/add"
+              method="post"
+              class="form form-add-user"
+              name="add-user"
+            >
+              <input type="hidden" name="courseCode" value="" />
+              <input type="hidden" name="userRole" value="student" />
+
+              <div class="form-group">
+                <input
+                  type="text"
+                  id="userNumber"
+                  name="number"
+                  placeholder="Number (e.g., B201...)"
+                  required
+                />
+              </div>
+
+              <div class="form-group">
+                <input
+                  type="text"
+                  id="userName"
+                  name="name"
+                  placeholder="Name"
+                  required
+                />
+              </div>
+
+              <div class="form-group">
+                <input
+                  type="text"
+                  id="userSurname"
+                  name="surname"
+                  placeholder="Surname"
+                  required
+                />
+              </div>
+
+              <button type="submit" class="btn btn__add-user btn--success">
+                Add Student
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <div class="user-list-wrapper">
+        <div class="container-user-list">
+          <div class="users">
+            <div class="users-header">
+              <form method="GET" class="search">
+                <!--
+                    th:action="@{/}"
+                -->
+                <input
+                  type="text"
+                  name="keyword"
+                  class="search__field"
+                  placeholder="Search..."
+                  th:value="${keyword}"
+                />
+
+                <!--
+                    th:value="${course.getCode()}"
+                -->
+                <input type="hidden" name="courseCode" />
+                <button type="submit" class="search__btn">
+                  <ion-icon
+                    class="search__icon"
+                    name="search-outline"
+                  ></ion-icon>
+                </button>
+              </form>
+            </div>
+
+            <div class="user-list">
+              <table>
+                <colgroup>
+                  <col class="col-count" />
+                  <col class="col-number" />
+                  <col class="col-name" />
+                  <col class="col-surname" />
+                  <col class="col-role" />
+                  <col class="col-actions" />
+                </colgroup>
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Number</th>
+                    <th>Name</th>
+                    <th>Surname</th>
+                    <th>Role</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <!-- <tr th:data-user-number="${user.id}"></tr> -->
+                  <tr data-user-number="1">
+                    <td>1</td>
+                    <td>B201202056</td>
+                    <td class="user-list__user-name">Tunahan</td>
+                    <td class="user-list__user-surname">Akça</td>
+                    <td>Student</td>
+                    <td>
+                      <button class="delete-user-btn">
+                        <ion-icon
+                          class="delete-user-btn__icon"
+                          name="trash"
+                        ></ion-icon>
+                      </button>
+                    </td>
+                  </tr>
+                  <tr data-user-number="10">
+                    <td>2</td>
+                    <td>B201202051</td>
+                    <td class="user-list__user-name">Enes</td>
+                    <td class="user-list__user-surname">Sefa</td>
+                    <td>Student</td>
+                    <td>
+                      <button class="delete-user-btn">
+                        <ion-icon
+                          class="delete-user-btn__icon"
+                          name="trash"
+                        ></ion-icon>
+                      </button>
+                    </td>
+                  </tr>
+                  <tr data-user-number="8">
+                    <td>3</td>
+                    <td>B201202052</td>
+                    <td class="user-list__user-name">Mert</td>
+                    <td class="user-list__user-surname">Munar</td>
+                    <td>Student</td>
+                    <td>
+                      <button class="delete-user-btn">
+                        <ion-icon
+                          class="delete-user-btn__icon"
+                          name="trash"
+                        ></ion-icon>
+                      </button>
+                    </td>
+                  </tr>
+                  <tr data-user-number="12">
+                    <td>4</td>
+                    <td>B201202053</td>
+                    <td class="user-list__user-name">Yiğit</td>
+                    <td class="user-list__user-surname">Bayramlı</td>
+                    <td>Student</td>
+                    <td>
+                      <button class="delete-user-btn">
+                        <ion-icon
+                          class="delete-user-btn__icon"
+                          name="trash"
+                        ></ion-icon>
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </body>
+</html>
+
+<!--
+<tbody>
+    <tr th:each="user, stat : ${users}">
+        <td th:text="${stat.count}"></td>  
+        <td th:text="${user.name}"></td>
+        <td th:text="${user.surname}"></td>
+        <td th:text="${user.role}"></td>
+        <td>
+            <button class="delete-user-btn" 
+                    th:onclick="'deleteUser(' + ${user.number} + ')'">
+                Delete
+            </button>
+        </td>
+    </tr>
+</tbody>
+-->

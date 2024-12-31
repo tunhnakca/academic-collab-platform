@@ -4,13 +4,12 @@
   layout:decorate="~{layout}"
 >
   <head>
-    <title>Projects</title>
+    <title th:text="${course.code + ' | Projects'}">Projects</title>
   </head>
   <body>
     <section class="section-projects" layout:fragment="content">
       <!-- Left: Sidebar -->
       <div class="projects__sidebar">
-        <!-- <h5 class="text-center">Course Info</h5> -->
         <div class="projects__sidebar-course__informations">
           <div class="projects__sidebar-course__information">
             <p class="projects__sidebar-course__information__heading">
@@ -162,12 +161,10 @@
                       End Date
                     </p>
                   </div>
-                  <p
+                  <div
                     class="project__description"
                     th:utext="${project.description}"
-                  >
-                    Description
-                  </p>
+                  ></div>
                 </div>
               </div>
             </div>

@@ -110,5 +110,13 @@ public class HomeController {
 
     }
 
+    @GetMapping("/users")
+    public String UsersPage(Principal principal, Model model) {
+        String number = principal.getName();
+        User user = userService.findByNumber(number);
+        model.addAttribute("loggedUser", user);
+        return "user-list";
+
+    }
 
 }
