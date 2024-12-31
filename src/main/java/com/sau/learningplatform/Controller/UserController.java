@@ -37,4 +37,10 @@ public class UserController {
 
         return "redirect:/student/list?courseCode=" + courseCode;
     }
+
+    @PutMapping("/course/remove/student")
+    public void removeStudentFromCourse(@RequestParam("courseCode") String courseCode,@RequestParam("userNumber") String number){
+
+
+    }
 }

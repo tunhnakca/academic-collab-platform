@@ -70,7 +70,7 @@ export function deleteUser() {
   async function deleteUserFromServer(userNumber) {
     try {
       const response = await fetch(`/course/remove/user/${userNumber}`, {
-        method: "POST",
+        method: "PUT",
         headers: {
           "Content-Type": "application/json",
         },
