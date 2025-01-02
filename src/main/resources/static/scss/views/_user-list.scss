@@ -41,6 +41,7 @@
             font-size: 1.4rem;
             color: $color-grey-light-5;
             font-weight: 300;
+            text-transform: capitalize;
 
             a:link,
             a:visited {
@@ -147,6 +148,7 @@
                     color: $color-grey-dark-1;
                     font-weight: 300;
                     padding: 1.2rem 1.6rem;
+                    text-transform: capitalize;
                 }
 
                 tbody {

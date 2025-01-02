@@ -16,7 +16,10 @@
         <div class="profile__informations">
           <div class="profile__information">
             <p class="profile__information-heading">Role</p>
-            <p th:text="${loggedUser.role}" class="profile__information-value">
+            <p
+              th:text="${loggedUser.role}"
+              class="profile__information-value profile__information-value--role"
+            >
               Role
             </p>
           </div>

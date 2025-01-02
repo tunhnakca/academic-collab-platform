@@ -54,6 +54,11 @@
             font-size: 1.6rem;
             color: $color-grey-light-5;
             font-weight: 300;
+            text-transform: capitalize;
+
+            &--role {
+                text-transform: uppercase;
+            }
         }
     }
 }
