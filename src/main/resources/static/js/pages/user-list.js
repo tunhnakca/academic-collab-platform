@@ -21,10 +21,11 @@ export function deleteUser() {
   }
 
   userList.addEventListener("click", function (e) {
-    if (e.target.closest("tr")) {
+    if (e.target.closest(".delete-user-btn")) {
       e.preventDefault();
       const selectedUser = e.target.closest("tr");
       const userNumber = selectedUser.dataset.userNumber;
+      const courseCode = selectedUser.dataset.relatedCourse;
       const userName = selectedUser.querySelector(
         ".user-list__user-name"
       ).textContent;
@@ -33,11 +34,16 @@ export function deleteUser() {
       ).textContent;
 
       // Show modal with confirmation
-      showDeleteUserModal(userNumber, userName, userSurname);
+      showDeleteUserModal(userNumber, userName, userSurname, courseCode);
     }
   });
 
-  const showDeleteUserModal = function (userNumber, userName, userSurname) {
+  const showDeleteUserModal = function (
+    userNumber,
+    userName,
+    userSurname,
+    courseCode
+  ) {
     const modal = document.createElement("div");
     modal.classList.add("modal-delete-user");
     modal.innerHTML = `
@@ -54,7 +60,7 @@ export function deleteUser() {
     document
       .getElementById("confirm-delete__user")
       .addEventListener("click", function () {
-        deleteUserFromServer(userNumber);
+        deleteUserFromServer(userNumber, courseCode);
         modal.remove();
         overlay.classList.add("d-none");
       });
@@ -67,14 +73,17 @@ export function deleteUser() {
       });
   };
 
-  async function deleteUserFromServer(userNumber) {
+  async function deleteUserFromServer(userNumber, courseCode) {
     try {
-      const response = await fetch(`/course/remove/user/${userNumber}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+      const response = await fetch(
+        `/course/remove/user?courseCode=${courseCode}/${userNumber}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
 
       if (response.ok) {
         location.reload();
