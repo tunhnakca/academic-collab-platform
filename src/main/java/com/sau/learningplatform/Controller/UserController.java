@@ -28,7 +28,7 @@ public class UserController {
         model.addAttribute("loggedUser", user);
         model.addAttribute("addStudent", new User());
 
-        model.addAttribute("students",userService.getAllStudents());
+        model.addAttribute("users",userService.getUsersByCourseCode(courseCode));
 
         model.addAttribute("course",courseService.getCourseResponseByCode(courseCode));
 

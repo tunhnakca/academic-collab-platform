@@ -146,22 +146,22 @@
                 </thead>
                 <tbody>
                   <tr
-                    th:each="student, stat : ${students}"
-                    th:data-user-number="${student.number}"
+                    th:each="user, stat : ${users}"
+                    th:data-user-number="${user.number}"
                     th:data-related-course="${courseCode}"
                   >
                     <td th:text="${stat.count}">#</td>
-                    <td th:text="${student.number}">B201202056</td>
-                    <td th:text="${student.name}" class="user-list__user-name">
+                    <td th:text="${user.number}">B201202056</td>
+                    <td th:text="${user.name}" class="user-list__user-name">
                       Name
                     </td>
                     <td
-                      th:text="${student.surname}"
+                      th:text="${user.surname}"
                       class="user-list__user-surname"
                     >
                       Surname
                     </td>
-                    <td th:text="${student.role}">Role</td>
+                    <td th:text="${user.role}">Role</td>
                     <td>
                       <button class="delete-user-btn">
                         <ion-icon
