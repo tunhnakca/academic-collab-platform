@@ -4,7 +4,7 @@
   layout:decorate="~{layout}"
 >
   <head>
-    <title th:text="${courseCode + ' | Users'}">Users</title>
+    <title th:text="${course.code + ' | Users'}">Users</title>
   </head>
   <body>
     <section class="section-user-list" layout:fragment="content">
@@ -17,7 +17,7 @@
             </p>
             <p
               class="user-list__sidebar-course__information__value"
-              th:text="${courseCode}"
+              th:text="${course.code}"
             >
               SWE000
             </p>
@@ -28,7 +28,7 @@
             </p>
             <p
               class="user-list__sidebar-course__information__value"
-              th:text="${courseTitle}"
+              th:text="${course.title}"
             >
               Course Title
             </p>
@@ -39,7 +39,7 @@
             </p>
             <p
               class="user-list__sidebar-course__information__value"
-              th:text="${courseOwner}"
+              th:text="${course.owner}"
             >
               Name Surname
             </p>
@@ -58,7 +58,7 @@
               th:object="${addStudent}"
               name="add-user"
             >
-              <input type="hidden" name="courseCode" th:value="${courseCode}" />
+              <input type="hidden" name="courseCode" th:value="${course.code}" />
 
               <div class="form-group">
                 <input
@@ -146,22 +146,22 @@
                 </thead>
                 <tbody>
                   <tr
-                    th:each="student, stat : ${students}"
-                    th:data-user-number="${student.number}"
+                    th:each="user, stat : ${users}"
+                    th:data-user-number="${user.number}"
                     th:data-related-course="${courseCode}"
                   >
                     <td th:text="${stat.count}">#</td>
-                    <td th:text="${student.number}">B201202056</td>
-                    <td th:text="${student.name}" class="user-list__user-name">
+                    <td th:text="${user.number}">B201202056</td>
+                    <td th:text="${user.name}" class="user-list__user-name">
                       Name
                     </td>
                     <td
-                      th:text="${student.surname}"
+                      th:text="${user.surname}"
                       class="user-list__user-surname"
                     >
                       Surname
                     </td>
-                    <td th:text="${student.role}">Role</td>
+                    <td th:text="${user.role}">Role</td>
                     <td>
                       <button class="delete-user-btn">
                         <ion-icon
