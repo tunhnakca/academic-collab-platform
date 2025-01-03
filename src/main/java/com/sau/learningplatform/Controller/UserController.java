@@ -1,6 +1,7 @@
 package com.sau.learningplatform.Controller;
 
 import com.sau.learningplatform.Entity.User;
+import com.sau.learningplatform.Service.CourseService;
 import com.sau.learningplatform.Service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,8 +13,11 @@ import java.security.Principal;
 public class UserController {
     private UserService userService;
 
-    public UserController(UserService userService) {
+    private CourseService courseService;
+
+    public UserController(UserService userService, CourseService courseService) {
         this.userService = userService;
+        this.courseService = courseService;
     }
 
     @GetMapping("/student/list")
@@ -24,8 +28,9 @@ public class UserController {
         model.addAttribute("loggedUser", user);
         model.addAttribute("addStudent", new User());
 
-        model.addAttribute("students",userService.getAllStudents());
-        model.addAttribute("courseCode",courseCode);
+        model.addAttribute("users",userService.getUsersByCourseCode(courseCode));
+
+        model.addAttribute("course",courseService.getCourseResponseByCode(courseCode));
 
         return "user-list";
     }

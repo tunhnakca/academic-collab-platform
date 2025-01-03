@@ -41,6 +41,8 @@ public class UserServiceImpl implements UserService {
         return result.get();
     }
 
+
+
     @Override
     public void register(User user) {
         String hashedPassword = encoder.encode(user.getPassword());
@@ -167,6 +169,15 @@ public class UserServiceImpl implements UserService {
             log.info("New student has been saved with a course! ");
         }
 
+    }
+
+    @Override
+    public List<UserResponse> getUsersByCourseCode(String courseCode) {
+        List<User>users=userRepository.findByCoursesCode(courseCode);
+        if(users.isEmpty()){
+            log.info("No users found with related course!");
+        }
+        return users.stream().map(this::mapToUserResponse).toList();
     }
 
 

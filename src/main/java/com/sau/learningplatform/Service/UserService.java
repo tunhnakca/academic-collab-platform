@@ -26,4 +26,6 @@ public interface UserService {
     List<UserResponse> getAllStudents();
 
     void addStudentToCourseAndSaveNonExistingStudent(User student, String courseCode);
+
+    List<UserResponse> getUsersByCourseCode(String courseCode);
 }
