@@ -172,10 +172,10 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<UserResponse> getUsersByCourseCode(String courseCode) {
-        List<User>users=userRepository.findByCoursesCode(courseCode);
+    public List<UserResponse> getUsersByCourseCodeAndRole(String courseCode,String role) {
+        List<User>users=userRepository.findByCoursesCodeAndRoleIgnoreCase(courseCode,role);
         if(users.isEmpty()){
-            log.info("No users found with related course!");
+            log.info("No user found with related course and role!");
         }
         return users.stream().map(this::mapToUserResponse).toList();
     }
