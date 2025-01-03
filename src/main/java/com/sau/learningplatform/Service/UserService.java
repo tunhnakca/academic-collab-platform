@@ -27,5 +27,5 @@ public interface UserService {
 
     void addStudentToCourseAndSaveNonExistingStudent(User student, String courseCode);
 
-    List<UserResponse> getUsersByCourseCode(String courseCode);
+    List<UserResponse> getUsersByCourseCodeAndRole(String courseCode,String role);
 }
