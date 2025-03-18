@@ -1,9 +1,8 @@
 package com.sau.learningplatform.Repository;
 
-import com.sau.learningplatform.Entity.Course;
 import com.sau.learningplatform.Entity.Project;
-import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
@@ -14,8 +13,13 @@ import java.util.List;
 public interface ProjectRepository extends JpaRepository<Project,Integer> {
     List<Project>findByCourseId(int id);
 
-    List<Project> findByCourseCodeAndTitleContainingIgnoreCase(String CourseCode,String title);
-
+    //project search
+    @Query("SELECT p FROM Project p WHERE p.course.code = :courseCode " +
+            "AND (LOWER(p.title) LIKE LOWER(CONCAT(:title, '%')) " +
+            "OR LOWER(p.title) LIKE LOWER(CONCAT('% ', :title, '%')))")
+    List<Project> searchByCourseCodeAndTitlePrefix(@Param("courseCode") String courseCode,
+                                                   @Param("title") String title);
+    
     //non-expired date
     List<Project> findByCourseCodeAndDateEndAfter(String CourseCode,LocalDateTime date);
     //expired date
