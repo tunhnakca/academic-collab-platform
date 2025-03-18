@@ -60,7 +60,7 @@ public class ProjectServiceImpl implements ProjectService{
 
     @Override
     public List<ProjectResponse> searchByCourseCodeAndProjectTitle(String courseCode, String title) {
-       List<Project>projects=projectRepository.findByCourseCodeAndTitleContainingIgnoreCase(courseCode,title);
+       List<Project>projects=projectRepository.searchByCourseCodeAndTitlePrefix(courseCode,title);
        if (projects.isEmpty()){
            log.info("Any project related with search keyword is not found!");
        }
