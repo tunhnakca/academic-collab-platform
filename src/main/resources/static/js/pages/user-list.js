@@ -60,7 +60,7 @@ export function deleteUser() {
     document
       .getElementById("confirm-delete__user")
       .addEventListener("click", function () {
-        deleteUserFromServer(userNumber, courseCode);
+        removeUserFromServer(userNumber, courseCode);
         modal.remove();
         overlay.classList.add("d-none");
       });
@@ -73,10 +73,10 @@ export function deleteUser() {
       });
   };
 
-  async function deleteUserFromServer(userNumber, courseCode) {
+  async function removeUserFromServer(userNumber, courseCode) {
     try {
       const response = await fetch(
-        `/course/remove/user?courseCode=${courseCode}/${userNumber}`,
+        `/courses/remove/user?courseCode=${courseCode}&userNumber=${userNumber}`,
         {
           method: "PUT",
           headers: {

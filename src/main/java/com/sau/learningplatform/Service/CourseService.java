@@ -28,4 +28,5 @@ public interface CourseService {
     Course getByCode(String code);
 
 
+    void removeUserFromCourse(String courseCode, String userNumber);
 }

@@ -114,6 +114,22 @@ public class CourseServiceImpl implements CourseService {
 
     }
 
+    @Override
+    public void removeUserFromCourse(String courseCode, String userNumber) {
+        Optional<Course> course=courseRepository.findByCode(courseCode);
+        if (course.isEmpty()){
+            throw new RuntimeException("There is no course with given code!");
+        }
+        List<User>users=course.get().getUsers();
+        User user=userService.findByNumber(userNumber);
+        users.remove(user);
+        course.get().setUsers(users);
+
+        courseRepository.save(course.get());
+        log.info("user has been removed successfully from course");
+    }
+
+
     private List<User> saveStudentsByFile(MultipartFile file) throws IOException {
         List<User> students = new ArrayList<>();
 

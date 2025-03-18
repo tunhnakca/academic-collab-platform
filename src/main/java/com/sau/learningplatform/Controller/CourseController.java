@@ -1,6 +1,5 @@
 package com.sau.learningplatform.Controller;
 
-import com.sau.learningplatform.Entity.Course;
 import com.sau.learningplatform.Entity.User;
 import com.sau.learningplatform.EntityResponse.CourseResponse;
 import com.sau.learningplatform.EntityResponse.MessageResponse;
@@ -17,18 +16,17 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
 import java.io.IOException;
-import java.lang.ProcessBuilder.Redirect;
 import java.security.Principal;
 import java.util.List;
 
 @Controller
-public class HomeController {
+public class CourseController {
 
     private CourseService courseService;
 
     private UserService userService;
 
-    public HomeController(CourseService courseService, UserService userService) {
+    public CourseController(CourseService courseService, UserService userService) {
         this.courseService = courseService;
         this.userService = userService;
     }
@@ -72,7 +70,7 @@ public class HomeController {
     }
 
     @GetMapping("/profile")
-    public String profilePage(Principal principal, Model model,
+    public String showProfilePage(Principal principal, Model model,
             @ModelAttribute("messageResponse") MessageResponse messageResponse) {
         String number = principal.getName();
         User user = userService.findByNumber(number);
@@ -111,9 +109,19 @@ public class HomeController {
     }
 
     @GetMapping("/users")
-    public String UsersPage(Principal principal, Model model) {
+    public String showUsersPage(Principal principal, Model model) {
         String number = principal.getName();
         User user = userService.findByNumber(number);
+        model.addAttribute("loggedUser", user);
+        return "user-list";
+
+    }
+
+    @PutMapping("/courses/remove/user")
+    public String removeUserFromCourse(Principal principal, Model model,@RequestParam String courseCode, @RequestParam String userNumber) {
+        String number = principal.getName();
+        User user = userService.findByNumber(number);
+        courseService.removeUserFromCourse(courseCode,userNumber);
         model.addAttribute("loggedUser", user);
         return "user-list";
 
