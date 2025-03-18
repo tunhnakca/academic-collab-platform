@@ -69,15 +69,6 @@ public class CourseController {
 
     }
 
-    @GetMapping("/profile")
-    public String showProfilePage(Principal principal, Model model,
-            @ModelAttribute("messageResponse") MessageResponse messageResponse) {
-        String number = principal.getName();
-        User user = userService.findByNumber(number);
-        model.addAttribute("loggedUser", user);
-        model.addAttribute(messageResponse);
-        return "profile";
-    }
 
     @DeleteMapping("/courses/delete/{courseId}")
     public ResponseEntity<String> deleteCourse(Principal principal, @PathVariable("courseId") int courseId) {
@@ -90,32 +81,7 @@ public class CourseController {
         }
     }
 
-    @PostMapping("/password/change")
-    public RedirectView changePassword(Principal principal,
-            Model model,
-            RedirectAttributes attributes,
-            @RequestParam("currentPassword") String currentPassword,
-            @RequestParam("newPassword") String newPassword) {
 
-        String number = principal.getName();
-        User user = userService.findByNumber(number);
-
-        MessageResponse messageResponse = userService.updatePassword(user, currentPassword, newPassword);
-
-        attributes.addFlashAttribute("messageResponse", messageResponse);
-
-        return new RedirectView("/profile");
-
-    }
-
-    @GetMapping("/users")
-    public String showUsersPage(Principal principal, Model model) {
-        String number = principal.getName();
-        User user = userService.findByNumber(number);
-        model.addAttribute("loggedUser", user);
-        return "user-list";
-
-    }
 
     @PutMapping("/courses/remove/user")
     public String removeUserFromCourse(Principal principal, Model model,@RequestParam String courseCode, @RequestParam String userNumber) {

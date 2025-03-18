@@ -43,6 +43,15 @@ public class UserController {
         return "redirect:/student/list?courseCode=" + courseCode;
     }
 
+    @GetMapping("/users")
+    public String showUsersPage(Principal principal, Model model) {
+        String number = principal.getName();
+        User user = userService.findByNumber(number);
+        model.addAttribute("loggedUser", user);
+        return "user-list";
+
+    }
+
     @PutMapping("/course/remove/student")
     public void removeStudentFromCourse(@RequestParam("courseCode") String courseCode,@RequestParam("userNumber") String number){
 
