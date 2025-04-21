@@ -17,5 +17,4 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 
     List<User> findByRoleIgnoreCase(String role);
 
-    List<User>findByCoursesCodeAndRoleIgnoreCase(String code,String role);
 }

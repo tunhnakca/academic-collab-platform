@@ -38,7 +38,7 @@ public class UserController {
     @PostMapping("/course/add/student")
     public String addUserToCourse(@ModelAttribute("addStudent")User student, @RequestParam("courseCode") String courseCode){
 
-        userService.addStudentToCourseAndSaveNonExistingStudent(student,courseCode);
+        courseService.addStudentToCourseAndSaveNonExistingStudent(student,courseCode);
 
         return "redirect:/student/list?courseCode=" + courseCode;
     }

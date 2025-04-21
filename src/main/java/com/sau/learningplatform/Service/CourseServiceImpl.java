@@ -1,8 +1,10 @@
 package com.sau.learningplatform.Service;
 
 import com.sau.learningplatform.Entity.Course;
+import com.sau.learningplatform.Entity.CourseRegistration;
 import com.sau.learningplatform.Entity.User;
 import com.sau.learningplatform.EntityResponse.CourseResponse;
+import com.sau.learningplatform.Repository.CourseRegistrationRepository;
 import com.sau.learningplatform.Repository.CourseRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.ss.usermodel.Row;
@@ -16,25 +18,33 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @Slf4j
 public class CourseServiceImpl implements CourseService {
     private CourseRepository courseRepository;
     private UserService userService;
+    private CourseRegistrationRepository courseRegistrationRepository;
 
-    public CourseServiceImpl(CourseRepository courseRepository, UserService userService) {
+    private SemesterService semesterService;
+
+    public CourseServiceImpl(CourseRepository courseRepository, UserService userService, CourseRegistrationRepository courseRegistrationRepository, SemesterService semesterService) {
         this.courseRepository = courseRepository;
         this.userService = userService;
+        this.courseRegistrationRepository = courseRegistrationRepository;
+        this.semesterService = semesterService;
     }
 
     @Override
-    public List<CourseResponse> getCoursesByUser(User user) {
+    public List<CourseResponse> getActiveCourseResponsesByUser(User user) {
 
-        List<Course> courses = courseRepository.findCoursesByUsers(user);
+        List<CourseRegistration>courseRegistrations=courseRegistrationRepository.findByUserIdAndSemesterId(user.getId(), semesterService.getCurrentSemester().getId());
+
+        List<Course> courses = courseRegistrations.stream().map(CourseRegistration::getCourse).toList();
 
         if (courses.isEmpty()) {
-            log.warn("no courses found for: {} !", user.getName());
+            log.warn("no active courses found for: {} !", user.getName());
         }
         return courses.stream().map(this::courseToResponse).toList();
     }
@@ -55,20 +65,16 @@ public class CourseServiceImpl implements CourseService {
         return courseToResponse(course.get());
     }
 
-
-
-
-
     @Override
-    public void addCourseWithStudentsByExcel(String ownerNumber, String courseName, String courseCode,
-            MultipartFile studentFile) throws IOException {
+    public void createCourseWithUsers(String ownerNumber, String courseName, String courseCode,
+                                      MultipartFile studentFile) throws IOException {
 
         if (courseRepository.existsByCode(courseCode)) {
             throw new RuntimeException("The course with given code is already exists!");
         }
 
         // Parse the uploaded Excel file
-        List<User> students = saveStudentsByFile(studentFile);
+        List<User> users = getStudentsFromExcelAndCreateNonExists(studentFile);
 
         User owner = userService.findByNumber(ownerNumber);
         String ownerName = owner.getName() + " ".concat(owner.getSurname());
@@ -76,10 +82,18 @@ public class CourseServiceImpl implements CourseService {
         // get a course, save and associate students with it
         Course course = new Course(courseName, ownerName, courseCode);
 
-        students.forEach(course::addUser);
-        course.addUser(owner);
+        users.add(owner);
 
-        courseRepository.save(course);
+        for(User user:users){
+            CourseRegistration courseRegistration=new CourseRegistration();
+            courseRegistration.setCourse(course);
+            courseRegistration.setUser(user);
+            courseRegistration.setSemester(semesterService.getCurrentSemester());
+            courseRegistrationRepository.save(courseRegistration);
+        }
+
+        log.info("course registries have been saved !");
+
     }
 
     @Override
@@ -115,22 +129,23 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public void removeUserFromCourse(String courseCode, String userNumber) {
+    public void removeUserFromCourseInActiveSemester(String courseCode, String userNumber) {
         Optional<Course> course=courseRepository.findByCode(courseCode);
+        User user=userService.findByNumber(userNumber);
         if (course.isEmpty()){
             throw new RuntimeException("There is no course with given code!");
         }
-        List<User>users=course.get().getUsers();
-        User user=userService.findByNumber(userNumber);
-        users.remove(user);
-        course.get().setUsers(users);
+        Optional<CourseRegistration>courseRegistration=courseRegistrationRepository.findByCourseIdAndUserId(course.get().getId(), user.getId());
+        if(courseRegistration.isEmpty()){
+            throw new RuntimeException("there is no registry for given user and course");
+        }
+        courseRegistrationRepository.deleteById(courseRegistration.get().getId());
 
-        courseRepository.save(course.get());
         log.info("user has been removed successfully from course");
     }
 
 
-    private List<User> saveStudentsByFile(MultipartFile file) throws IOException {
+    public List<User> getStudentsFromExcelAndCreateNonExists(MultipartFile file) throws IOException {
         List<User> students = new ArrayList<>();
 
         try (Workbook workbook = new XSSFWorkbook(file.getInputStream())) {
@@ -143,14 +158,15 @@ public class CourseServiceImpl implements CourseService {
                     String number = row.getCell(2).getStringCellValue();
 
                     User student;
+
                     // if user already exists just get it
                     if (userService.existsByNumber(number)) {
                         student = userService.findByNumber(number);
                     }
-                    // if it's not exists create new user
+                    // if it's not exists create a new user
                     else {
                         student = new User(number, name, surname, number, "student");
-                        userService.register(student);
+                        //userService.register(student);
                     }
                     students.add(student);
                 }
@@ -158,10 +174,44 @@ public class CourseServiceImpl implements CourseService {
         } catch (Exception e) {
             throw new RuntimeException(e.getMessage());
         }
-        log.info("course has been saved!");
+
 
         return students;
     }
+
+    @Override
+    public void addStudentToCourseAndSaveNonExistingStudent(User student, String courseCode) {
+
+        Optional<Course> course=courseRepository.findByCode(courseCode);
+
+        if (course.isEmpty()){
+            throw new RuntimeException("there is no such a course with given code!");
+        }
+
+        User user=student;
+
+        if (userService.existsByNumber(student.getNumber())) {
+
+            user=userService.findByNumber(student.getNumber());
+
+        }
+        else {
+            user.setPassword(user.getNumber());
+            user.setRole("student");
+            userService.encodePasswordAndSaveUser(user);
+        }
+
+        CourseRegistration courseRegistration =new CourseRegistration();
+        courseRegistration.setUser(user);
+        courseRegistration.setCourse(course.get());
+        courseRegistration.setSemester(semesterService.getCurrentSemester());
+
+        courseRegistrationRepository.save(courseRegistration);
+
+        log.info("a new course registry has been saved for {}",course.get().getTitle());
+
+    }
+
 
     private CourseResponse courseToResponse(Course course) {
 

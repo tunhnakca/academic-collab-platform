@@ -10,7 +10,6 @@ import java.util.Optional;
 
 @Repository
 public interface CourseRepository extends JpaRepository<Course,Integer> {
-    List<Course>findCoursesByUsers(User user);
 
     Optional<Course> findByCode(String code);
 

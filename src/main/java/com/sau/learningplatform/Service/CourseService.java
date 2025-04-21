@@ -10,14 +10,14 @@ import java.util.List;
 
 public interface CourseService {
 
-    List<CourseResponse> getCoursesByUser(User user);
+    List<CourseResponse> getActiveCourseResponsesByUser(User user);
 
     void save(Course course);
 
     CourseResponse getCourseResponseByCode(String courseCode);
 
-    void addCourseWithStudentsByExcel(String ownerNumber, String courseName, String courseCode,
-            MultipartFile studentFile) throws IOException;
+    void createCourseWithUsers(String ownerNumber, String courseName, String courseCode,
+                               MultipartFile studentFile) throws IOException;
 
     void deleteById(int id);
 
@@ -27,6 +27,6 @@ public interface CourseService {
 
     Course getByCode(String code);
 
-
-    void removeUserFromCourse(String courseCode, String userNumber);
+    void addStudentToCourseAndSaveNonExistingStudent(User user, String courseCode);
+    void removeUserFromCourseInActiveSemester(String courseCode, String userNumber);
 }
