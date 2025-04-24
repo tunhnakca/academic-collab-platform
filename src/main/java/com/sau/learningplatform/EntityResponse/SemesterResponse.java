@@ -8,6 +8,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 
 @Data
 @Builder
@@ -24,6 +26,18 @@ public class SemesterResponse {
     private LocalDateTime endDate;
 
     private Boolean isActive;
+
+    public String getStartDateFormatted() {
+        if (startDate == null) return "";
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
+        return startDate.format(formatter);
+    }
+
+    public String getEndDateFormatted() {
+        if (endDate == null) return "";
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
+        return endDate.format(formatter);
+    }
 
 
 }

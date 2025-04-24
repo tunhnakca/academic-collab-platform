@@ -3,7 +3,19 @@
 @use "../abstracts/utilities" as *;
 @use "../components" as *;
 
-.section-add-course {
+.section-add-semester {
+  .error-message {
+    color: $color-danger;
+    margin-top: 1rem;
+  }
+
+  .input-error {
+    border-color: $color-danger !important;
+
+    &::placeholder {
+      color: $color-danger !important;
+    }
+  }
 }
 
 .add-semester {
@@ -12,4 +24,10 @@
 
 .btn__add-semester {
   align-self: end;
+
+  &:disabled {
+    background-color: $color-disable;
+    color: $color-grey-light-6;
+    cursor: not-allowed;
+  }
 }

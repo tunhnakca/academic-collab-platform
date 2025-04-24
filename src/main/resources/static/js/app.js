@@ -2,6 +2,7 @@ import "./components/alert-bar.js";
 import { showLoginInfoModal } from "./pages/login";
 import { toggleDropdownHeader } from "./pages/header";
 import { setupPasswordValidation } from "./pages/profile";
+import { setupSemesterDateValidation } from "./pages/add-semester";
 import {
   deleteCourseButton,
   updatePadding,
@@ -51,6 +52,16 @@ if (window.location.pathname.includes("profile")) {
     setupPasswordValidation();
   });
 }
+
+///////////////////////////
+// Add Semester Page
+///////////////////////////
+
+// When the document is fully loaded
+document.addEventListener("DOMContentLoaded", function () {
+  // Initialize date validation for start and end date inputs
+  setupSemesterDateValidation();
+});
 
 ///////////////////////////
 // Courses Page
