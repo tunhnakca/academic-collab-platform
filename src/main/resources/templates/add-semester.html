@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{layout}"
+>
+  <head>
+    <title>Add Semester</title>
+  </head>
+  <body>
+    <section class="section section-add-semester" layout:fragment="content">
+      <!-- Buraya if koy ve eğerki aktif semester varsa adı update aktif yoksa add
+      olsun -->
+      <div class="container container-add-semester container-form">
+        <h2 class="heading-secondary add-semester">Add Semester</h2>
+
+        <form
+          th:action="@{/add-semester}"
+          method="post"
+          class="form form-add-semester"
+          th:object="${semester}"
+          name="add-semester"
+        ></form>
+      </div>
+    </section>
+  </body>
+</html>
