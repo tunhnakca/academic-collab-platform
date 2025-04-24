@@ -39,6 +39,7 @@ public class HomeController {
         return "login";
 
     }
+    
     @GetMapping("/profile")
     public String showProfilePage(Principal principal, Model model,
                                   @ModelAttribute("messageResponse") MessageResponse messageResponse) {
@@ -47,6 +48,16 @@ public class HomeController {
         model.addAttribute("loggedUser", user);
         model.addAttribute(messageResponse);
         return "profile";
+    }
+
+    @GetMapping("/add-semester")
+    public String showAddSemester(Principal principal, Model model,
+                                  @ModelAttribute("messageResponse") MessageResponse messageResponse) {
+        String number = principal.getName();
+        User user = userService.findByNumber(number);
+        model.addAttribute("loggedUser", user);
+        model.addAttribute(messageResponse);
+        return "add-semester";
     }
 
     @PostMapping("/password/change")
