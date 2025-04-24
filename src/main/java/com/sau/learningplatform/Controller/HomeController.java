@@ -2,6 +2,8 @@ package com.sau.learningplatform.Controller;
 
 import com.sau.learningplatform.Entity.User;
 import com.sau.learningplatform.EntityResponse.MessageResponse;
+import com.sau.learningplatform.Repository.SemesterRepository;
+import com.sau.learningplatform.Service.SemesterService;
 import com.sau.learningplatform.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,9 +22,11 @@ public class HomeController {
 
     private final UserService userService;
 
-    @Autowired
-    public HomeController(UserService userService) {
+    private SemesterService semesterService;
+
+    public HomeController(UserService userService, SemesterService semesterService) {
         this.userService = userService;
+        this.semesterService = semesterService;
     }
 
     //Bunu kullan artık ************************************************************************
@@ -56,6 +60,7 @@ public class HomeController {
         String number = principal.getName();
         User user = userService.findByNumber(number);
         model.addAttribute("loggedUser", user);
+        model.addAttribute("semester", semesterService.getCurrentSemester());
         model.addAttribute(messageResponse);
         return "add-semester";
     }

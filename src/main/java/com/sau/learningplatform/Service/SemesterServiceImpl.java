@@ -4,6 +4,7 @@ import com.sau.learningplatform.Entity.Semester;
 import com.sau.learningplatform.Repository.SemesterRepository;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 
@@ -16,9 +17,11 @@ public class SemesterServiceImpl implements SemesterService{
     }
 
 
+
     @Override
     public Semester getCurrentSemester() {
-        List<Semester> semesterList=semesterRepository.findByIsActiveTrue();
+        List<Semester> semesterList=semesterRepository.findActiveSemesters(LocalDateTime.now());
+
         if (semesterList.size()<1){
             throw new RuntimeException("There is No active Semester !");
         }
@@ -26,9 +29,13 @@ public class SemesterServiceImpl implements SemesterService{
             throw new RuntimeException("There are multiple active Semesters !");
         }
 
+
         return semesterList.get(0);
 
     }
+
+
+
 
 
 }
