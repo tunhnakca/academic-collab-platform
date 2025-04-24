@@ -2,6 +2,7 @@ package com.sau.learningplatform.Controller;
 
 import com.sau.learningplatform.Entity.User;
 import com.sau.learningplatform.EntityResponse.MessageResponse;
+import com.sau.learningplatform.EntityResponse.SemesterResponse;
 import com.sau.learningplatform.Repository.SemesterRepository;
 import com.sau.learningplatform.Service.SemesterService;
 import com.sau.learningplatform.Service.UserService;
@@ -60,7 +61,9 @@ public class HomeController {
         User user = userService.findByNumber(number);
         model.addAttribute("loggedUser", user);
         model.addAttribute("semester", semesterService.getActiveSemesterResponseIfNotEmptyResponse());
-
+        SemesterResponse emptySemester = new SemesterResponse();
+        emptySemester.setIsActive(false);
+        model.addAttribute("emptySemester", new SemesterResponse());
         return "add-semester";
     }
 
