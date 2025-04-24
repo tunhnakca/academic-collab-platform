@@ -24,9 +24,6 @@ public class Semester {
     @Column(name = "end_date")
     private LocalDateTime endDate;
 
-    @Column(name = "is_active")
-    private Boolean isActive;
-
     public int getId() {
         return id;
     }
@@ -59,11 +56,4 @@ public class Semester {
         this.endDate = endDate;
     }
 
-    public Boolean getActive() {
-        return isActive;
-    }
-
-    public void setActive(Boolean active) {
-        isActive = active;
-    }
 }
