@@ -1,9 +1,11 @@
 package com.sau.learningplatform.Service;
 
 import com.sau.learningplatform.Entity.Course;
+import com.sau.learningplatform.Entity.CourseRegistration;
 import com.sau.learningplatform.Entity.User;
 import com.sau.learningplatform.EntityResponse.MessageResponse;
 import com.sau.learningplatform.EntityResponse.UserResponse;
+import com.sau.learningplatform.Repository.CourseRegistrationRepository;
 import com.sau.learningplatform.Repository.CourseRepository;
 import com.sau.learningplatform.Repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -21,11 +23,17 @@ public class UserServiceImpl implements UserService {
 
     private CourseRepository courseRepository;
 
+    private SemesterService semesterService;
+
+    private CourseRegistrationRepository courseRegistrationRepository;
+
     private BCryptPasswordEncoder encoder;
 
-    public UserServiceImpl(UserRepository userRepository, CourseRepository courseRepository, BCryptPasswordEncoder encoder) {
+    public UserServiceImpl(UserRepository userRepository, CourseRepository courseRepository, SemesterService semesterService, CourseRegistrationRepository courseRegistrationRepository, BCryptPasswordEncoder encoder) {
         this.userRepository = userRepository;
         this.courseRepository = courseRepository;
+        this.semesterService = semesterService;
+        this.courseRegistrationRepository = courseRegistrationRepository;
         this.encoder = encoder;
     }
 
@@ -42,12 +50,12 @@ public class UserServiceImpl implements UserService {
     }
 
 
-
     @Override
-    public void register(User user) {
+    public void encodePasswordAndSaveUser(User user) {
         String hashedPassword = encoder.encode(user.getPassword());
         user.setPassword(hashedPassword);
         userRepository.save(user);
+        log.info("new user has been registered !");
     }
 
     @Override
@@ -117,9 +125,7 @@ public class UserServiceImpl implements UserService {
                 .surname(user.getSurname())
                 .number(user.getNumber())
                 .build();
-
     }
-
 
 
 
@@ -137,46 +143,19 @@ public class UserServiceImpl implements UserService {
         return students.stream().map(this::mapToUserResponse).toList();
     }
 
-    @Override
-    public void addStudentToCourseAndSaveNonExistingStudent(User student, String courseCode) {
 
-        Optional<Course> course=courseRepository.findByCode(courseCode);
-
-        if (course.isEmpty()){
-            throw new RuntimeException("there is no such a course with given code!");
-        }
-
-
-        if (userRepository.existsByNumber(student.getNumber())){
-
-            User user=userRepository.findByNumber(student.getNumber()).get();
-            user.addCourse(course.get());
-
-            userRepository.save(user);
-
-            log.info("Student added to course {}",course.get().getTitle());
-
-        }
-        else{
-            String upperCasedNumber=student.getNumber().toUpperCase();
-            student.setNumber(upperCasedNumber);
-            student.setPassword(encoder.encode(student.getNumber()));
-            student.addCourse(course.get());
-            student.setRole("student");
-
-            userRepository.save(student);
-
-            log.info("New student has been saved with a course! ");
-        }
-
-    }
 
     @Override
     public List<UserResponse> getUsersByCourseCodeAndRole(String courseCode,String role) {
-        List<User>users=userRepository.findByCoursesCodeAndRoleIgnoreCase(courseCode,role);
+
+        List<CourseRegistration>courseRegistrations=courseRegistrationRepository.findByCourseCodeAndUserRole(courseCode,role);
+
+        List<User>users=courseRegistrations.stream().map(CourseRegistration::getUser).toList();
+
         if(users.isEmpty()){
             log.info("No user found with related course and role!");
         }
+
         return users.stream().map(this::mapToUserResponse).toList();
     }
 

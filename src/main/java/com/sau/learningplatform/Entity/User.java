@@ -18,10 +18,8 @@ public class User {
     @Column(name = "id")
     private int id;
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH,
-            CascadeType.DETACH })
-    @JoinTable(name = "course_users", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "course_id"))
-    private List<Course> courses = new ArrayList<>();
+    @OneToMany(mappedBy = "user",fetch = FetchType.LAZY)
+    List<CourseRegistration> courseRegistrations =new ArrayList<>();
 
     @Column(name = "number", unique = true)
     private String number;
@@ -58,14 +56,6 @@ public class User {
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public List<Course> getCourses() {
-        return courses;
-    }
-
-    public void setCourses(List<Course> courses) {
-        this.courses = courses;
     }
 
     public String getNumber() {
@@ -116,9 +106,11 @@ public class User {
         isDeleted = deleted;
     }
 
-    public void addCourse(Course course) {
-        courses.add(course);
-
+    public List<CourseRegistration> getCourseRegistrations() {
+        return courseRegistrations;
     }
 
+    public void setCourseRegistrations(List<CourseRegistration> courseRegistrations) {
+        this.courseRegistrations = courseRegistrations;
+    }
 }

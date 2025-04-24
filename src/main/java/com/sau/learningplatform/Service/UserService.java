@@ -9,7 +9,7 @@ import java.util.List;
 public interface UserService {
     User findById(int id);
 
-    void register(User user);
+    void encodePasswordAndSaveUser(User user);
 
     User findByNumber(String number);
 
@@ -25,7 +25,6 @@ public interface UserService {
 
     List<UserResponse> getAllStudents();
 
-    void addStudentToCourseAndSaveNonExistingStudent(User student, String courseCode);
 
     List<UserResponse> getUsersByCourseCodeAndRole(String courseCode,String role);
 }

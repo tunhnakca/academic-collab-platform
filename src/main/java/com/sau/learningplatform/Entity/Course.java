@@ -16,10 +16,10 @@ public class Course {
     @Column(name = "id")
     private int id;
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH,
-            CascadeType.DETACH })
-    @JoinTable(name = "course_users", joinColumns = @JoinColumn(name = "course_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
-    private List<User> users = new ArrayList<>();
+    @OneToMany(fetch = FetchType.LAZY, cascade = { CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH,
+            CascadeType.DETACH },
+    mappedBy = "course")
+    private List<CourseRegistration> courseRegistrations =new ArrayList<>();
 
     @Column(name = "title")
     private String title;
@@ -48,12 +48,12 @@ public class Course {
         this.id = id;
     }
 
-    public List<User> getUsers() {
-        return users;
+    public List<CourseRegistration> getCourseUsers() {
+        return courseRegistrations;
     }
 
-    public void setUsers(List<User> users) {
-        this.users = users;
+    public void setCourseUsers(List<CourseRegistration> courseRegistrations) {
+        this.courseRegistrations = courseRegistrations;
     }
 
     public String getOwner() {
@@ -88,20 +88,5 @@ public class Course {
         isDeleted = deleted;
     }
 
-    public void addUser(User user) {
-        users.add(user);
-    }
-
-    @Override
-    public String toString() {
-        return "Course{" +
-                "id=" + id +
-                ", users=" + users +
-                ", title='" + title + '\'' +
-                ", owner='" + owner + '\'' +
-                ", code='" + code + '\'' +
-                ", isDeleted=" + isDeleted +
-                '}';
-    }
 
 }

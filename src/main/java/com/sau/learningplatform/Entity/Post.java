@@ -28,17 +28,18 @@ public class Post {
     @JoinColumn(name = "project_id", nullable = false)
     private Project project;
 
+    /*
     @OneToMany
     @JoinColumn(name = "child_post_id")
     private List<Post> childPost;
-
+*/
     @Column(name = "text")
     private String text;
     @Column(name = "status")
     private String status;
     @Column(name = "date_created")
-    @CreationTimestamp
 
+    @CreationTimestamp
     private LocalDateTime dateCreated;
     @Column(name = "is_deleted")
     private Boolean isDeleted = Boolean.FALSE;
@@ -65,15 +66,6 @@ public class Post {
 
     public void setProject(Project project) {
         this.project = project;
-    }
-
-    public List<Post> getChildPost() {
-        return childPost;
-    }
-
-    public void setChildPost(List<Post> childPost) {
-        this.childPost = childPost;
-
     }
 
     public String getText() {
