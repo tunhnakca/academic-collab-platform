@@ -1,162 +1,192 @@
-@use '../abstracts/base' as *;
-@use '../abstracts/mixins' as *;
-@use '../abstracts/utilities' as *;
-@use '../components' as *;
+@use "../abstracts/base" as *;
+@use "../abstracts/mixins" as *;
+@use "../abstracts/utilities" as *;
+@use "../components" as *;
 
 .header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: #fff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #fff;
 
-    height: 6rem;
-    padding: 0 7.2rem;
-    border-bottom: 1px solid $color-grey-light-2;
-    position: relative;
+  height: 6rem;
+  padding: 0 7.2rem;
+  border-bottom: 1px solid $color-grey-light-2;
+  position: relative;
 }
 
 .main-nav {
-    &__list {
-        list-style: none;
-        display: flex;
-        align-items: center;
-        gap: 3.6rem;
+  &__list {
+    list-style: none;
+    display: flex;
+    align-items: center;
+    gap: 3.6rem;
+  }
+
+  &__link {
+    &:link,
+    &:visited {
+      @extend .transition-hover-effect;
+      display: inline-block;
+      text-decoration: none;
+      color: $color-grey-dark-1;
+      font-weight: 300;
+      font-size: 1.6rem;
+      padding: 0.4rem 0.8rem;
     }
 
-    &__link {
-        &:link,
-        &:visited {
-            @extend .transition-hover-effect;
-            display: inline-block;
-            text-decoration: none;
-            color: $color-grey-dark-1;
-            font-weight: 300;
-            font-size: 1.6rem;
-            padding: 0.4rem 0.8rem;
-        }
-
-        &:hover { 
-            background-color: $color-grey-light-3; 
-            border-radius: 8px; 
-        }
-
-        &:active {
-            @extend .scale-click-effect;
-        }
+    &:hover {
+      background-color: $color-grey-light-3;
+      border-radius: 8px;
     }
+
+    &:active {
+      @extend .scale-click-effect;
+    }
+  }
 }
 
 .user-info {
-    font-size: 1.6rem;
-    margin-right: 8rem;
+  font-size: 1.6rem;
+  margin-right: 8rem;
 
-    &__name {
-        position: relative;
-        cursor: pointer;
-        display: inline-block;
-        color: $color-grey-dark-1;
-        font-weight: 300;
-        padding: 0.4rem 0.8rem;
-        @extend .transition-hover-effect;
+  &__name {
+    position: relative;
+    cursor: pointer;
+    display: inline-block;
+    color: $color-grey-dark-1;
+    font-weight: 300;
+    padding: 0.4rem 0.8rem;
+    @extend .transition-hover-effect;
 
-        &:hover { 
-            background-color: $color-grey-light-3; 
-            border-radius: 8px; 
-        }
-        &:active {
-            @extend .scale-click-effect;
-        }
+    &:hover {
+      background-color: $color-grey-light-3;
+      border-radius: 8px;
+    }
+    &:active {
+      @extend .scale-click-effect;
+    }
+  }
+
+  &__tag {
+    @extend .badge;
+    position: absolute;
+    top: 0;
+    right: 0;
+    transform: translateY(-15%) translateX(105%);
+
+    &--admin {
+      @extend .badge--admin;
     }
 
-    &__tag {
-        @extend .badge;
-        position: absolute;
-        top: 0; 
-        right: 0;
-        transform: translateY(-15%) translateX(105%);
-
-        &--admin {
-            @extend .badge--admin;
-        }
-
-        &--instructor {
-            @extend .badge--instructor;
-        }
-
-        &--mediator {
-            @extend .badge--mediator;
-        }
-
-        &--student {
-            @extend .badge--student;
-        }
-
-        .user-info__name:hover & {
-            &--admin {
-                color: $color-admin;
-                @include border-box-shadow($color-admin);
-                background-color: #fff;
-            }
-            &--instructor {
-                color: $color-instructor; 
-                @include border-box-shadow($color-instructor);
-                background-color: #fff;
-            }
-            &--mediator {
-                color: $color-mediator; 
-                @include border-box-shadow($color-mediator);
-                background-color: #fff;
-            }
-            &--student {
-                color: $color-student; 
-                @include border-box-shadow($color-student);
-                background-color: #fff;
-            }
-        }
+    &--instructor {
+      @extend .badge--instructor;
     }
 
-    &__dropdown {
-        position: absolute;
-        top: calc(100% + 1px); // 1px means that header border bottom px
+    &--mediator {
+      @extend .badge--mediator;
+    }
+
+    &--student {
+      @extend .badge--student;
+    }
+
+    .user-info__name:hover & {
+      &--admin {
+        color: $color-admin;
+        @include border-box-shadow($color-admin);
         background-color: #fff;
-        border-radius: 1rem;
-        @include box-shadow(rgba(0, 0, 0, 0.1));
-        @extend .transition-hover-effect;
-        z-index: 1000;
-
-        ul {
-            list-style: none;
-        }
-
-        &__link {
-            display: flex;
-            gap: 1.2rem;
-            align-items: center;
-            justify-content: flex-start;
-            width: 100%;
-            text-decoration: none;
-            color: $color-grey-dark-1;
-            padding: 1.2rem 1.6rem;
-            @extend .transition-hover-effect;
-            border: none;
-            background: none;
-            cursor: pointer;
-            font: inherit;
-            font-size: 1.6rem;
-            font-weight: 300;
-
-            &__icon {
-                height: 2.4rem;
-                width: 2.4rem;
-            }
-
-            &:hover {
-                background-color: $color-grey-light-3; 
-            }
-
-            &--logout {
-                color: $color-danger;
-            }
-        }
+      }
+      &--instructor {
+        color: $color-instructor;
+        @include border-box-shadow($color-instructor);
+        background-color: #fff;
+      }
+      &--mediator {
+        color: $color-mediator;
+        @include border-box-shadow($color-mediator);
+        background-color: #fff;
+      }
+      &--student {
+        color: $color-student;
+        @include border-box-shadow($color-student);
+        background-color: #fff;
+      }
     }
+  }
+
+  &__dropdown {
+    position: absolute;
+    top: calc(100% + 1px); // 1px means that header border bottom px
+    margin-right: 1.6rem;
+    background-color: #fff;
+    border-radius: 1rem;
+    @include box-shadow(rgba(0, 0, 0, 0.1));
+    @extend .transition-hover-effect;
+    z-index: 1000;
+
+    ul {
+      list-style: none;
+    }
+
+    &__link {
+      display: flex;
+      gap: 1.2rem;
+      align-items: flex-start;
+      justify-content: flex-start;
+      width: 100%;
+      text-decoration: none;
+      color: $color-grey-dark-1;
+      padding: 1.2rem 1.6rem;
+      @extend .transition-hover-effect;
+      border: none;
+      border-left: 3px solid transparent;
+      background: none;
+      cursor: pointer;
+      font: inherit;
+      font-size: 1.6rem;
+      font-weight: 300;
+      white-space: normal;
+      word-break: break-word;
+      overflow-wrap: break-word;
+
+      &__icon {
+        flex: 0 0 auto;
+        width: 2.4rem;
+        height: 2.4rem;
+        min-width: 2.4rem;
+        min-height: 2.4rem;
+        max-width: 2.4rem;
+        max-height: 2.4rem;
+        display: inline-block;
+        vertical-align: middle;
+      }
+
+      &:hover {
+        background-color: $color-grey-light-3;
+      }
+
+      &--logout {
+        color: $color-danger;
+      }
+    }
+
+    &--admin__list {
+      background-color: $color-admin;
+
+      .user-info__dropdown__link,
+      .user-info__dropdown__link:link,
+      .user-info__dropdown__link:visited {
+        color: #fff;
+        @extend .transition-hover-effect;
+      }
+
+      .user-info__dropdown__link:hover,
+      .user-info__dropdown__link:active {
+        color: $color-admin;
+        background-color: #fff;
+        border-left: 3px solid $color-admin;
+      }
+    }
+  }
 }
