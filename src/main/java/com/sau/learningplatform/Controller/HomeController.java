@@ -54,14 +54,13 @@ public class HomeController {
         return "profile";
     }
 
-    @GetMapping("/add-semester")
-    public String showAddSemester(Principal principal, Model model,
-                                  @ModelAttribute("messageResponse") MessageResponse messageResponse) {
+    @GetMapping("/semester/add")
+    public String showAddSemesterForm(Principal principal, Model model) {
         String number = principal.getName();
         User user = userService.findByNumber(number);
         model.addAttribute("loggedUser", user);
-        model.addAttribute("semester", semesterService.getCurrentSemester());
-        model.addAttribute(messageResponse);
+        model.addAttribute("semester", semesterService.getActiveSemesterResponseIfNotEmptyResponse());
+
         return "add-semester";
     }
 
