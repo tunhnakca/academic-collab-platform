@@ -2,7 +2,9 @@ package com.sau.learningplatform.Service;
 
 import com.sau.learningplatform.Entity.Semester;
 import com.sau.learningplatform.EntityResponse.SemesterResponse;
+import com.sau.learningplatform.Enum.EnumSeason;
 import com.sau.learningplatform.Repository.SemesterRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -10,6 +12,7 @@ import java.util.List;
 
 
 @Service
+@Slf4j
 public class SemesterServiceImpl implements SemesterService{
     private SemesterRepository semesterRepository;
 
@@ -50,6 +53,25 @@ public class SemesterServiceImpl implements SemesterService{
 
     }
 
+    @Override
+    public void saveOrUpdateResponse(SemesterResponse semesterResponse) {
+
+        Semester semester=new Semester(semesterResponse.getId(),semesterResponse.getStartDate(),semesterResponse.getEndDate());
+
+        System.out.println(semesterResponse);
+
+        if (semesterResponse.getSeason().equals("FALL") || semesterResponse.getSeason().equals("fall")){
+            semester.setSeason(EnumSeason.FALL);
+        }
+        else if(semesterResponse.getSeason().equals("SPRING") || semesterResponse.getSeason().equals("spring")){
+            semester.setSeason(EnumSeason.SPRING);
+        }
+        else {
+            log.error("invalid season name!");
+        }
+        semesterRepository.save(semester);
+    }
+
 
     private SemesterResponse mapToSemesterResponse(Semester semester){
         return SemesterResponse.builder()
@@ -60,6 +82,8 @@ public class SemesterServiceImpl implements SemesterService{
                 .isActive(semester.getEndDate().isAfter(LocalDateTime.now()))
                 .build();
     }
+
+
 
 
 
