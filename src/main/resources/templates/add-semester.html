@@ -8,18 +8,71 @@
   </head>
   <body>
     <section class="section section-add-semester" layout:fragment="content">
-      <!-- Buraya if koy ve eğerki aktif semester varsa adı update aktif yoksa add
-      olsun -->
       <div class="container container-add-semester container-form">
-        <h2 class="heading-secondary add-semester">Add Semester</h2>
+        <h2
+          class="heading-secondary add-semester"
+          th:text="${semester.isActive} ? 'Update Semester' : 'Add Semester'"
+        ></h2>
 
         <form
-          th:action="@{/add-semester}"
+          th:action="@{/semester/add}"
           method="post"
           class="form form-add-semester"
           th:object="${semester}"
           name="add-semester"
-        ></form>
+        >
+          <input
+            type="hidden"
+            th:if="${semester.isActive}"
+            th:field="*{id}"
+            name="semesterId"
+          />
+          <div class="form-group">
+            <label for="semesterStartDate">Start Date</label>
+            <input
+              type="datetime-local"
+              id="semesterStartDate"
+              th:value="${semester.startDateFormatted}"
+              th:disabled="${semester.isActive}"
+              th:readonly="${semester.isActive}"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="semesterEndDate">End Date</label>
+            <input
+              type="datetime-local"
+              id="semesterEndDate"
+              th:value="${semester.endDateFormatted}"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="semesterSeason">Season</label>
+            <select
+              th:field="*{season}"
+              id="semesterSeason"
+              th:disabled="${semester.isActive}"
+              required
+            >
+              <option value="FALL" th:selected="${semester.season == 'FALL'}">
+                Fall
+              </option>
+              <option
+                value="SPRING"
+                th:selected="${semester.season == 'SPRING'}"
+              >
+                Spring
+              </option>
+            </select>
+          </div>
+          <button
+            type="submit"
+            class="btn btn__add-semester"
+            th:classappend="${semester.isActive} ? 'btn--primary' : 'btn--success'"
+            th:text="${semester.isActive} ? 'Update Semester' : 'Add Semester'"
+          ></button>
+        </form>
       </div>
     </section>
   </body>
