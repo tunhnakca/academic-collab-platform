@@ -10,7 +10,7 @@ public interface CourseRegistrationRepository extends JpaRepository<CourseRegist
 
     Optional<CourseRegistration> findByCourseIdAndUserId(int courseId, int userId);
 
-    List<CourseRegistration> findByUserIdAndSemesterId(int userId, int semesterId);
+    List<CourseRegistration> findByUserIdAndSemesterId(int userId, Long semesterId);
 
     List<CourseRegistration> findByCourseCodeAndUserRole(String courseCode, String userRole);
 

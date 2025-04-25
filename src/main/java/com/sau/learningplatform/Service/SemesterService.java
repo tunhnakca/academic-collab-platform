@@ -8,4 +8,5 @@ public interface SemesterService {
     Semester getCurrentSemester();
     SemesterResponse getActiveSemesterResponseIfNotEmptyResponse();
 
+    void saveOrUpdateResponse(SemesterResponse semesterResponse);
 }

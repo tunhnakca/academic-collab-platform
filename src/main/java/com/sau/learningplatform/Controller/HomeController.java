@@ -55,17 +55,7 @@ public class HomeController {
         return "profile";
     }
 
-    @GetMapping("/semester/add")
-    public String showAddSemesterForm(Principal principal, Model model) {
-        String number = principal.getName();
-        User user = userService.findByNumber(number);
-        model.addAttribute("loggedUser", user);
-        model.addAttribute("semester", semesterService.getActiveSemesterResponseIfNotEmptyResponse());
-        SemesterResponse emptySemester = new SemesterResponse();
-        emptySemester.setIsActive(false);
-        model.addAttribute("emptySemester", new SemesterResponse());
-        return "add-semester";
-    }
+
 
     @PostMapping("/password/change")
     public RedirectView changePassword(Principal principal,

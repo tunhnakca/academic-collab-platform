@@ -14,7 +14,7 @@ public class Semester {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    int id;
+    Long id;
 
     @Enumerated(EnumType.STRING)
     @Column(name="season")
@@ -24,11 +24,20 @@ public class Semester {
     @Column(name = "end_date")
     private LocalDateTime endDate;
 
-    public int getId() {
+    public Semester() {
+    }
+
+    public Semester(Long id, LocalDateTime startDate, LocalDateTime endDate) {
+        this.id = id;
+        this.startDate = startDate;
+        this.endDate = endDate;
+    }
+
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -56,4 +65,13 @@ public class Semester {
         this.endDate = endDate;
     }
 
+    @Override
+    public String toString() {
+        return "Semester{" +
+                "id=" + id +
+                ", season=" + season +
+                ", startDate=" + startDate +
+                ", endDate=" + endDate +
+                '}';
+    }
 }
