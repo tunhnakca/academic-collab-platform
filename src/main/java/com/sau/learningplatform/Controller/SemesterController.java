@@ -36,12 +36,13 @@ public class SemesterController {
     }
 
     @PostMapping("/semester/add")
-    public void updateOrSaveSemester(Principal principal, Model model, @ModelAttribute("semester")SemesterResponse semesterResponse) {
+    public String updateOrSaveSemester(Principal principal, Model model, @ModelAttribute("semester")SemesterResponse semesterResponse) {
         String number = principal.getName();
         User user = userService.findByNumber(number);
         model.addAttribute("loggedUser", user);
 
         semesterService.saveOrUpdateResponse(semesterResponse);
 
+        return "redirect:/semester/add";
     }
 }
