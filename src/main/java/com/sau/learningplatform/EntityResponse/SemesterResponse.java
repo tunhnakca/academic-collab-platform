@@ -17,7 +17,7 @@ import java.time.format.DateTimeFormatter;
 @NoArgsConstructor
 public class SemesterResponse {
 
-    int id;
+    Long id;
 
     private String season;
 
