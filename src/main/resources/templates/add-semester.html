@@ -21,29 +21,33 @@
           th:object="${semester}"
           name="add-semester"
         >
-          <input
-            type="hidden"
-            th:if="${semester.isActive}"
-            th:field="*{id}"
-            name="semesterId"
-          />
+          <!-- If semester is active send semester id -->
+          <input type="hidden" th:if="${semester.isActive}" th:field="*{id}" />
+
           <div class="form-group">
             <label for="semesterStartDate">Start Date</label>
             <input
               type="datetime-local"
               id="semesterStartDate"
-              th:value="${semester.startDateFormatted}"
+              th:field="*{startDate}"
               th:disabled="${semester.isActive}"
               th:readonly="${semester.isActive}"
               required
             />
+            <!-- If semester is active send start date value -->
+            <input
+              type="hidden"
+              th:if="${semester.isActive}"
+              th:field="*{startDate}"
+            />
           </div>
+
           <div class="form-group">
             <label for="semesterEndDate">End Date</label>
             <input
               type="datetime-local"
               id="semesterEndDate"
-              th:value="${semester.endDateFormatted}"
+              th:field="*{endDate}"
               required
             />
           </div>
@@ -55,16 +59,15 @@
               th:disabled="${semester.isActive}"
               required
             >
-              <option value="FALL" th:selected="${semester.season == 'FALL'}">
-                Fall
-              </option>
-              <option
-                value="SPRING"
-                th:selected="${semester.season == 'SPRING'}"
-              >
-                Spring
-              </option>
+              <option value="FALL">Fall</option>
+              <option value="SPRING">Spring</option>
             </select>
+            <!-- If semester is active send season value -->
+            <input
+              type="hidden"
+              th:if="${semester.isActive}"
+              th:field="*{season}"
+            />
           </div>
           <button
             type="submit"
