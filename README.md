@@ -26,15 +26,15 @@ npm install --save-dev parcel concurrently
 
 #### 1.3 Update package.json
 
-Update your package.json file with the following scripts for watching, building assets, and running the application:
-
+Update your package.json file with the following scripts for watching, building, cleaning, and running the application:
 ```json
 {
-  "scripts": {
+    "scripts": {
     "watch": "npx parcel watch src/main/resources/static/js/app.js src/main/resources/static/scss/main.scss --dist-dir src/main/resources/static/dist --public-url /dist",
     "build-assets": "npx parcel build src/main/resources/static/js/app.js src/main/resources/static/scss/main.scss --dist-dir src/main/resources/static/dist --public-url /dist",
     "build": "npm run build-assets && ./mvnw clean package",
-    "dev": "concurrently -k \"npm run watch\" \"./mvnw spring-boot:run\""
+    "clean": "rm -rf .parcel-cache src/main/resources/static/dist",
+    "dev": "npm run clean && concurrently -k --names \"watch,backend\" \"npm run watch\" \"./mvnw spring-boot:run\""
   }
 }
 ```
@@ -45,7 +45,9 @@ Update your package.json file with the following scripts for watching, building 
 
 - build: Combines the build-assets script with Maven's clean and package commands to create a production-ready build.
 
-- dev: Runs the Parcel watcher and the Spring Boot application concurrently for a seamless development experience.
+- clean: Deletes the .parcel-cache and previously built assets in dist directory.
+
+- dev: Cleans old assets and starts both the Parcel watcher and Spring Boot backend concurrently, ensuring a smooth development environment.
 
 #### 1.4 Run Parcel and Spring Boot
 
