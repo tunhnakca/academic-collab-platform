@@ -148,7 +148,22 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public void transferInstructorsAndAdminsToNewSemester(Semester closestPastSemester, Semester newSemester) {
+    public void transferInstructorsAndAdminsToNewSemester(Semester previousSemester, Semester newSemester) {
+        List<CourseRegistration> adminAndInstructorRegistries = new ArrayList<>(courseRegistrationRepository.findByUserRoleIgnoreCaseAndSemester("INSTRUCTOR", previousSemester));
+        adminAndInstructorRegistries.addAll(courseRegistrationRepository.findByUserRoleIgnoreCaseAndSemester("ADMIN",previousSemester));
+
+        for(CourseRegistration oldRegistry:adminAndInstructorRegistries){
+
+            CourseRegistration newRegistry=new CourseRegistration();
+            newRegistry.setCourse(oldRegistry.getCourse());
+            newRegistry.setUser(oldRegistry.getUser());
+            newRegistry.setSemester(newSemester);
+            
+            courseRegistrationRepository.save(newRegistry);
+            
+        }
+
+
 
     }
 

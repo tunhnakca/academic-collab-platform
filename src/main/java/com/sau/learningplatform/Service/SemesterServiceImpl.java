@@ -70,6 +70,13 @@ public class SemesterServiceImpl implements SemesterService{
         else {
             log.error("invalid season name!");
         }
+
+        if (semesterResponse.getId()==null){
+            log.info("new semester has been saved successfully!");
+        }
+        else {
+            log.info("semester has been updated successfully!");
+        }
        return semesterRepository.save(semester);
     }
 

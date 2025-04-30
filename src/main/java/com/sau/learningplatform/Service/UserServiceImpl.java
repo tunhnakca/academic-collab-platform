@@ -148,7 +148,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<UserResponse> getUsersByCourseCodeAndRole(String courseCode,String role) {
 
-        List<CourseRegistration>courseRegistrations=courseRegistrationRepository.findByCourseCodeAndUserRole(courseCode,role);
+        List<CourseRegistration>courseRegistrations=courseRegistrationRepository.findByCourseCodeAndUserRoleAndSemester(courseCode,role,semesterService.getCurrentSemester());
 
         List<User>users=courseRegistrations.stream().map(CourseRegistration::getUser).toList();
 

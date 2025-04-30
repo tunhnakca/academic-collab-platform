@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.security.Principal;
 
-@RestController
+@Controller
 public class SemesterController {
     final private UserService userService;
 
@@ -41,12 +41,6 @@ public class SemesterController {
         return "add-semester";
     }
 
-    @GetMapping("/deneme")
-    Semester returnPastSemester() {
-
-        return semesterService.getClosestPastSemester();
-
-    }
 
     @PostMapping("/semester/add")
     public String updateOrSaveSemester(Principal principal, Model model, @ModelAttribute("semester")SemesterResponse semesterResponse) {
