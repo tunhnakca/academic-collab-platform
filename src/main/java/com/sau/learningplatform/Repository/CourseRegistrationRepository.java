@@ -1,6 +1,7 @@
 package com.sau.learningplatform.Repository;
 
 import com.sau.learningplatform.Entity.CourseRegistration;
+import com.sau.learningplatform.Entity.Semester;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
@@ -12,6 +13,8 @@ public interface CourseRegistrationRepository extends JpaRepository<CourseRegist
 
     List<CourseRegistration> findByUserIdAndSemesterId(int userId, Long semesterId);
 
-    List<CourseRegistration> findByCourseCodeAndUserRole(String courseCode, String userRole);
+    List<CourseRegistration> findByCourseCodeAndUserRoleAndSemester(String courseCode, String userRole,Semester semester);
+
+    List<CourseRegistration> findByUserRoleIgnoreCaseAndSemester(String userRole, Semester semester);
 
 }
