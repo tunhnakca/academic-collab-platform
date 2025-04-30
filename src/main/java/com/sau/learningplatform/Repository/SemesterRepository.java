@@ -12,5 +12,7 @@ import java.util.Optional;
 public interface SemesterRepository extends JpaRepository<Semester,Integer> {
     @Query("SELECT s FROM Semester s WHERE s.startDate <= :now AND s.endDate >= :now ORDER BY s.startDate ASC")
     List<Semester> findActiveSemesters(@Param("now") LocalDateTime now);
+    Optional<Semester> findTopByEndDateBeforeOrderByEndDateDesc(LocalDateTime currentDateTime);
+
 
 }

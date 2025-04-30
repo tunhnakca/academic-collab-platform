@@ -2,6 +2,7 @@ package com.sau.learningplatform.Service;
 
 import com.sau.learningplatform.Entity.Course;
 import com.sau.learningplatform.Entity.CourseRegistration;
+import com.sau.learningplatform.Entity.Semester;
 import com.sau.learningplatform.Entity.User;
 import com.sau.learningplatform.EntityResponse.CourseResponse;
 import com.sau.learningplatform.Repository.CourseRegistrationRepository;
@@ -96,6 +97,8 @@ public class CourseServiceImpl implements CourseService {
 
     }
 
+
+
     @Override
     public void deleteById(int id) {
         courseRepository.deleteById(id);
@@ -142,6 +145,11 @@ public class CourseServiceImpl implements CourseService {
         courseRegistrationRepository.deleteById(courseRegistration.get().getId());
 
         log.info("user has been removed successfully from course");
+    }
+
+    @Override
+    public void transferInstructorsAndAdminsToNewSemester(Semester closestPastSemester, Semester newSemester) {
+
     }
 
 

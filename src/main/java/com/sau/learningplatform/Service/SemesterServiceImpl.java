@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 
 @Service
@@ -54,7 +55,7 @@ public class SemesterServiceImpl implements SemesterService{
     }
 
     @Override
-    public void saveOrUpdateResponse(SemesterResponse semesterResponse) {
+    public Semester saveOrUpdateResponse(SemesterResponse semesterResponse) {
 
         Semester semester=new Semester(semesterResponse.getId(),semesterResponse.getStartDate(),semesterResponse.getEndDate());
 
@@ -69,7 +70,16 @@ public class SemesterServiceImpl implements SemesterService{
         else {
             log.error("invalid season name!");
         }
-        semesterRepository.save(semester);
+       return semesterRepository.save(semester);
+    }
+
+    @Override
+    public Semester getClosestPastSemester() {
+        Optional<Semester>optionalPastSemester=semesterRepository.findTopByEndDateBeforeOrderByEndDateDesc(LocalDateTime.now());
+        if (optionalPastSemester.isEmpty()){
+            throw new RuntimeException("previous semester is not found!");
+        }
+        return optionalPastSemester.get();
     }
 
 
