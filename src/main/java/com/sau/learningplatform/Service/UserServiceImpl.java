@@ -55,7 +55,7 @@ public class UserServiceImpl implements UserService {
         String hashedPassword = encoder.encode(user.getPassword());
         user.setPassword(hashedPassword);
         userRepository.save(user);
-        log.info("new user has been registered !");
+        log.info("New user has been registered !");
     }
 
     @Override
@@ -93,7 +93,7 @@ public class UserServiceImpl implements UserService {
 
             log.warn("Incorrect password, change request has been denied!");
 
-            return new MessageResponse("incorrect current password!", HttpStatus.UNAUTHORIZED);
+            return new MessageResponse("Incorrect current password!", HttpStatus.UNAUTHORIZED);
 
         }
 
@@ -101,7 +101,7 @@ public class UserServiceImpl implements UserService {
 
             log.warn("Your new password cannot be same as your number!");
 
-            return new MessageResponse("new password cannot be same as your number!", HttpStatus.BAD_REQUEST);
+            return new MessageResponse("New password cannot be same as your number!", HttpStatus.BAD_REQUEST);
 
         }
 
