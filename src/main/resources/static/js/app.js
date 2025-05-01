@@ -1,5 +1,5 @@
 import "./components/alert-bar.js";
-import { showLoginInfoModal } from "./pages/login";
+import { showLoginInfoModal, removeLoginParams } from "./pages/login";
 import { toggleDropdownHeader } from "./pages/header";
 import { setupPasswordValidation } from "./pages/profile";
 import { setupSemesterDateValidation } from "./pages/add-semester";
@@ -34,6 +34,7 @@ import {
 if (window.location.pathname.includes("login")) {
   document.addEventListener("DOMContentLoaded", (e) => {
     showLoginInfoModal();
+    removeLoginParams();
   });
 }
 
