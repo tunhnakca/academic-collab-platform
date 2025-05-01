@@ -1,5 +1,23 @@
 import { overlay } from "../common/config";
 
+// Helper function to remove login-related URL parameters
+export function removeLoginParams() {
+  const url = new URL(window.location);
+  const paramsToRemove = ["error", "logout"];
+  let shouldUpdate = false;
+
+  paramsToRemove.forEach((param) => {
+    if (url.searchParams.has(param)) {
+      url.searchParams.delete(param);
+      shouldUpdate = true;
+    }
+  });
+
+  if (shouldUpdate) {
+    history.replaceState(null, "", url.pathname + url.search);
+  }
+}
+
 export function showLoginInfoModal() {
   const modal = document.querySelector(".modal-login");
   const btnCloseModal = document.querySelector(".modal-close");
