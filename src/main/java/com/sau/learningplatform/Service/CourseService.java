@@ -4,6 +4,7 @@ import com.sau.learningplatform.Entity.Course;
 import com.sau.learningplatform.Entity.Semester;
 import com.sau.learningplatform.Entity.User;
 import com.sau.learningplatform.EntityResponse.CourseResponse;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -29,7 +30,7 @@ public interface CourseService {
     Course getByCode(String code);
 
     void addStudentToCourseAndSaveNonExistingStudent(User user, String courseCode);
-    void removeUserFromCourseInActiveSemester(String courseCode, String userNumber);
+    ResponseEntity<?> removeUserFromCourseInActiveSemester(String courseCode, String userNumber);
 
     void transferInstructorsAndAdminsToNewSemester(Semester closestPastSemester, Semester newSemester);
 }

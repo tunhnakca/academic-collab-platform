@@ -12,6 +12,8 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -132,19 +134,22 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public void removeUserFromCourseInActiveSemester(String courseCode, String userNumber) {
+    public ResponseEntity<?> removeUserFromCourseInActiveSemester(String courseCode, String userNumber) {
         Optional<Course> course=courseRepository.findByCode(courseCode);
         User user=userService.findByNumber(userNumber);
         if (course.isEmpty()){
-            throw new RuntimeException("There is no course with given code!");
+            log.error("There is no course with given code!");
+            return new ResponseEntity<>("There is no course with given code!", HttpStatus.NOT_FOUND);
         }
         Optional<CourseRegistration>courseRegistration=courseRegistrationRepository.findByCourseIdAndUserId(course.get().getId(), user.getId());
         if(courseRegistration.isEmpty()){
-            throw new RuntimeException("there is no registry for given user and course");
+            log.error("there is no registry for given user and course");
+            return new ResponseEntity<>("there is no registry for given user and course", HttpStatus.NOT_FOUND);
         }
         courseRegistrationRepository.deleteById(courseRegistration.get().getId());
 
         log.info("user has been removed successfully from course");
+        return new ResponseEntity<>("user has been removed successfully from course", HttpStatus.OK);
     }
 
     @Override

@@ -81,8 +81,9 @@ public class CourseController {
 
 
     @PutMapping("/courses/remove/user")
-    public void removeUserFromCourse(@RequestParam String courseCode, @RequestParam String userNumber) {
-        courseService.removeUserFromCourseInActiveSemester(courseCode,userNumber);
+    public ResponseEntity<?> removeUserFromCourse(@RequestParam String courseCode, @RequestParam String userNumber) {
+
+        return courseService.removeUserFromCourseInActiveSemester(courseCode,userNumber);
     }
 
 }
