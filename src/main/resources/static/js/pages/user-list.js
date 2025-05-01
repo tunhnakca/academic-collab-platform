@@ -86,8 +86,8 @@ export function deleteUser() {
       );
 
       if (response.ok) {
-        location.reload();
         console.info("User removed from course successfully");
+        location.reload();
       } else {
         throw new Error("Problem removing user");
       }

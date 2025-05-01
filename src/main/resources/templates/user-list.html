@@ -58,7 +58,11 @@
               th:object="${addStudent}"
               name="add-user"
             >
-              <input type="hidden" name="courseCode" th:value="${course.code}" />
+              <input
+                type="hidden"
+                name="courseCode"
+                th:value="${course.code}"
+              />
 
               <div class="form-group">
                 <input
@@ -148,7 +152,7 @@
                   <tr
                     th:each="user, stat : ${users}"
                     th:data-user-number="${user.number}"
-                    th:data-related-course="${courseCode}"
+                    th:data-related-course="${course.code}"
                   >
                     <td th:text="${stat.count}">#</td>
                     <td th:text="${user.number}">B201202056</td>

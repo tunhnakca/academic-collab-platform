@@ -81,13 +81,8 @@ public class CourseController {
 
 
     @PutMapping("/courses/remove/user")
-    public String removeUserFromCourse(Principal principal, Model model,@RequestParam String courseCode, @RequestParam String userNumber) {
-        String number = principal.getName();
-        User user = userService.findByNumber(number);
+    public void removeUserFromCourse(@RequestParam String courseCode, @RequestParam String userNumber) {
         courseService.removeUserFromCourseInActiveSemester(courseCode,userNumber);
-        model.addAttribute("loggedUser", user);
-        return "user-list";
-
     }
 
 }
