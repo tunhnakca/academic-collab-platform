@@ -6,18 +6,22 @@ import com.sau.learningplatform.Service.CourseService;
 import com.sau.learningplatform.Service.UserService;
 import com.sau.learningplatform.EntityResponse.MessageResponse;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.servlet.view.RedirectView;
 
 import java.io.IOException;
 import java.security.Principal;
 import java.util.List;
 
 @Controller
+@Slf4j
 public class CourseController {
 
     private CourseService courseService;
@@ -68,14 +72,24 @@ public class CourseController {
     }
 
 
-    @DeleteMapping("/courses/delete/{courseId}")
-    public MessageResponse deleteCourse(Principal principal, @PathVariable("courseId") int courseId) {
+    @PostMapping("/courses/delete/{courseId}")
+    public RedirectView deleteCourse(@PathVariable("courseId") int courseId, Model model, RedirectAttributes attributes) {
+        MessageResponse messageResponse=new MessageResponse();
         try {
             courseService.deleteById(courseId);
-            return new MessageResponse("Course deleted successfully",HttpStatus.OK);
+            messageResponse.setMessage("Course has been deleted successfully!");
+            messageResponse.setStatus(HttpStatus.OK);
         } catch (Exception e) {
-            return new MessageResponse("Failed to delete course",HttpStatus.BAD_REQUEST);
+            messageResponse.setMessage("Failed to delete course!");
+            messageResponse.setStatus(HttpStatus.BAD_REQUEST);
         }
+        model.addAttribute("messageResponse",messageResponse);
+        log.info(messageResponse.getMessage());
+
+        attributes.addFlashAttribute("messageResponse", messageResponse);
+
+        return new RedirectView("/courses");
+
     }
 
 
