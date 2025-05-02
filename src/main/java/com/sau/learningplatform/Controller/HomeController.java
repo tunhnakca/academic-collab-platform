@@ -46,14 +46,13 @@ public class HomeController {
     }
     
     @GetMapping("/profile")
-    public String showProfilePage(Principal principal, Model model,
-                                  @ModelAttribute("messageResponse") MessageResponse messageResponse) {
+    public String showProfilePage(Principal principal, Model model) {
         String number = principal.getName();
         User user = userService.findByNumber(number);
         model.addAttribute("loggedUser", user);
-        model.addAttribute(messageResponse);
+        // messageResponse sadece redirect sonrası flash olarak gelecek, burada elle model'e eklenmeyecek!
         return "profile";
-    }
+}
 
 
 

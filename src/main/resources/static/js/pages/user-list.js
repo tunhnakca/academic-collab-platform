@@ -47,7 +47,7 @@ export function deleteUser() {
     const modal = document.createElement("div");
     modal.classList.add("modal-delete-user");
     modal.innerHTML = `
-      <p>Are you sure you want to delete <em>${userName}</em> <em>${userSurname}</em> ?</p>
+      <p>Are you sure you want to remove <em>${userName}</em> <em>${userSurname}</em> from this course ?</p>
       <div class="modal-delete-user__buttons">
       <button class="btn btn--danger" id="confirm-delete__user">Yes</button>
       <button class="btn btn--light" id="cancel-delete__user">No</button>
