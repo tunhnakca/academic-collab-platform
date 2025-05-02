@@ -58,7 +58,6 @@ public class HomeController {
 
     @PostMapping("/password/change")
     public RedirectView changePassword(Principal principal,
-                                       Model model,
                                        RedirectAttributes attributes,
                                        @RequestParam("currentPassword") String currentPassword,
                                        @RequestParam("newPassword") String newPassword) {
