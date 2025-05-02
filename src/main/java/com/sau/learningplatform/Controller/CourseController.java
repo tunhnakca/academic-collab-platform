@@ -4,6 +4,7 @@ import com.sau.learningplatform.Entity.User;
 import com.sau.learningplatform.EntityResponse.CourseResponse;
 import com.sau.learningplatform.Service.CourseService;
 import com.sau.learningplatform.Service.UserService;
+import com.sau.learningplatform.EntityResponse.MessageResponse;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -68,13 +69,12 @@ public class CourseController {
 
 
     @DeleteMapping("/courses/delete/{courseId}")
-    public ResponseEntity<String> deleteCourse(Principal principal, @PathVariable("courseId") int courseId) {
+    public MessageResponse deleteCourse(Principal principal, @PathVariable("courseId") int courseId) {
         try {
             courseService.deleteById(courseId);
-            return ResponseEntity.ok("Course deleted successfully");
+            return new MessageResponse("Course deleted successfully",HttpStatus.OK);
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body("Failed to delete project: " + e.getMessage());
+            return new MessageResponse("Failed to delete course",HttpStatus.BAD_REQUEST);
         }
     }
 
