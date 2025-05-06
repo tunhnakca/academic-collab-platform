@@ -1,6 +1,10 @@
 // import "./components/alert-bar.js";
 import showAlert from "./components/show-alert-bar.js";
-import { showLoginInfoModal, removeLoginParams } from "./pages/login";
+import {
+  showLoginInfoModal,
+  handleLoginAlerts,
+  removeLoginParams,
+} from "./pages/login";
 import { toggleDropdownHeader } from "./pages/header";
 import { setupPasswordValidation } from "./pages/profile";
 import { setupSemesterDateValidation } from "./pages/add-semester";
@@ -54,6 +58,7 @@ document.addEventListener("DOMContentLoaded", () => {
 if (window.location.pathname.includes("login")) {
   document.addEventListener("DOMContentLoaded", (e) => {
     showLoginInfoModal();
+    handleLoginAlerts();
     removeLoginParams();
   });
 }
