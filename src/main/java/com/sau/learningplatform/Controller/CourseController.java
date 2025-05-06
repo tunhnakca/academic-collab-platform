@@ -93,11 +93,4 @@ public class CourseController {
     }
 
 
-/*
-    @PutMapping("/courses/remove/user")
-    public MessageResponse removeUserFromCourse(@RequestParam String courseCode, @RequestParam String userNumber) {
-
-        return courseService.removeUserFromCourseInActiveSemester(courseCode,userNumber);
-    }
-*/
 }

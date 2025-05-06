@@ -5,6 +5,7 @@ import com.sau.learningplatform.Entity.CourseRegistration;
 import com.sau.learningplatform.Entity.Semester;
 import com.sau.learningplatform.Entity.User;
 import com.sau.learningplatform.EntityResponse.CourseResponse;
+import com.sau.learningplatform.EntityResponse.MessageDTO;
 import com.sau.learningplatform.EntityResponse.MessageResponse;
 import com.sau.learningplatform.Repository.CourseRegistrationRepository;
 import com.sau.learningplatform.Repository.CourseRepository;
@@ -135,22 +136,22 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public MessageResponse removeUserFromCourseInActiveSemester(String courseCode, String userNumber) {
+    public ResponseEntity<MessageDTO> removeUserFromCourseInActiveSemester(String courseCode, String userNumber) {
         Optional<Course> course=courseRepository.findByCode(courseCode);
         User user=userService.findByNumber(userNumber);
         if (course.isEmpty()){
             log.error("There is no course with given code!");
-            return new MessageResponse("There is no course with given code!", HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(new MessageDTO("There is no course with given code!"), HttpStatus.NOT_FOUND);
         }
         Optional<CourseRegistration>courseRegistration=courseRegistrationRepository.findByCourseIdAndUserId(course.get().getId(), user.getId());
         if(courseRegistration.isEmpty()){
             log.error("there is no registry for given user and course");
-            return new MessageResponse("there is no registry for given user and course", HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(new MessageDTO("there is no registry for given user and course"), HttpStatus.NOT_FOUND);
         }
         courseRegistrationRepository.deleteById(courseRegistration.get().getId());
 
         log.info("user has been removed successfully from course");
-        return new MessageResponse("user has been removed successfully from course", HttpStatus.OK);
+        return new ResponseEntity<>(new MessageDTO("user has been removed successfully from course"), HttpStatus.OK);
     }
 
     @Override

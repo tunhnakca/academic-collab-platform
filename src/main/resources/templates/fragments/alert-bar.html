@@ -1,20 +1,3 @@
-<!--
-  
-  <div
-  th:if="${message}"
-  th:fragment="alert-bar"
-  class="alert-bar"
-  th:classappend="${'alert-bar--' + alertClass}"
-  >
-  <ion-icon name="alert-circle-outline" class="alert-icon"></ion-icon>
-  <span class="alert-message" th:text="${message}">Default error message</span>
-  <ion-icon name="close-outline" class="alert-close"></ion-icon>
-  <div class="alert-progress-bar"></div>
-</div>
-
--->
-
-<!-- fragments/alert-bar.html -->
 <div
   th:if="${messageResponse != null}"
   th:fragment="alert-bar"
