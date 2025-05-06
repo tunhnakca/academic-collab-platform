@@ -17,7 +17,7 @@
     }
 
     // Change the icon if the alert has the "alert-bar--danger" class
-    if (alertBar?.classList.contains("alert-bar--danger"))
+    if (alertBar?.classList.contains("alert-bar--error"))
       alertIcon?.setAttribute("name", "alert-circle-outline");
     // Change the icon if the alert has the "alert-bar--success" class
     if (alertBar?.classList.contains("alert-bar--success"))

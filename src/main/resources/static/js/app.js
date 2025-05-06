@@ -1,5 +1,10 @@
-import "./components/alert-bar.js";
-import { showLoginInfoModal, removeLoginParams } from "./pages/login";
+// import "./components/alert-bar.js";
+import showAlert from "./components/show-alert-bar.js";
+import {
+  showLoginInfoModal,
+  handleLoginAlerts,
+  removeLoginParams,
+} from "./pages/login";
 import { toggleDropdownHeader } from "./pages/header";
 import { setupPasswordValidation } from "./pages/profile";
 import { setupSemesterDateValidation } from "./pages/add-semester";
@@ -29,11 +34,31 @@ import {
 } from "./pages/user-list";
 
 ///////////////////////////
+// Show alert
+///////////////////////////
+document.addEventListener("DOMContentLoaded", () => {
+  const alertData = localStorage.getItem("alertMessage");
+
+  if (alertData) {
+    try {
+      const { message, status } = JSON.parse(alertData);
+      showAlert(message, status === "success" ? "success" : "error");
+    } catch (err) {
+      console.error("Alert message parse error:", err);
+    } finally {
+      // Clear message to show only once
+      localStorage.removeItem("alertMessage");
+    }
+  }
+});
+
+///////////////////////////
 // Login Page
 ///////////////////////////
 if (window.location.pathname.includes("login")) {
   document.addEventListener("DOMContentLoaded", (e) => {
     showLoginInfoModal();
+    handleLoginAlerts();
     removeLoginParams();
   });
 }

@@ -1,4 +1,18 @@
 import { overlay } from "../common/config";
+import showAlert from "../components/show-alert-bar";
+
+// Function that displays alerts based on login parameters
+export function handleLoginAlerts() {
+  const urlParams = new URLSearchParams(window.location.search);
+
+  if (urlParams.has("error")) {
+    showAlert("Invalid username or password. Please try again.", "error");
+  }
+
+  if (urlParams.has("logout")) {
+    showAlert("You have logged out successfully.", "success");
+  }
+}
 
 // Helper function to remove login-related URL parameters
 export function removeLoginParams() {
