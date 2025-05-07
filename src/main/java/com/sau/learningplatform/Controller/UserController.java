@@ -35,13 +35,7 @@ public class UserController {
         return "user-list";
     }
 
-    @PostMapping("/course/add/student")
-    public String addUserToCourse(@ModelAttribute("addStudent")User student, @RequestParam("courseCode") String courseCode){
 
-        courseService.addStudentToCourseAndSaveNonExistingStudent(student,courseCode);
-
-        return "redirect:/student/list?courseCode=" + courseCode;
-    }
 
     @GetMapping("/users")
     public String showUsersPage(Principal principal, Model model) {
@@ -52,9 +46,4 @@ public class UserController {
 
     }
 
-    @PutMapping("/course/remove/student")
-    public void removeStudentFromCourse(@RequestParam("courseCode") String courseCode,@RequestParam("userNumber") String number){
-
-
-    }
 }

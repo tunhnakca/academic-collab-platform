@@ -41,7 +41,7 @@ public class SemesterController {
         return "add-semester";
     }
 
-
+    //bu kaldı Rest e tasınacak
     @PostMapping("/semester/add")
     public String updateOrSaveSemester(Principal principal, Model model, @ModelAttribute("semester")SemesterResponse semesterResponse) {
         String number = principal.getName();

@@ -10,5 +10,4 @@ import org.springframework.http.HttpStatus;
 @AllArgsConstructor
 public class MessageResponse {
     String message;
-    HttpStatus status;
 }

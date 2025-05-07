@@ -55,21 +55,4 @@ public class HomeController {
 }
 
 
-
-    @PostMapping("/password/change")
-    public RedirectView changePassword(Principal principal,
-                                       RedirectAttributes attributes,
-                                       @RequestParam("currentPassword") String currentPassword,
-                                       @RequestParam("newPassword") String newPassword) {
-
-        String number = principal.getName();
-        User user = userService.findByNumber(number);
-
-        MessageResponse messageResponse = userService.updatePassword(user, currentPassword, newPassword);
-
-        attributes.addFlashAttribute("messageResponse", messageResponse);
-
-        return new RedirectView("/profile");
-
-    }
 }

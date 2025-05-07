@@ -10,6 +10,7 @@ import com.sau.learningplatform.Repository.CourseRepository;
 import com.sau.learningplatform.Repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -87,21 +88,19 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public MessageResponse updatePassword(User user, String currentPassword, String newPassword) {
+    public ResponseEntity<MessageResponse> updatePassword(User user, String currentPassword, String newPassword) {
 
         if (!encoder.matches(currentPassword, user.getPassword())) {
 
             log.warn("Incorrect password, change request has been denied!");
-
-            return new MessageResponse("Incorrect current password!", HttpStatus.UNAUTHORIZED);
+            return new ResponseEntity<>(new MessageResponse("Incorrect current password!"), HttpStatus.UNAUTHORIZED);
 
         }
 
         if (newPassword.equals(user.getNumber())) {
 
             log.warn("Your new password cannot be same as your number!");
-
-            return new MessageResponse("New password cannot be same as your number!", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(new MessageResponse("New password cannot be same as your number!"), HttpStatus.BAD_REQUEST);
 
         }
 
@@ -110,8 +109,8 @@ public class UserServiceImpl implements UserService {
         userRepository.save(user);
 
         log.info("password has been updated successfully! ");
+        return new ResponseEntity<>(new MessageResponse("Your password has been updated successfully!"), HttpStatus.OK);
 
-        return new MessageResponse("Your password has been updated successfully!", HttpStatus.OK);
 
     }
 
