@@ -1,6 +1,7 @@
 import { async } from "regenerator-runtime";
 import { updateSectionHeight } from "../common/helpers.js";
 import { overlay } from "../common/config";
+import showAlert from "../components/show-alert-bar";
 
 export const deleteUserButton = document.querySelector(
   ".section-user-list .delete-user-btn"
@@ -76,7 +77,7 @@ export function deleteUser() {
   async function removeUserFromServer(userNumber, courseCode) {
     try {
       const response = await fetch(
-        `/courses/remove/user?courseCode=${courseCode}&userNumber=${userNumber}`,
+        `/api/courses/remove/user?courseCode=${courseCode}&userNumber=${userNumber}`,
         {
           method: "PUT",
           headers: {
@@ -85,14 +86,22 @@ export function deleteUser() {
         }
       );
 
+      const data = await response.json();
+
       if (response.ok) {
-        console.info("User removed from course successfully");
+        // Set message to localStorage
+        localStorage.setItem(
+          "alertMessage",
+          JSON.stringify({ message: data.message, status: "success" })
+        );
+        // Reload the page
         location.reload();
       } else {
-        throw new Error("Problem removing user");
+        showAlert(data.message || "Unexpected error", "error");
       }
     } catch (error) {
       console.error(error.message);
+      showAlert("Network error or server unreachable", "error");
     }
   }
 }
