@@ -71,24 +71,6 @@ public class ProjectController {
         return "add-project";
     }
 
-    @PostMapping("/projects/add")
-    public String saveNewProject( @ModelAttribute Project project, @RequestParam("courseCode") String courseCode) {
-        projectService.saveProject(project, courseCode);
-
-        return "redirect:/projects?courseCode=" + courseCode;
-    }
-
-    @DeleteMapping("/projects/delete/{projectId}")
-    public ResponseEntity<String> deleteProject(@PathVariable("projectId") int id) {
-        try {
-            projectService.deleteById(id);
-            return ResponseEntity.ok("Project deleted successfully");
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body("Failed to delete project: " + e.getMessage());
-        }
-    }
-
 
 
     @GetMapping("/projects/filter")

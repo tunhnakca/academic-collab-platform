@@ -58,39 +58,7 @@ public class CourseController {
 
     }
 
-    @PostMapping("/courses/add")
-    public String addCourse(Principal principal,
-            @RequestParam("courseName") String courseName,
-            @RequestParam("courseCode") String courseCode,
-            @RequestParam("file") MultipartFile studentFile,
-            Model model) throws IOException {
 
-        courseService.createCourseWithUsers(principal.getName(), courseName, courseCode, studentFile);
-
-        return "redirect:/courses";
-
-    }
-
-
-    @PostMapping("/courses/delete/{courseId}")
-    public RedirectView deleteCourse(@PathVariable("courseId") int courseId, Model model, RedirectAttributes attributes) {
-        MessageResponse messageResponse=new MessageResponse();
-        try {
-            courseService.deleteById(courseId);
-            messageResponse.setMessage("Course has been deleted successfully!");
-            messageResponse.setStatus(HttpStatus.OK);
-        } catch (Exception e) {
-            messageResponse.setMessage("Failed to delete course!");
-            messageResponse.setStatus(HttpStatus.BAD_REQUEST);
-        }
-        model.addAttribute("messageResponse",messageResponse);
-        log.info(messageResponse.getMessage());
-
-        attributes.addFlashAttribute("messageResponse", messageResponse);
-
-        return new RedirectView("/courses");
-
-    }
 
 
 }
