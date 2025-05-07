@@ -1,7 +1,9 @@
 package com.sau.learningplatform.Service;
 
 import com.sau.learningplatform.Entity.Project;
+import com.sau.learningplatform.EntityResponse.MessageResponse;
 import com.sau.learningplatform.EntityResponse.ProjectResponse;
+import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 
@@ -10,7 +12,7 @@ public interface ProjectService {
 
     List<ProjectResponse> getProjectsByCourseId(int courseId);
 
-    void deleteById(int id);
+    ResponseEntity<MessageResponse> deleteById(int id);
 
     List<ProjectResponse> searchByCourseCodeAndProjectTitle(String courseCode, String title);
 
@@ -18,5 +20,5 @@ public interface ProjectService {
 
     List<ProjectResponse> filterOrSort(String courseCode,String queryParam);
 
-    void saveProject(Project project, String courseCode);
+    ResponseEntity<MessageResponse> saveProjectToCourseWithCode(Project project, String courseCode);
 }

@@ -5,7 +5,6 @@ import com.sau.learningplatform.Entity.CourseRegistration;
 import com.sau.learningplatform.Entity.Semester;
 import com.sau.learningplatform.Entity.User;
 import com.sau.learningplatform.EntityResponse.CourseResponse;
-import com.sau.learningplatform.EntityResponse.MessageDTO;
 import com.sau.learningplatform.EntityResponse.MessageResponse;
 import com.sau.learningplatform.Repository.CourseRegistrationRepository;
 import com.sau.learningplatform.Repository.CourseRepository;
@@ -18,6 +17,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.view.RedirectView;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -71,11 +71,13 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public void createCourseWithUsers(String ownerNumber, String courseName, String courseCode,
+    public ResponseEntity<MessageResponse> createCourseWithUsers(String ownerNumber, String courseName, String courseCode,
                                       MultipartFile studentFile) throws IOException {
 
         if (courseRepository.existsByCode(courseCode)) {
-            throw new RuntimeException("The course with given code is already exists!");
+            log.warn("The course with given code is already exists!");
+            return new ResponseEntity<>(new MessageResponse("The course with given code is already exists!"), HttpStatus.NOT_FOUND);
+
         }
 
         // Parse the uploaded Excel file
@@ -98,8 +100,9 @@ public class CourseServiceImpl implements CourseService {
         }
 
         log.info("course registries have been saved !");
-
+        return new ResponseEntity<>(new MessageResponse("Course has been added successfully"), HttpStatus.OK);
     }
+
 
 
 
@@ -136,22 +139,22 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public ResponseEntity<MessageDTO> removeUserFromCourseInActiveSemester(String courseCode, String userNumber) {
+    public ResponseEntity<MessageResponse> removeUserFromCourseInActiveSemester(String courseCode, String userNumber) {
         Optional<Course> course=courseRepository.findByCode(courseCode);
         User user=userService.findByNumber(userNumber);
         if (course.isEmpty()){
             log.error("There is no course with given code!");
-            return new ResponseEntity<>(new MessageDTO("There is no course with given code!"), HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(new MessageResponse("There is no course with given code!"), HttpStatus.NOT_FOUND);
         }
         Optional<CourseRegistration>courseRegistration=courseRegistrationRepository.findByCourseIdAndUserId(course.get().getId(), user.getId());
         if(courseRegistration.isEmpty()){
             log.error("there is no registry for given user and course");
-            return new ResponseEntity<>(new MessageDTO("there is no registry for given user and course"), HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(new MessageResponse("there is no registry for given user and course"), HttpStatus.NOT_FOUND);
         }
         courseRegistrationRepository.deleteById(courseRegistration.get().getId());
 
         log.info("user has been removed successfully from course");
-        return new ResponseEntity<>(new MessageDTO("user has been removed successfully from course"), HttpStatus.OK);
+        return new ResponseEntity<>(new MessageResponse("user has been removed successfully from course"), HttpStatus.OK);
     }
 
     @Override
@@ -167,10 +170,20 @@ public class CourseServiceImpl implements CourseService {
             newRegistry.setSemester(newSemester);
             
             courseRegistrationRepository.save(newRegistry);
-            
         }
 
+    }
 
+    @Override
+    public ResponseEntity<MessageResponse> deleteByIdAndReturnResponse(int courseId) {
+
+        try {
+            courseRepository.deleteById(courseId);
+            return new ResponseEntity<>(new MessageResponse("Course has been deleted successfully!"),(HttpStatus.OK));
+        } catch (Exception e) {
+            log.info("Failed to delete course! {}",e.getMessage());
+            return new ResponseEntity<>(new MessageResponse("Course could not be deleted."),(HttpStatus.BAD_REQUEST));
+        }
 
     }
 
@@ -210,12 +223,12 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public void addStudentToCourseAndSaveNonExistingStudent(User student, String courseCode) {
+    public ResponseEntity<MessageResponse> addStudentToCourseAndSaveNonExistingStudent(User student, String courseCode) {
 
         Optional<Course> course=courseRepository.findByCode(courseCode);
 
         if (course.isEmpty()){
-            throw new RuntimeException("there is no such a course with given code!");
+            return new ResponseEntity<>(new MessageResponse("There is no such a course with given code!"), HttpStatus.NOT_FOUND);
         }
 
         User user=student;
@@ -239,7 +252,7 @@ public class CourseServiceImpl implements CourseService {
         courseRegistrationRepository.save(courseRegistration);
 
         log.info("a new course registry has been saved for {}",course.get().getTitle());
-
+        return new ResponseEntity<>(new MessageResponse("New registry has been saved successfully"), HttpStatus.OK);
     }
 
 

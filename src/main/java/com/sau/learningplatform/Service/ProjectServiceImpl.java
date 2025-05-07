@@ -2,12 +2,15 @@ package com.sau.learningplatform.Service;
 
 import com.sau.learningplatform.Entity.Course;
 import com.sau.learningplatform.Entity.Project;
+import com.sau.learningplatform.EntityResponse.MessageResponse;
 import com.sau.learningplatform.EntityResponse.ProjectResponse;
 import com.sau.learningplatform.Repository.CourseRepository;
 import com.sau.learningplatform.Repository.ProjectRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.commonmark.parser.Parser;
 import org.commonmark.renderer.html.HtmlRenderer;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -53,9 +56,16 @@ public class ProjectServiceImpl implements ProjectService{
     }
 
     @Override
-    public void deleteById(int id) {
-        projectRepository.deleteById(id);
-        log.info("project with id: {} is deleted!",id);
+    public ResponseEntity<MessageResponse> deleteById(int id) {
+        try {
+            log.info("project with id: {} is deleted!",id);
+            projectRepository.deleteById(id);
+            return new ResponseEntity<>(new MessageResponse("Project deleted successfully"), HttpStatus.OK);
+
+        } catch (Exception e) {
+            log.error("Project could not be deleted");
+            return new ResponseEntity<>(new MessageResponse("Project could not be deleted"), HttpStatus.OK);
+        }
     }
 
     @Override
@@ -94,12 +104,14 @@ public class ProjectServiceImpl implements ProjectService{
         return projects.stream().map(this::mapToResponse).toList();
     }
 
+
     @Override
-    public void saveProject(Project project, String courseCode) {
+    public ResponseEntity<MessageResponse> saveProjectToCourseWithCode(Project project, String courseCode) {
         Optional<Course> course=courseRepository.findByCode(courseCode);
 
         if (course.isEmpty()){
-            throw new RuntimeException("No course found with given code !");
+            log.error("No course found with given code !");
+            return new ResponseEntity<>(new MessageResponse("Project could not be added !"), HttpStatus.BAD_REQUEST);
         }
 
         String htmlDescription=convertMarkdownToHtml(project.getDescription());
@@ -110,6 +122,7 @@ public class ProjectServiceImpl implements ProjectService{
         projectRepository.save(project);
 
         log.info("new project has been saved successfully!");
+        return new ResponseEntity<>(new MessageResponse("new project has been saved successfully!"), HttpStatus.OK);
     }
 
 
