@@ -43,6 +43,7 @@ document.addEventListener("DOMContentLoaded", () => {
     try {
       const { message, status } = JSON.parse(alertData);
       showAlert(message, status === "success" ? "success" : "error");
+      console.info(message);
     } catch (err) {
       console.error("Alert message parse error:", err);
     } finally {
