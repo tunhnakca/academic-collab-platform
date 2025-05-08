@@ -45,7 +45,7 @@ public class RestController {
         return courseService.removeUserFromCourseInActiveSemester(courseCode,userNumber);
     }
 
-    @PostMapping("/courses/delete/{courseId}")
+    @DeleteMapping("/courses/delete/{courseId}")
     public ResponseEntity<MessageResponse> deleteCourse(@PathVariable("courseId") int courseId) {
 
         return courseService.deleteByIdAndReturnResponse(courseId);
@@ -65,19 +65,6 @@ public class RestController {
         //location.reload lazım yok ise
     }
 
-    @PostMapping("/password/change")
-    public ResponseEntity<MessageResponse> changePassword(Principal principal,
-                                       @RequestParam("currentPassword") String currentPassword,
-                                       @RequestParam("newPassword") String newPassword) {
-        String number = principal.getName();
-        User user = userService.findByNumber(number);
-
-        return userService.updatePassword(user,currentPassword, newPassword);
-
-
-
-        //location.reload lazım yok ise
-    }
 
     @PostMapping("/projects/add")
     public ResponseEntity<MessageResponse> saveNewProject(@ModelAttribute Project project, @RequestParam("courseCode") String courseCode) {

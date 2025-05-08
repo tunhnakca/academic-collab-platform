@@ -81,7 +81,7 @@ export function deleteCourse() {
   async function deleteCourseFromServer(courseId) {
     try {
       const response = await fetch(`/api/courses/delete/${courseId}`, {
-        method: "POST",
+        method: "DELETE",
         headers: {
           "Content-Type": "application/json",
         },
