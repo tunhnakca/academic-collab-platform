@@ -112,7 +112,7 @@ public class ProjectServiceImpl implements ProjectService{
 
         if (course.isEmpty()){
             log.error("No course found with given code !");
-            return new MessageResponseWithStatus("Project could not be added !", false);
+            return new MessageResponseWithStatus("Project could not be added!", false);
         }
 
         String htmlDescription=convertMarkdownToHtml(project.getDescription());
@@ -123,7 +123,7 @@ public class ProjectServiceImpl implements ProjectService{
         projectRepository.save(project);
 
         log.info("new project has been saved successfully!");
-        return new MessageResponseWithStatus("New project has been saved successfully!", false);
+        return new MessageResponseWithStatus("New project has been saved successfully!", true);
 
     }
 

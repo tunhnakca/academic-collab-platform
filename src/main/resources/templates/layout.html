@@ -34,7 +34,9 @@
   <body>
     <div th:replace="~{fragments/header :: header}"></div>
     <div th:replace="~{fragments/alert-bar :: alert-bar}"></div>
-    <div th:replace="~{fragments/alert-bar-new :: alert-bar-new}"></div>
+    <div
+      th:replace="~{fragments/alert-bar-with-fetch :: alert-bar-with-fetch}"
+    ></div>
     <main><div layout:fragment="content"></div></main>
     <div class="overlay d-none"></div>
   </body>
