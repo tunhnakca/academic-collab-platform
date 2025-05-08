@@ -2,7 +2,6 @@ package com.sau.learningplatform.Service;
 
 import com.sau.learningplatform.Entity.Semester;
 import com.sau.learningplatform.EntityResponse.MessageResponseWithStatus;
-import com.sau.learningplatform.EntityResponse.SemesterAndMessageDTO;
 import com.sau.learningplatform.EntityResponse.SemesterAndMessageResponseWithStatusDTO;
 import com.sau.learningplatform.EntityResponse.SemesterResponse;
 import com.sau.learningplatform.Enum.EnumSeason;
