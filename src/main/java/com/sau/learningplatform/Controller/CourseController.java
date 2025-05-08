@@ -2,6 +2,7 @@ package com.sau.learningplatform.Controller;
 
 import com.sau.learningplatform.Entity.User;
 import com.sau.learningplatform.EntityResponse.CourseResponse;
+import com.sau.learningplatform.EntityResponse.MessageResponseWithStatus;
 import com.sau.learningplatform.Service.CourseService;
 import com.sau.learningplatform.Service.UserService;
 import com.sau.learningplatform.EntityResponse.MessageResponse;
@@ -56,6 +57,20 @@ public class CourseController {
         model.addAttribute("loggedUser", user);
         return "add-course";
 
+    }
+
+    @PostMapping("/courses/add")
+    public RedirectView addCourse(Principal principal,     RedirectAttributes redirectAttributes,
+                                                     @RequestParam("courseName") String courseName,
+                                                     @RequestParam("courseCode") String courseCode,
+                                                     @RequestParam("file") MultipartFile studentFile
+    ) throws IOException {
+
+         MessageResponseWithStatus messageResponseWithStatus= courseService.createCourseWithUsers(principal.getName(), courseName, courseCode, studentFile);
+         redirectAttributes.addFlashAttribute(messageResponseWithStatus);
+
+        //return "redirect:/courses";
+        return new RedirectView("/semester/add");
     }
 
 

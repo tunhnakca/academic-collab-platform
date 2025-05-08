@@ -3,6 +3,7 @@ package com.sau.learningplatform.Service;
 import com.sau.learningplatform.Entity.Course;
 import com.sau.learningplatform.Entity.Project;
 import com.sau.learningplatform.EntityResponse.MessageResponse;
+import com.sau.learningplatform.EntityResponse.MessageResponseWithStatus;
 import com.sau.learningplatform.EntityResponse.ProjectResponse;
 import com.sau.learningplatform.Repository.CourseRepository;
 import com.sau.learningplatform.Repository.ProjectRepository;
@@ -106,12 +107,12 @@ public class ProjectServiceImpl implements ProjectService{
 
 
     @Override
-    public ResponseEntity<MessageResponse> saveProjectToCourseWithCode(Project project, String courseCode) {
+    public MessageResponseWithStatus saveProjectToCourseWithCode(Project project, String courseCode) {
         Optional<Course> course=courseRepository.findByCode(courseCode);
 
         if (course.isEmpty()){
             log.error("No course found with given code !");
-            return new ResponseEntity<>(new MessageResponse("Project could not be added !"), HttpStatus.BAD_REQUEST);
+            return new MessageResponseWithStatus("Project could not be added !", false);
         }
 
         String htmlDescription=convertMarkdownToHtml(project.getDescription());
@@ -122,7 +123,8 @@ public class ProjectServiceImpl implements ProjectService{
         projectRepository.save(project);
 
         log.info("new project has been saved successfully!");
-        return new ResponseEntity<>(new MessageResponse("New project has been saved successfully!"), HttpStatus.OK);
+        return new MessageResponseWithStatus("New project has been saved successfully!", false);
+
     }
 
 

@@ -45,50 +45,14 @@ public class RestController {
         return courseService.removeUserFromCourseInActiveSemester(courseCode,userNumber);
     }
 
-    @PostMapping("/courses/delete/{courseId}")
+    @DeleteMapping("/courses/delete/{courseId}")
     public ResponseEntity<MessageResponse> deleteCourse(@PathVariable("courseId") int courseId) {
 
         return courseService.deleteByIdAndReturnResponse(courseId);
         //location.reload lazım yok ise
 
     }
-
-    @PostMapping("/courses/add")
-    public ResponseEntity<MessageResponse> addCourse(Principal principal,
-                            @RequestParam("courseName") String courseName,
-                            @RequestParam("courseCode") String courseCode,
-                            @RequestParam("file") MultipartFile studentFile
-                            ) throws IOException {
-
-        return courseService.createCourseWithUsers(principal.getName(), courseName, courseCode, studentFile);
-
-        //location.reload lazım yok ise
-    }
-
-    @PostMapping("/password/change")
-    public ResponseEntity<MessageResponse> changePassword(Principal principal,
-                                       @RequestParam("currentPassword") String currentPassword,
-                                       @RequestParam("newPassword") String newPassword) {
-        String number = principal.getName();
-        User user = userService.findByNumber(number);
-
-        return userService.updatePassword(user,currentPassword, newPassword);
-
-
-
-        //location.reload lazım yok ise
-    }
-
-    @PostMapping("/projects/add")
-    public ResponseEntity<MessageResponse> saveNewProject(@ModelAttribute Project project, @RequestParam("courseCode") String courseCode) {
-
-
-        return projectService.saveProjectToCourseWithCode(project,courseCode);
-
-        //location.reload lazım yok ise
-
-        //return "redirect:/projects?courseCode=" + courseCode;
-    }
+    
 
     @DeleteMapping("/projects/delete/{projectId}")
     public ResponseEntity<MessageResponse> deleteProject(@PathVariable("projectId") int id) {

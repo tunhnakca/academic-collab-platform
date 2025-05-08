@@ -2,6 +2,7 @@ package com.sau.learningplatform.Service;
 
 import com.sau.learningplatform.Entity.User;
 import com.sau.learningplatform.EntityResponse.MessageResponse;
+import com.sau.learningplatform.EntityResponse.MessageResponseWithStatus;
 import com.sau.learningplatform.EntityResponse.UserResponse;
 import org.springframework.http.ResponseEntity;
 
@@ -20,7 +21,7 @@ public interface UserService {
 
     void deleteById(int id);
 
-    ResponseEntity<MessageResponse> updatePassword(User user, String currentPassword, String newPassword);
+    MessageResponseWithStatus updatePassword(User user, String currentPassword, String newPassword);
 
     void saveUser(User user);
 

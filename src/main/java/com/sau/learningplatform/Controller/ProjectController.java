@@ -4,6 +4,8 @@ import com.sau.learningplatform.Entity.Course;
 import com.sau.learningplatform.Entity.Project;
 import com.sau.learningplatform.Entity.User;
 import com.sau.learningplatform.EntityResponse.CourseResponse;
+import com.sau.learningplatform.EntityResponse.MessageResponse;
+import com.sau.learningplatform.EntityResponse.MessageResponseWithStatus;
 import com.sau.learningplatform.EntityResponse.ProjectResponse;
 import com.sau.learningplatform.Service.CourseService;
 import com.sau.learningplatform.Service.ProjectService;
@@ -13,6 +15,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.servlet.view.RedirectView;
 
 import java.security.Principal;
 import java.util.List;
@@ -85,5 +89,19 @@ public class ProjectController {
 
         return "projects";
 
+    }
+
+    @PostMapping("/projects/add")
+    public RedirectView saveNewProject(@ModelAttribute Project project, @RequestParam("courseCode") String courseCode, RedirectAttributes redirectAttributes) {
+
+
+        MessageResponseWithStatus messageResponseWithStatus= projectService.saveProjectToCourseWithCode(project,courseCode);
+        redirectAttributes.addFlashAttribute(messageResponseWithStatus);
+
+        return new RedirectView("/projects?courseCode=" + courseCode);
+
+        //location.reload lazım yok ise
+
+        //return "redirect:/projects?courseCode=" + courseCode;
     }
 }

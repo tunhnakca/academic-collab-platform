@@ -5,6 +5,7 @@ import com.sau.learningplatform.Entity.Semester;
 import com.sau.learningplatform.Entity.User;
 import com.sau.learningplatform.EntityResponse.CourseResponse;
 import com.sau.learningplatform.EntityResponse.MessageResponse;
+import com.sau.learningplatform.EntityResponse.MessageResponseWithStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -19,8 +20,8 @@ public interface CourseService {
 
     CourseResponse getCourseResponseByCode(String courseCode);
 
-    ResponseEntity<MessageResponse> createCourseWithUsers(String ownerNumber, String courseName, String courseCode,
-                               MultipartFile studentFile) throws IOException;
+    MessageResponseWithStatus createCourseWithUsers(String ownerNumber, String courseName, String courseCode,
+                                                    MultipartFile studentFile) throws IOException;
 
     void deleteById(int id);
 
