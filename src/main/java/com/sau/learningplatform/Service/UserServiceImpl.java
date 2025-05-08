@@ -4,6 +4,7 @@ import com.sau.learningplatform.Entity.Course;
 import com.sau.learningplatform.Entity.CourseRegistration;
 import com.sau.learningplatform.Entity.User;
 import com.sau.learningplatform.EntityResponse.MessageResponse;
+import com.sau.learningplatform.EntityResponse.MessageResponseWithStatus;
 import com.sau.learningplatform.EntityResponse.UserResponse;
 import com.sau.learningplatform.Repository.CourseRegistrationRepository;
 import com.sau.learningplatform.Repository.CourseRepository;
@@ -88,19 +89,20 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public ResponseEntity<MessageResponse> updatePassword(User user, String currentPassword, String newPassword) {
+    public MessageResponseWithStatus updatePassword(User user, String currentPassword, String newPassword) {
 
         if (!encoder.matches(currentPassword, user.getPassword())) {
 
             log.warn("Incorrect password, change request has been denied!");
-            return new ResponseEntity<>(new MessageResponse("Incorrect current password!"), HttpStatus.UNAUTHORIZED);
+            return new MessageResponseWithStatus("Incorrect current password!", false);
 
         }
 
         if (newPassword.equals(user.getNumber())) {
 
             log.warn("Your new password cannot be same as your number!");
-            return new ResponseEntity<>(new MessageResponse("New password cannot be same as your number!"), HttpStatus.BAD_REQUEST);
+            return new MessageResponseWithStatus("New password cannot be same as your number!", false);
+
 
         }
 
@@ -109,7 +111,7 @@ public class UserServiceImpl implements UserService {
         userRepository.save(user);
 
         log.info("password has been updated successfully! ");
-        return new ResponseEntity<>(new MessageResponse("Your password has been updated successfully!"), HttpStatus.OK);
+        return new MessageResponseWithStatus("Your password has been updated successfully!", true);
 
 
     }

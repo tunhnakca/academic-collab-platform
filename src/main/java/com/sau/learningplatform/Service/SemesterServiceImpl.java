@@ -1,6 +1,8 @@
 package com.sau.learningplatform.Service;
 
 import com.sau.learningplatform.Entity.Semester;
+import com.sau.learningplatform.EntityResponse.MessageResponseWithStatus;
+import com.sau.learningplatform.EntityResponse.SemesterAndMessageResponseWithStatusDTO;
 import com.sau.learningplatform.EntityResponse.SemesterResponse;
 import com.sau.learningplatform.Enum.EnumSeason;
 import com.sau.learningplatform.Repository.SemesterRepository;
@@ -55,29 +57,39 @@ public class SemesterServiceImpl implements SemesterService{
     }
 
     @Override
-    public Semester saveOrUpdateResponse(SemesterResponse semesterResponse) {
+    public SemesterAndMessageResponseWithStatusDTO saveOrUpdateResponse(SemesterResponse semesterResponse) {
 
         Semester semester=new Semester(semesterResponse.getId(),semesterResponse.getStartDate(),semesterResponse.getEndDate());
 
-        System.out.println(semesterResponse);
+        //System.out.println(semesterResponse);
 
-        if (semesterResponse.getSeason().equals("FALL") || semesterResponse.getSeason().equals("fall")){
+        SemesterAndMessageResponseWithStatusDTO semesterAndMessageResponseWithStatusDTO=new SemesterAndMessageResponseWithStatusDTO();
+
+        if (semesterResponse.getSeason().equalsIgnoreCase("fall")){
             semester.setSeason(EnumSeason.FALL);
         }
-        else if(semesterResponse.getSeason().equals("SPRING") || semesterResponse.getSeason().equals("spring")){
+        else if(semesterResponse.getSeason().equalsIgnoreCase("spring")){
             semester.setSeason(EnumSeason.SPRING);
         }
         else {
             log.error("invalid season name!");
+            semesterAndMessageResponseWithStatusDTO.setMessageResponseWithStatus(new MessageResponseWithStatus("Semester could not be saved due to invalid season name!",false));
         }
 
         if (semesterResponse.getId()==null){
             log.info("new semester has been saved successfully!");
+            semesterAndMessageResponseWithStatusDTO.setMessageResponseWithStatus(new MessageResponseWithStatus("new semester has been saved successfully",true));
         }
         else {
             log.info("semester has been updated successfully!");
+            semesterAndMessageResponseWithStatusDTO.setMessageResponseWithStatus(new MessageResponseWithStatus("semester has been updated successfully",true));
+
         }
-       return semesterRepository.save(semester);
+        Semester semesterEntity=semesterRepository.save(semester);
+
+        semesterAndMessageResponseWithStatusDTO.setSemester(semesterEntity);
+
+        return semesterAndMessageResponseWithStatusDTO;
     }
 
     @Override

@@ -2,6 +2,7 @@ package com.sau.learningplatform.Controller;
 
 import com.sau.learningplatform.Entity.User;
 import com.sau.learningplatform.EntityResponse.MessageResponse;
+import com.sau.learningplatform.EntityResponse.MessageResponseWithStatus;
 import com.sau.learningplatform.EntityResponse.SemesterResponse;
 import com.sau.learningplatform.Repository.SemesterRepository;
 import com.sau.learningplatform.Service.SemesterService;
@@ -53,6 +54,23 @@ public class HomeController {
         // messageResponse sadece redirect sonrası flash olarak gelecek, burada elle model'e eklenmeyecek!
         return "profile";
 }
+
+    @PostMapping("/password/change")
+    public RedirectView changePassword(Principal principal,
+                                       RedirectAttributes attributes,
+                                       @RequestParam("currentPassword") String currentPassword,
+                                       @RequestParam("newPassword") String newPassword) {
+
+        String number = principal.getName();
+        User user = userService.findByNumber(number);
+
+        MessageResponseWithStatus messageResponseWithStatus = userService.updatePassword(user, currentPassword, newPassword);
+
+        attributes.addFlashAttribute("messageResponseWithStatus", messageResponseWithStatus);
+
+        return new RedirectView("/profile");
+
+    }
 
 
 }
