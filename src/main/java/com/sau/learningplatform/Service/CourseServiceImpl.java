@@ -154,7 +154,7 @@ public class CourseServiceImpl implements CourseService {
         courseRegistrationRepository.deleteById(courseRegistration.get().getId());
 
         log.info("user has been removed successfully from course");
-        return new ResponseEntity<>(new MessageResponse("user has been removed successfully from course"), HttpStatus.OK);
+        return new ResponseEntity<>(new MessageResponse("User has been removed successfully from course"), HttpStatus.OK);
     }
 
     @Override
