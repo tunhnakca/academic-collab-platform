@@ -52,30 +52,7 @@ public class RestController {
         //location.reload lazım yok ise
 
     }
-
-    @PostMapping("/courses/add")
-    public ResponseEntity<MessageResponse> addCourse(Principal principal,
-                            @RequestParam("courseName") String courseName,
-                            @RequestParam("courseCode") String courseCode,
-                            @RequestParam("file") MultipartFile studentFile
-                            ) throws IOException {
-
-        return courseService.createCourseWithUsers(principal.getName(), courseName, courseCode, studentFile);
-
-        //location.reload lazım yok ise
-    }
-
-
-    @PostMapping("/projects/add")
-    public ResponseEntity<MessageResponse> saveNewProject(@ModelAttribute Project project, @RequestParam("courseCode") String courseCode) {
-
-
-        return projectService.saveProjectToCourseWithCode(project,courseCode);
-
-        //location.reload lazım yok ise
-
-        //return "redirect:/projects?courseCode=" + courseCode;
-    }
+    
 
     @DeleteMapping("/projects/delete/{projectId}")
     public ResponseEntity<MessageResponse> deleteProject(@PathVariable("projectId") int id) {

@@ -6,6 +6,7 @@ import com.sau.learningplatform.Entity.Semester;
 import com.sau.learningplatform.Entity.User;
 import com.sau.learningplatform.EntityResponse.CourseResponse;
 import com.sau.learningplatform.EntityResponse.MessageResponse;
+import com.sau.learningplatform.EntityResponse.MessageResponseWithStatus;
 import com.sau.learningplatform.Repository.CourseRegistrationRepository;
 import com.sau.learningplatform.Repository.CourseRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -71,12 +72,14 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public ResponseEntity<MessageResponse> createCourseWithUsers(String ownerNumber, String courseName, String courseCode,
-                                      MultipartFile studentFile) throws IOException {
+    public MessageResponseWithStatus createCourseWithUsers(String ownerNumber, String courseName, String courseCode,
+                                                           MultipartFile studentFile) throws IOException {
 
         if (courseRepository.existsByCode(courseCode)) {
             log.warn("The course with given code is already exists!");
-            return new ResponseEntity<>(new MessageResponse("The course with given code is already exists!"), HttpStatus.NOT_FOUND);
+
+            return new MessageResponseWithStatus("The course with given code is already exists!", false);
+
 
         }
 
@@ -100,7 +103,8 @@ public class CourseServiceImpl implements CourseService {
         }
 
         log.info("course registries have been saved !");
-        return new ResponseEntity<>(new MessageResponse("Course has been added successfully"), HttpStatus.OK);
+        return new MessageResponseWithStatus("Course has been added successfully", true);
+
     }
 
 
