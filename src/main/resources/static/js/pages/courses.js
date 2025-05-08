@@ -1,6 +1,8 @@
 import { async } from "regenerator-runtime";
 import { showEmptyMessage } from "../common/helpers.js";
 import { overlay } from "../common/config";
+import showAlert from "../components/show-alert-bar";
+
 export const deleteCourseButton = document.querySelector(
   ".courses-buttons__link--delete"
 );
@@ -78,21 +80,29 @@ export function deleteCourse() {
 
   async function deleteCourseFromServer(courseId) {
     try {
-      const response = await fetch(`/courses/delete/${courseId}`, {
+      const response = await fetch(`/api/courses/delete/${courseId}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
       });
 
+      const data = await response.json();
+
       if (response.ok) {
+        // Set message to localStorage
+        localStorage.setItem(
+          "alertMessage",
+          JSON.stringify({ message: data.message, status: "success" })
+        );
+        // Reload the page
         location.reload();
-        console.info("Course deleted successfully");
       } else {
-        throw new Error("Problem deleting course");
+        showAlert(data.message || "Unexpected error", "error");
       }
     } catch (error) {
       console.error(error.message);
+      showAlert("Network error or server unreachable", "error");
     }
   }
 }

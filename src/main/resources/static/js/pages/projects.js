@@ -111,21 +111,29 @@ export function deleteProject() {
 
   async function deleteProjectFromServer(projectId) {
     try {
-      const response = await fetch(`/projects/delete/${projectId}`, {
+      const response = await fetch(`/api/projects/delete/${projectId}`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
         },
       });
 
+      const data = await response.json();
+
       if (response.ok) {
+        // Set message to localStorage
+        localStorage.setItem(
+          "alertMessage",
+          JSON.stringify({ message: data.message, status: "success" })
+        );
+        // Reload the page
         location.reload();
-        console.info("Project deleted successfuly");
       } else {
-        throw new Error("Problem deleting project");
+        showAlert(data.message || "Unexpected error", "error");
       }
     } catch (error) {
       console.error(error.message);
+      showAlert("Network error or server unreachable", "error");
     }
   }
 }

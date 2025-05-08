@@ -122,7 +122,7 @@ public class ProjectServiceImpl implements ProjectService{
         projectRepository.save(project);
 
         log.info("new project has been saved successfully!");
-        return new ResponseEntity<>(new MessageResponse("new project has been saved successfully!"), HttpStatus.OK);
+        return new ResponseEntity<>(new MessageResponse("New project has been saved successfully!"), HttpStatus.OK);
     }
 
 
