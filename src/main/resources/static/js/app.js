@@ -33,7 +33,10 @@ import {
   deleteUserButton,
 } from "./pages/user-list";
 
-import { updateSectionPostsHeight } from "./pages/posts";
+import {
+  updateSectionPostsHeight,
+  updateProjectDateTimeOnPosts,
+} from "./pages/posts";
 
 ///////////////////////////
 // Show alert
@@ -181,4 +184,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Call updateSectionProjectsHeight when the window is resized
   window.addEventListener("resize", updateSectionPostsHeight());
+
+  // Update Date Formats
+  updateProjectDateTimeOnPosts();
 });
