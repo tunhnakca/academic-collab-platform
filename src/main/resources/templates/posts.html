@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{layout}"
+>
+  <head>
+    <title th:text="${project.title + ' | Posts'}">Posts</title>
+  </head>
+  <body>
+    <section class="section-posts" layout:fragment="content">
+      <div class="posts__sidebar">
+        <div class="posts__sidebar-course__informations">
+          <div class="posts__sidebar-course__information">
+            <p class="posts__sidebar-course__information__heading">
+              Course Code:
+            </p>
+            <p class="posts__sidebar-course__information__value">SWE000</p>
+          </div>
+          <div class="posts__sidebar-course__information">
+            <p class="posts__sidebar-course__information__heading">
+              Course Title:
+            </p>
+            <p class="posts__sidebar-course__information__value">
+              Course Title
+            </p>
+          </div>
+          <div class="posts__sidebar-course__information">
+            <p class="posts__sidebar-course__information__heading">
+              Course Owner:
+            </p>
+            <p class="posts__sidebar-course__information__value">
+              Name Surname
+            </p>
+          </div>
+          <div class="posts__sidebar-course__information">
+            <p class="posts__sidebar-course__information__heading">
+              Project Title:
+            </p>
+            <p
+              class="posts__sidebar-course__information__value"
+              th:text="${project.title}"
+            >
+              Project Title
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="posts-wrapper">
+        <div class="container-posts">
+          Lorem Ipsum is simply dummy text of the printing and typesetting
+          industry. Lorem Ipsum has been the industry's standard dummy text ever
+          since the 1500s, when an unknown printer took a galley of type and
+          scrambled it to make a type specimen book. It has survived not only
+          five centuries, but also the leap into electronic typesetting,
+          remaining essentially unchanged. It was popularised in the 1960s with
+          the release of Letraset sheets containing Lorem Ipsum passages, and
+          more recently with desktop publishing software like Aldus PageMaker
+          including versions of Lorem Ipsum
+        </div>
+      </div>
+    </section>
+  </body>
+</html>
