@@ -1,9 +1,9 @@
 package com.sau.learningplatform.Service;
 
 import com.sau.learningplatform.Entity.Project;
+import com.sau.learningplatform.EntityResponse.ProjectResponse;
 import com.sau.learningplatform.EntityResponse.MessageResponse;
 import com.sau.learningplatform.EntityResponse.MessageResponseWithStatus;
-import com.sau.learningplatform.EntityResponse.ProjectResponse;
 import org.springframework.http.ResponseEntity;
 
 import java.util.List;
@@ -22,4 +22,6 @@ public interface ProjectService {
     List<ProjectResponse> filterOrSort(String courseCode,String queryParam);
 
     MessageResponseWithStatus saveProjectToCourseWithCode(Project project, String courseCode);
+
+    ProjectResponse getResponseById(int id);
 }
