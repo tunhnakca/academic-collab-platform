@@ -144,7 +144,7 @@
                   th:classappend="${project.isValid} ? 'project--opened' : 'project--closed'"
                 >
                   <a
-                    href="#"
+                    th:href="@{'/post/' + ${project.id}}"
                     class="project__heading"
                     th:text="${project.title}"
                   >

@@ -33,6 +33,8 @@ import {
   deleteUserButton,
 } from "./pages/user-list";
 
+import { updateSectionPostsHeight } from "./pages/posts";
+
 ///////////////////////////
 // Show alert
 ///////////////////////////
@@ -166,4 +168,17 @@ document.addEventListener("DOMContentLoaded", function () {
   if (deleteUserButton) {
     deleteUser();
   }
+});
+
+///////////////////////////
+// Posts Page
+///////////////////////////
+
+// When the document is fully loaded
+document.addEventListener("DOMContentLoaded", function () {
+  //Start calculating header height
+  updateSectionPostsHeight();
+
+  // Call updateSectionProjectsHeight when the window is resized
+  window.addEventListener("resize", updateSectionPostsHeight());
 });
