@@ -3,6 +3,7 @@ package com.sau.learningplatform.Service;
 import com.sau.learningplatform.Entity.User;
 import com.sau.learningplatform.EntityResponse.MessageResponse;
 import com.sau.learningplatform.EntityResponse.MessageResponseWithStatus;
+import com.sau.learningplatform.EntityResponse.UserPageResponse;
 import com.sau.learningplatform.EntityResponse.UserResponse;
 import org.springframework.http.ResponseEntity;
 
@@ -26,6 +27,8 @@ public interface UserService {
     void saveUser(User user);
 
     List<UserResponse> getAllStudents();
+
+    public UserPageResponse getPaginatedUsers(int pageNo, int pageSize);
 
 
     List<UserResponse> getUsersByCourseCodeAndRole(String courseCode,String role);
