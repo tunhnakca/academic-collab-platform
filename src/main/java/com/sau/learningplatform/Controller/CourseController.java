@@ -67,10 +67,11 @@ public class CourseController {
     ) throws IOException {
 
          MessageResponseWithStatus messageResponseWithStatus= courseService.createCourseWithUsers(principal.getName(), courseName, courseCode, studentFile);
-         redirectAttributes.addFlashAttribute(messageResponseWithStatus);
+         redirectAttributes.addFlashAttribute("messageResponseWithStatus", messageResponseWithStatus);
+
 
         //return "redirect:/courses";
-        return new RedirectView("/semester/add");
+        return new RedirectView("/courses/add");
     }
 
 

@@ -1,13 +1,20 @@
-<div
-  th:if="${messageResponse != null}"
-  th:fragment="alert-bar"
-  class="alert-bar"
-  th:classappend="${messageResponse.status == T(org.springframework.http.HttpStatus).OK ? 'alert-bar--success' : 'alert-bar--error'}"
->
-  <ion-icon name="alert-circle-outline" class="alert-icon"></ion-icon>
-  <span class="alert-message" th:text="${messageResponse.message}">
-    Default error message
-  </span>
-  <ion-icon name="close-outline" class="alert-close"></ion-icon>
-  <div class="alert-progress-bar"></div>
+<div th:fragment="alert-bar">
+  <!-- sadece mesaj varsa JS bloğu enjekte edilir -->
+  <div th:if="${messageResponseWithStatus != null}">
+    <script th:inline="javascript">
+      /*<![CDATA[*/
+      const alertMessage = /*[[${messageResponseWithStatus.message}]]*/ null;
+      const alertStatus = /*[[${messageResponseWithStatus.isStatusOk}]]*/ false
+        ? "success"
+        : "error";
+
+      if (alertMessage && alertStatus) {
+        localStorage.setItem(
+          "alertMessage",
+          JSON.stringify({ message: alertMessage, status: alertStatus })
+        );
+      }
+      /*]]>*/
+    </script>
+  </div>
 </div>
