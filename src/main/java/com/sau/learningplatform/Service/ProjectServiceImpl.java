@@ -40,6 +40,17 @@ public class ProjectServiceImpl implements ProjectService{
     }
 
 
+    public ProjectResponse getResponseById(int id) {
+        Optional<Project>result=projectRepository.findById(id);
+
+        if (result.isEmpty()){
+            throw new RuntimeException("Project not found with given id !");
+        }
+
+        return mapToResponse(result.get());
+    }
+
+
     @Override
     public List<ProjectResponse> getProjectsByCourseId(int courseId) {
 

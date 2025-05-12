@@ -5,11 +5,15 @@ import com.sau.learningplatform.Entity.CourseRegistration;
 import com.sau.learningplatform.Entity.User;
 import com.sau.learningplatform.EntityResponse.MessageResponse;
 import com.sau.learningplatform.EntityResponse.MessageResponseWithStatus;
+import com.sau.learningplatform.EntityResponse.UserPageResponse;
 import com.sau.learningplatform.EntityResponse.UserResponse;
 import com.sau.learningplatform.Repository.CourseRegistrationRepository;
 import com.sau.learningplatform.Repository.CourseRepository;
 import com.sau.learningplatform.Repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -130,6 +134,9 @@ public class UserServiceImpl implements UserService {
 
 
 
+
+
+
     @Override
     public void saveUser(User user) {
         userRepository.save(user);
@@ -158,6 +165,32 @@ public class UserServiceImpl implements UserService {
         }
 
         return users.stream().map(this::mapToUserResponse).toList();
+    }
+
+
+    @Override
+    public UserPageResponse getPaginatedUsers(int pageNo, int pageSize) {
+        Pageable pageable= PageRequest.of(pageNo,pageSize);
+        Page<User> users=userRepository.findAll(pageable);
+
+        return usersToPageResponse(pageNo,pageSize,users);
+
+    }
+
+    private UserPageResponse usersToPageResponse(int pageNo, int pageSize, Page<User>users){
+        List<User>productList=users.getContent();
+        List<UserResponse>userResponses=productList.stream().map(this::mapToUserResponse).toList();
+
+        UserPageResponse userPageResponse=new UserPageResponse();
+
+        userPageResponse.setUsers(userResponses);
+        userPageResponse.setPageSize(pageSize);
+        userPageResponse.setPageNo(pageNo);
+        userPageResponse.setTotalPages(users.getTotalPages());
+        userPageResponse.setTotalElements(users.getTotalElements());
+
+        return userPageResponse;
+
     }
 
 
