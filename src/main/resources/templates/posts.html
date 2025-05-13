@@ -14,34 +14,48 @@
             <p class="posts__sidebar-course__information__heading">
               Course Code:
             </p>
-            <p class="posts__sidebar-course__information__value">SWE000</p>
+            <p class="posts__sidebar-course__information__value"></p>
           </div>
           <div class="posts__sidebar-course__information">
             <p class="posts__sidebar-course__information__heading">
               Course Title:
             </p>
-            <p class="posts__sidebar-course__information__value">
-              Course Title
-            </p>
+            <p class="posts__sidebar-course__information__value"></p>
           </div>
           <div class="posts__sidebar-course__information">
             <p class="posts__sidebar-course__information__heading">
               Course Owner:
             </p>
-            <p class="posts__sidebar-course__information__value">
-              Name Surname
-            </p>
+            <p class="posts__sidebar-course__information__value"></p>
           </div>
           <div class="posts__sidebar-course__information">
             <p class="posts__sidebar-course__information__heading">
-              Project Title:
+              Project Name:
             </p>
             <p
               class="posts__sidebar-course__information__value"
               th:text="${project.title}"
-            >
-              Project Title
+            ></p>
+          </div>
+          <div class="posts__sidebar-course__information">
+            <p class="posts__sidebar-course__information__heading">
+              Start Date:
             </p>
+            <p
+              class="posts__sidebar-course__information__value posts__sidebar-course__information__value__date"
+              th:data-date="${project.startDate}"
+            ></p>
+          </div>
+          <div class="posts__sidebar-course__information">
+            <p
+              class="posts__sidebar-course__information__heading posts__sidebar-course__information__value__date"
+            >
+              End Date:
+            </p>
+            <p
+              class="posts__sidebar-course__information__value posts__sidebar-course__information__value__date"
+              th:data-date="${project.endDate}"
+            ></p>
           </div>
         </div>
       </div>
