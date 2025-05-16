@@ -115,10 +115,11 @@
                   th:value="${keyword}"
                 />
 
-                <!--
-                    th:value="${course.getCode()}"
-                -->
-                <input type="hidden" name="courseCode" />
+                <input
+                  type="hidden"
+                  name="courseCode"
+                  th:value="${course.code}"
+                />
                 <button type="submit" class="search__btn">
                   <ion-icon
                     class="search__icon"
