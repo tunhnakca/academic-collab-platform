@@ -114,11 +114,15 @@
                   placeholder="Search..."
                   th:value="${keyword}"
                 />
+                <input
+                        type="hidden"
+                        name="courseCode"
+                        th:value="${course.getCode()}"
+                />
 
                 <!--
                     th:value="${course.getCode()}"
                 -->
-                <input type="hidden" name="courseCode" />
                 <button type="submit" class="search__btn">
                   <ion-icon
                     class="search__icon"
