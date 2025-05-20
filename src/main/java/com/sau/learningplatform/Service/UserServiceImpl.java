@@ -1,9 +1,7 @@
 package com.sau.learningplatform.Service;
 
-import com.sau.learningplatform.Entity.Course;
 import com.sau.learningplatform.Entity.CourseRegistration;
 import com.sau.learningplatform.Entity.User;
-import com.sau.learningplatform.EntityResponse.MessageResponse;
 import com.sau.learningplatform.EntityResponse.MessageResponseWithStatus;
 import com.sau.learningplatform.EntityResponse.UserPageResponse;
 import com.sau.learningplatform.EntityResponse.UserResponse;
@@ -14,8 +12,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -27,17 +23,15 @@ import java.util.Optional;
 public class UserServiceImpl implements UserService {
     private UserRepository userRepository;
 
-    private CourseRepository courseRepository;
 
     private SemesterService semesterService;
 
     private CourseRegistrationRepository courseRegistrationRepository;
 
-    private BCryptPasswordEncoder encoder;
+    final private BCryptPasswordEncoder encoder;
 
-    public UserServiceImpl(UserRepository userRepository, CourseRepository courseRepository, SemesterService semesterService, CourseRegistrationRepository courseRegistrationRepository, BCryptPasswordEncoder encoder) {
+    public UserServiceImpl(UserRepository userRepository, SemesterService semesterService, CourseRegistrationRepository courseRegistrationRepository, BCryptPasswordEncoder encoder) {
         this.userRepository = userRepository;
-        this.courseRepository = courseRepository;
         this.semesterService = semesterService;
         this.courseRegistrationRepository = courseRegistrationRepository;
         this.encoder = encoder;
@@ -154,17 +148,28 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
-    public List<UserResponse> getUsersByCourseCodeAndRole(String courseCode,String role) {
+    public UserPageResponse getPaginatedUsersByCourseCodeAndRole(String courseCode, String role, int pageNo, int pageSize) {
+        Pageable pageable = PageRequest.of(pageNo, pageSize);
+        Page<CourseRegistration> registrations = courseRegistrationRepository
+                .findByCourseCodeAndUserRoleAndSemester(courseCode, role, semesterService.getCurrentSemester(), pageable);
 
-        List<CourseRegistration>courseRegistrations=courseRegistrationRepository.findByCourseCodeAndUserRoleAndSemester(courseCode,role,semesterService.getCurrentSemester());
+        List<UserResponse> userResponses = registrations.getContent().stream()
+                .map(CourseRegistration::getUser)
+                .map(this::mapToUserResponse)
+                .toList();
 
-        List<User>users=courseRegistrations.stream().map(CourseRegistration::getUser).toList();
-
-        if(users.isEmpty()){
-            log.info("No user found with related course and role!");
+        if(userResponses.isEmpty()){
+            log.info("paginated users are empty.");
         }
 
-        return users.stream().map(this::mapToUserResponse).toList();
+        UserPageResponse response = new UserPageResponse();
+        response.setUsers(userResponses);
+        response.setPageSize(pageSize);
+        response.setPageNo(pageNo);
+        response.setTotalPages(registrations.getTotalPages());
+
+
+        return response;
     }
 
 
@@ -187,7 +192,6 @@ public class UserServiceImpl implements UserService {
         userPageResponse.setPageSize(pageSize);
         userPageResponse.setPageNo(pageNo);
         userPageResponse.setTotalPages(users.getTotalPages());
-        userPageResponse.setTotalElements(users.getTotalElements());
 
         return userPageResponse;
 

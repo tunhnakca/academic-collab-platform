@@ -21,15 +21,16 @@ public class UserController {
     }
 
     @GetMapping("/student/list")
-    public String showStudentList(Model model, Principal principal, @RequestParam("courseCode") String courseCode){
+    public String showStudentList(Model model, Principal principal, @RequestParam("courseCode") String courseCode,@RequestParam(defaultValue = "0") int pageNo,
+                                  @RequestParam(defaultValue = "5") int pageSize){
         String number = principal.getName();
         User user = userService.findByNumber(number);
 
         model.addAttribute("loggedUser", user);
         model.addAttribute("addStudent", new User());
         //returns only students
-        model.addAttribute("users",userService.getUsersByCourseCodeAndRole(courseCode,"student"));
-
+        model.addAttribute("usersPage",userService.getPaginatedUsersByCourseCodeAndRole(courseCode,"student",pageNo,pageSize));
+        System.out.println(userService.getPaginatedUsersByCourseCodeAndRole(courseCode,"student",pageNo,pageSize));
         model.addAttribute("course",courseService.getCourseResponseByCode(courseCode));
 
         return "user-list";

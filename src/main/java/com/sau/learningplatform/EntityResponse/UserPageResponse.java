@@ -18,5 +18,4 @@ public class UserPageResponse {
 
     private int totalPages;
 
-    private Long totalElements;
 }
