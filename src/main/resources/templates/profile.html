@@ -4,7 +4,11 @@
   layout:decorate="~{layout}"
 >
   <head>
-    <title>Profile</title>
+    <title
+      th:text="${'Profile | ' + loggedUser.name + ' ' + loggedUser.surname}"
+    >
+      Profile
+    </title>
   </head>
   <body>
     <section class="section section-profile" layout:fragment="content">
