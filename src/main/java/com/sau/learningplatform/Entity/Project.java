@@ -19,7 +19,7 @@ public class Project {
 
     @JoinColumn(name = "course_id")
     @ManyToOne(cascade = { CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST,
-            CascadeType.REFRESH }, fetch = FetchType.LAZY)
+            CascadeType.REFRESH }, fetch = FetchType.EAGER)
     private Course course;
 
     @Column(name = "title")

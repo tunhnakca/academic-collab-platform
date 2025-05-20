@@ -14,7 +14,7 @@ public class ProjectResponse {
 
     private int id;
 
-    private Course course;
+    private CourseResponse course;
 
     private String title;
 

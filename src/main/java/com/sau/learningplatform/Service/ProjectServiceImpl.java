@@ -2,6 +2,7 @@ package com.sau.learningplatform.Service;
 
 import com.sau.learningplatform.Entity.Course;
 import com.sau.learningplatform.Entity.Project;
+import com.sau.learningplatform.EntityResponse.CourseResponse;
 import com.sau.learningplatform.EntityResponse.MessageResponse;
 import com.sau.learningplatform.EntityResponse.MessageResponseWithStatus;
 import com.sau.learningplatform.EntityResponse.ProjectResponse;
@@ -141,6 +142,17 @@ public class ProjectServiceImpl implements ProjectService{
 
     private ProjectResponse mapToResponse(Project project){
 
+        if (project.getCourse()==null){
+            log.error("a project without course is found!");
+        }
+
+        CourseResponse courseResponse=CourseResponse.builder()
+                .code(project.getCourse().getCode())
+                .owner(project.getCourse().getOwner())
+                .id(project.getCourse().getId())
+                .title(project.getCourse().getTitle())
+                .build();
+
         return ProjectResponse
                 .builder()
                 .id(project.getId())
@@ -149,6 +161,7 @@ public class ProjectServiceImpl implements ProjectService{
                 .isValid(project.getDateEnd().isAfter(LocalDateTime.now()))
                 .startDate(project.getDateCreated())
                 .endDate(project.getDateEnd())
+                .course(courseResponse)
                 .build();
 
     }

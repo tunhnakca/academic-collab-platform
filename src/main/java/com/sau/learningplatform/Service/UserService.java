@@ -30,6 +30,7 @@ public interface UserService {
 
     public UserPageResponse getPaginatedUsers(int pageNo, int pageSize);
 
+    UserPageResponse searchUsersPaged(String courseCode, String role,String keyword, int pageNo, int pageSize);
+    UserPageResponse getPaginatedUsersByCourseCodeAndRole(String courseCode, String role, int pageNo, int pageSize);
 
-    List<UserResponse> getUsersByCourseCodeAndRole(String courseCode,String role);
 }
