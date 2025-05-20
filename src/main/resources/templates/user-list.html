@@ -4,7 +4,7 @@
   layout:decorate="~{layout}"
 >
   <head>
-    <title th:text="${course.code + ' | Users'}">Users</title>
+    <title th:text="${course.code + ' | Students'}">Users</title>
   </head>
   <body>
     <section class="section-user-list" layout:fragment="content">
@@ -115,14 +115,11 @@
                   th:value="${keyword}"
                 />
                 <input
-                        type="hidden"
-                        name="courseCode"
-                        th:value="${course.getCode()}"
+                  type="hidden"
+                  name="courseCode"
+                  th:value="${course.code}"
                 />
 
-                <!--
-                    th:value="${course.getCode()}"
-                -->
                 <button type="submit" class="search__btn">
                   <ion-icon
                     class="search__icon"
@@ -154,11 +151,15 @@
                 </thead>
                 <tbody>
                   <tr
-                    th:each="user, stat : ${users}"
+                    th:each="user, stat : ${usersPage.users}"
                     th:data-user-number="${user.number}"
                     th:data-related-course="${course.code}"
                   >
-                    <td th:text="${stat.count}">#</td>
+                    <td
+                      th:text="${stat.index + 1 + usersPage.pageSize * usersPage.pageNo}"
+                    >
+                      #
+                    </td>
                     <td th:text="${user.number}">B201202056</td>
                     <td th:text="${user.name}" class="user-list__user-name">
                       Name
@@ -181,6 +182,45 @@
                   </tr>
                 </tbody>
               </table>
+            </div>
+            <div
+              class="pagination user-list-pagination"
+              th:if="${usersPage.totalPages > 0}"
+            >
+              <!-- Prev -->
+              <a
+                th:href="${usersPage.pageNo <= 0} ? '#' : @{/student/list(courseCode=${course.code}, pageNo=${usersPage.pageNo - 1}, pageSize=${usersPage.pageSize})}"
+                th:classappend="${usersPage.pageNo <= 0} ? ' disabled-link' : ''"
+                class="pagination__link-btn pagination__link-btn--prev"
+              >
+                <button
+                  class="pagination__btn pagination__btn--prev"
+                  th:disabled="${usersPage.pageNo <= 0}"
+                >
+                  Prev
+                </button>
+              </a>
+
+              <!-- Page Info -->
+              <div class="pagination__page-number">
+                <span th:text="${usersPage.pageNo + 1}">1/</span>
+                <span>/</span>
+                <span th:text="${usersPage.totalPages}">30</span>
+              </div>
+
+              <!-- Next -->
+              <a
+                th:href="${usersPage.pageNo + 1 >= usersPage.totalPages} ? '#' : @{/student/list(courseCode=${course.code}, pageNo=${usersPage.pageNo + 1}, pageSize=${usersPage.pageSize})}"
+                th:classappend="${usersPage.pageNo + 1 >= usersPage.totalPages} ? ' disabled-link' : ''"
+                class="pagination__link-btn pagination__link-btn--next"
+              >
+                <button
+                  class="pagination__btn pagination__btn--next"
+                  th:disabled="${usersPage.pageNo + 1 >= usersPage.totalPages}"
+                >
+                  Next
+                </button>
+              </a>
             </div>
           </div>
         </div>

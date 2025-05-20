@@ -1,237 +1,235 @@
-@use '../abstracts/base' as *;
-@use '../abstracts/mixins' as *;
-@use '../abstracts/utilities' as *;
-@use '../components' as *;
+@use "../abstracts/base" as *;
+@use "../abstracts/mixins" as *;
+@use "../abstracts/utilities" as *;
+@use "../components" as *;
 
 .section-projects {
-    display: flex;
-    overflow: hidden;
+  display: flex;
+  overflow: hidden;
 }
 
 .projects__sidebar {
-    width: 30rem;
-    padding: 1.2rem 2.4rem;
-    overflow: hidden;
-    background-color: #fff;
-    border-right: 1px solid $color-grey-light-2;
-    overflow-y: auto;
-    position: sticky;
-    top: 0;
+  width: 26rem;
+  padding: 1.2rem 2.4rem;
+  overflow: hidden;
+  background-color: #fff;
+  border-right: 1px solid $color-grey-light-2;
+  overflow-y: auto;
+  position: sticky;
+  top: 0;
 
-    &-course__informations{
-        display: flex;
-        flex-direction: column;
+  &-course__informations {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &-course__information {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    padding: 2rem 0;
+
+    &:not(:last-child) {
+      border-bottom: 1px solid #e2e5e9;
     }
 
-    &-course__information{
-        display: flex;
-        flex-direction: column;
-        gap: 0.2rem;
-        padding: 2rem 0;
-
-        &:not(:last-child){
-            border-bottom: 1px solid #E2E5E9;
-        }
-
-        &__heading{
-            font-size: 1.4rem;
-        }
-
-        &__value{
-            font-size: 1.4rem;
-            color: $color-grey-light-5;
-            font-weight: 300;
-            text-transform: capitalize;
-
-            a:link,
-            a:visited {
-                text-decoration: none;
-                display: inline-block;
-                font-family: inherit;
-                font-weight: 400;
-                @extend .transition-hover-effect;
-                cursor: pointer;
-                color: $color-primary;
-                border-bottom: 1px solid  transparent;
-            }
-
-            a:hover,
-            a:active {
-                border-bottom: 1px solid currentColor;
-            }
-        }
-
-        &--project-management {
-            gap: 1rem;
-        }
+    &__heading {
+      font-size: 1.4rem;
     }
+
+    &__value {
+      font-size: 1.4rem;
+      color: $color-grey-light-5;
+      font-weight: 300;
+      text-transform: capitalize;
+
+      a:link,
+      a:visited {
+        text-decoration: none;
+        display: inline-block;
+        font-family: inherit;
+        font-weight: 400;
+        @extend .transition-hover-effect;
+        cursor: pointer;
+        color: $color-primary;
+        border-bottom: 1px solid transparent;
+      }
+
+      a:hover,
+      a:active {
+        border-bottom: 1px solid currentColor;
+      }
+    }
+
+    &--project-management {
+      gap: 1rem;
+    }
+  }
 }
 
 .projects-wrapper {
-    display: flex; 
-    flex-grow: 1; 
-    justify-content: center; 
-    align-items: flex-start; 
-    padding: 4.8rem 3.2rem 3.2rem 3.2rem;
-    overflow: hidden;
-    overflow-y: auto;
+  display: flex;
+  flex-grow: 1;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 4.8rem 3.2rem 3.2rem 3.2rem;
+  overflow: hidden;
+  overflow-y: auto;
 }
 
 .container-projects {
-    //max-width: calc(120rem - 30rem); //30rem is sidebar width
-    max-width: calc(102rem);
-    width: 100%; 
-    padding: 0;
-    margin: 0 auto; 
+  //max-width: calc(120rem - 30rem); //30rem is sidebar width
+  max-width: calc(102rem);
+  width: 100%;
+  padding: 0;
+  margin: 0 auto;
 
-    background-color: #fff;
-    overflow: hidden;
-    border-radius: 1rem;
-    @include box-shadow(rgba(0, 0, 0, 0.06));
+  background-color: #fff;
+  overflow: hidden;
+  border-radius: 1rem;
+  @include box-shadow(rgba(0, 0, 0, 0.06));
 
-    .projects {
+  .projects {
+    .project {
+      padding: 2rem 3.2rem;
+      @extend .transition-hover-effect;
 
-        .project {
-            padding: 2rem 3.2rem;
-            @extend .transition-hover-effect;
+      &:not(:last-child) {
+        border-bottom: 1px solid $color-grey-light-2;
+      }
 
-            &:not(:last-child){
-                border-bottom: 1px solid $color-grey-light-2;
-            }
+      &--opened {
+        background-color: #e7f7e7;
+        border-left: 5px solid $color-success;
+      }
 
-            &--opened {
-                background-color: #e7f7e7; 
-                border-left: 5px solid $color-success; 
-            }
+      &--closed {
+        background-color: $color-disable-light;
+        border-left: 5px solid #6c757d;
 
-            &--closed {
-                background-color: $color-disable-light; 
-                border-left: 5px solid #6C757D;
-
-                .project__date-range {
-                    .project__date-range--start,
-                    .project__date-range--end {
-                        text-decoration: line-through; 
-                        color: $color-grey-light-4; 
-                    }
-                }
-            }
-
-            &__heading {
-                &:link,
-                &:visited {
-                    @extend .transition-hover-effect;
-                    display: inline-block;
-                    text-decoration: none;
-                    color: $color-grey-dark-2;
-                    font-weight: 600;
-                    font-size: 2.4rem;
-                    margin-bottom: 0.4rem;
-
-                    display: -webkit-box;
-                    -webkit-box-orient: vertical;
-                    overflow: hidden;
-                    text-overflow: ellipsis;
-                    -webkit-line-clamp: 1;  /* Only shows two lines */
-                }
-
-                &:hover,
-                &:active {
-                    transform: translateX(6px);
-                }
-            }
-
-            &__date-range {
-                display: flex;
-                align-items: center;
-                gap: 1rem;
-                margin-bottom: 1.6rem;
-
-                &--to {
-                    
-                }
-
-                &--start {
-                    @extend .badge;
-                    background-color: #007bff;
-                }
-
-                &--end {
-                    @extend .badge;
-                    background-color: #6c757d;
-                }
-            }
-
-            &__description {
-                font-size: 1.6rem;
-                white-space: pre-wrap;
-                font-family: inherit;
-
-                display: -webkit-box;
-                -webkit-box-orient: vertical;
-                overflow: hidden;
-                text-overflow: ellipsis;
-                -webkit-line-clamp: 4;  /* Only shows 4 lines */
-            }
+        .project__date-range {
+          .project__date-range--start,
+          .project__date-range--end {
+            text-decoration: line-through;
+            color: $color-grey-light-4;
+          }
         }
-        
-        &-header {
-            display: flex;
-            gap: 2.4rem;
-            align-items: center;
-            justify-content: space-between;
-            padding: 2.4rem 4.8rem;
-            border-bottom: 1px solid $color-grey-light-2;
-    
-            .search {
-                width: 50%;
-            }
-            
-            .filter__dropdown {
-                border: 1px solid $color-grey-light-2;
-                border-radius: 1rem;
-                padding: 0.8rem 2.4rem;
-                @extend .transition-hover-effect;
-                font-family: inherit;
-                font-size: 1.6rem;
-                font-weight: 300;
-                color: inherit;
-            }
+      }
+
+      &__heading {
+        &:link,
+        &:visited {
+          @extend .transition-hover-effect;
+          display: inline-block;
+          text-decoration: none;
+          color: $color-grey-dark-2;
+          font-weight: 600;
+          font-size: 2.4rem;
+          margin-bottom: 0.4rem;
+
+          display: -webkit-box;
+          -webkit-box-orient: vertical;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          -webkit-line-clamp: 1; /* Only shows two lines */
         }
+
+        &:hover,
+        &:active {
+          transform: translateX(6px);
+        }
+      }
+
+      &__date-range {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        margin-bottom: 1.6rem;
+
+        &--to {
+        }
+
+        &--start {
+          @extend .badge;
+          background-color: #007bff;
+        }
+
+        &--end {
+          @extend .badge;
+          background-color: #6c757d;
+        }
+      }
+
+      &__description {
+        font-size: 1.6rem;
+        white-space: pre-wrap;
+        font-family: inherit;
+
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        -webkit-line-clamp: 4; /* Only shows 4 lines */
+      }
     }
+
+    &-header {
+      display: flex;
+      gap: 2.4rem;
+      align-items: center;
+      justify-content: space-between;
+      padding: 2.4rem 4.8rem;
+      border-bottom: 1px solid $color-grey-light-2;
+
+      .search {
+        width: 50%;
+      }
+
+      .filter__dropdown {
+        border: 1px solid $color-grey-light-2;
+        border-radius: 1rem;
+        padding: 0.8rem 2.4rem;
+        @extend .transition-hover-effect;
+        font-family: inherit;
+        font-size: 1.6rem;
+        font-weight: 300;
+        color: inherit;
+      }
+    }
+  }
 }
 
 .delete-mode {
-    .project {
-        cursor: pointer;
-        background-color: rgba(255, 0, 0, 0.1) !important;
-        border-left: 5px solid $color-danger !important; 
+  .project {
+    cursor: pointer;
+    background-color: rgba(255, 0, 0, 0.1) !important;
+    border-left: 5px solid $color-danger !important;
 
-        &:hover {
-            background-color: rgba(255, 0, 0, 0.2) !important; 
-            transform: translateX(5px);
-        }
+    &:hover {
+      background-color: rgba(255, 0, 0, 0.2) !important;
+      transform: translateX(5px);
     }
+  }
 }
 
 .modal-delete-project {
-    @extend .modal;
+  @extend .modal;
+  display: flex;
+  flex-direction: column;
+  gap: 2.4rem;
+  align-items: center;
+
+  p {
+    font-size: 1.6rem;
+  }
+
+  &__buttons {
     display: flex;
-    flex-direction: column;
-    gap: 2.4rem;
-    align-items: center;
+    gap: 1.2rem;
 
-    p {
-        font-size: 1.6rem;
+    button {
+      font-size: 1.8rem;
+      padding: 1.2rem 3.6rem;
     }
-
-    &__buttons {
-        display: flex;
-        gap: 1.2rem;
-
-        button {
-            font-size: 1.8rem;
-            padding: 1.2rem 3.6rem;
-        }
-    }
+  }
 }

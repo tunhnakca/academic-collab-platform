@@ -118,6 +118,7 @@
   &__dropdown {
     position: absolute;
     top: calc(100% + 1px); // 1px means that header border bottom px
+    min-width: 20rem;
     margin-right: 1.6rem;
     background-color: #fff;
     border-radius: 1rem;

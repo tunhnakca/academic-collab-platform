@@ -1,56 +1,65 @@
-@use 'abstracts/base' as *;
-@use 'abstracts/utilities' as *;
-@use 'abstracts/mixins' as *;
+@use "abstracts/base" as *;
+@use "abstracts/utilities" as *;
+@use "abstracts/mixins" as *;
 
 /******* Hover effects ********/
 .transition-hover-effect {
-    transition: all 0.3s ease;
+  transition: all 0.3s ease;
 }
 
 .scale-click-effect {
-    transform: scale(0.96)
+  transform: scale(0.96);
 }
 
 /* Normal Sized Shadow */
 .shadow-normal {
-    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.15);  
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.15);
 }
-  
-  /* Medium Sized Shadow */
+
+/* Medium Sized Shadow */
 .shadow-medium {
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
 }
-  
-  /* Smaller Sized Shadow */
+
+/* Smaller Sized Shadow */
 .shadow-smaller {
-    box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.1); 
+  box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.1);
 }
 
 /***********************/
 /* User badge */
 /***********************/
-.badge  {
-    @extend .transition-hover-effect;
-    @include box-shadow(rgba(0, 0, 0, 0.1));
-    font-size: 1rem;
-    letter-spacing: .15rem;
-    padding: 0.2rem 0.8rem;
-    border-radius: 1rem;
-    text-transform: uppercase;
-    font-weight: 600;
-    color: #fff;
+.badge {
+  @extend .transition-hover-effect;
+  @include box-shadow(rgba(0, 0, 0, 0.1));
+  font-size: 1rem;
+  letter-spacing: 0.15rem;
+  padding: 0.2rem 0.8rem;
+  border-radius: 1rem;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: #fff;
 
-    &--admin { background-color: $color-admin; }
-    &--instructor { background-color: $color-instructor; }
-    &--mediator { background-color: $color-mediator; }
-    &--student { background-color: $color-student; }
+  &--admin {
+    background-color: $color-admin;
+  }
+  &--instructor {
+    background-color: $color-instructor;
+  }
+  &--mediator {
+    background-color: $color-mediator;
+  }
+  &--student {
+    background-color: $color-student;
+  }
 }
 
 /***********************/
 /* Headings */
 /***********************/
 
-.heading-secondary, h2 {
+.heading-secondary,
+h2 {
   color: $color-grey-dark-1;
   font-size: 3.2rem;
   font-weight: 600;
@@ -128,7 +137,6 @@ h5 {
   &--primary {
     background-color: $color-primary;
   }
-
 }
 
 /***********************/
@@ -160,7 +168,6 @@ h5 {
     font-size: 1.6rem;
     color: #fff;
   }
-
 
   &:hover {
     @extend .shadow-medium;
@@ -195,48 +202,48 @@ h5 {
   @extend .transition-hover-effect;
 
   &:focus-within {
-      transform: translateY(-2px);
+    transform: translateY(-2px);
   }
 
   &__field {
-      border: none;
-      background: none;
-      font-family: inherit;
-      color: inherit;
-      font-size: 1.6rem;
-      
-      width: 100%;
-  
-      &:focus {
-        outline: none;
-      }
-  
-      &::placeholder {
-          color: $color-grey-light-4;
-          font-weight: 300;
-      }
+    border: none;
+    background: none;
+    font-family: inherit;
+    color: inherit;
+    font-size: 1.6rem;
+
+    width: 100%;
+
+    &:focus {
+      outline: none;
+    }
+
+    &::placeholder {
+      color: $color-grey-light-4;
+      font-weight: 300;
+    }
   }
 
   &__btn {
-      display: inline-block;
-      border: none;
-      cursor: pointer;
-      background: none;
-      @extend .transition-hover-effect;
+    display: inline-block;
+    border: none;
+    cursor: pointer;
+    background: none;
+    @extend .transition-hover-effect;
 
-      &:hover {
-          transform: scale(1.1);
-      }
+    &:hover {
+      transform: scale(1.1);
+    }
 
-      &:active {
-          transform: scale(1);
-      }
+    &:active {
+      transform: scale(1);
+    }
   }
 
   &__icon {
-      width: 2.4rem;
-      height: 2.4rem;
-      color: $color-grey-light-6;
+    width: 2.4rem;
+    height: 2.4rem;
+    color: $color-grey-light-6;
   }
 }
 
@@ -259,7 +266,6 @@ h5 {
   gap: 2.4rem;
 
   &-group {
-
     label {
       display: block;
       font-size: 1.6rem;
@@ -268,7 +274,9 @@ h5 {
       color: #495057;
     }
 
-    input, textarea, select {
+    input,
+    textarea,
+    select {
       width: 100%;
       padding: 1.2rem;
       font-size: 1.6rem;
@@ -314,4 +322,53 @@ h5 {
   background-color: rgba(0, 0, 0, 0.1);
   backdrop-filter: blur(3px);
   z-index: 8000;
+}
+
+/***********************/
+/* Pagination */
+/***********************/
+
+.pagination {
+  text-align: center;
+  font-weight: 300;
+
+  display: flex;
+  gap: 1.6rem;
+  align-items: center;
+  justify-content: center;
+
+  &__btn {
+    display: inline-block;
+    border: none;
+    background: none;
+    font-size: 1.4rem;
+    font-weight: inherit;
+    border: 1px solid currentColor;
+    border-radius: 5px;
+    padding: 0.6rem 1rem;
+    @extend .transition-hover-effect;
+
+    &:not(:disabled) {
+      cursor: pointer;
+      color: $color-primary;
+    }
+
+    &:disabled {
+      cursor: not-allowed;
+      opacity: 0.8;
+    }
+  }
+
+  &__page-number {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.3rem;
+
+    font-size: 1.5rem;
+
+    span {
+      display: inline-block;
+    }
+  }
 }

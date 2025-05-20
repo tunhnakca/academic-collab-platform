@@ -23,7 +23,7 @@ public class UserController {
 
     @GetMapping("/student/list")
     public String showStudentList(Model model, Principal principal, @RequestParam("courseCode") String courseCode,@RequestParam(defaultValue = "0") int pageNo,
-                                  @RequestParam(defaultValue = "5") int pageSize){
+                                  @RequestParam(defaultValue = "10") int pageSize){
         String number = principal.getName();
         User user = userService.findByNumber(number);
 
@@ -50,7 +50,7 @@ public class UserController {
 
     @GetMapping("/users/search")
     public String searchUserByNameAndSurname(Model model, Principal principal,@RequestParam("keyword")String keyword, @RequestParam("courseCode") String courseCode,@RequestParam(defaultValue = "0") int pageNo,
-                                             @RequestParam(defaultValue = "5") int pageSize){
+                                             @RequestParam(defaultValue = "10") int pageSize){
         String number = principal.getName();
         User user = userService.findByNumber(number);
 

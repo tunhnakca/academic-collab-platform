@@ -8,25 +8,35 @@
   </head>
   <body>
     <section class="section-posts" layout:fragment="content">
+      <!-- Left: Sidebar -->
       <div class="posts__sidebar">
         <div class="posts__sidebar-course__informations">
           <div class="posts__sidebar-course__information">
             <p class="posts__sidebar-course__information__heading">
               Course Code:
             </p>
-            <p class="posts__sidebar-course__information__value"></p>
+            <p
+              class="posts__sidebar-course__information__value"
+              th:text="${project.course.code}"
+            ></p>
           </div>
           <div class="posts__sidebar-course__information">
             <p class="posts__sidebar-course__information__heading">
               Course Title:
             </p>
-            <p class="posts__sidebar-course__information__value"></p>
+            <p
+              class="posts__sidebar-course__information__value"
+              th:text="${project.course.title}"
+            ></p>
           </div>
           <div class="posts__sidebar-course__information">
             <p class="posts__sidebar-course__information__heading">
               Course Owner:
             </p>
-            <p class="posts__sidebar-course__information__value"></p>
+            <p
+              class="posts__sidebar-course__information__value"
+              th:text="${project.course.owner}"
+            ></p>
           </div>
           <div class="posts__sidebar-course__information">
             <p class="posts__sidebar-course__information__heading">
@@ -62,15 +72,43 @@
 
       <div class="posts-wrapper">
         <div class="container-posts">
-          Lorem Ipsum is simply dummy text of the printing and typesetting
-          industry. Lorem Ipsum has been the industry's standard dummy text ever
-          since the 1500s, when an unknown printer took a galley of type and
-          scrambled it to make a type specimen book. It has survived not only
-          five centuries, but also the leap into electronic typesetting,
-          remaining essentially unchanged. It was popularised in the 1960s with
-          the release of Letraset sheets containing Lorem Ipsum passages, and
-          more recently with desktop publishing software like Aldus PageMaker
-          including versions of Lorem Ipsum
+          <div class="users-header">
+            <!--
+<form th:action="@{/users/search}" method="GET" class="search">
+            -->
+
+            <form method="GET" class="search">
+              <input
+                type="text"
+                name="keyword"
+                class="search__field"
+                placeholder="Search..."
+                th:value="${keyword}"
+              />
+
+              <!--
+                <input
+                type="hidden"
+                name="courseCode"
+                th:value="${course.code}"
+                />
+              -->
+
+              <button type="submit" class="search__btn">
+                <ion-icon class="search__icon" name="search-outline"></ion-icon>
+              </button>
+            </form>
+          </div>
+
+          <div class="post-list">
+            <div class="post-metadata">
+              <span class="post-author">Ahmet Ozmen</span>
+              <span class="post-date">15:03, 20/01/2025</span>
+            </div>
+            <div class="post-box">
+              <div class="post-content" th:utext="${project.description}"></div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
