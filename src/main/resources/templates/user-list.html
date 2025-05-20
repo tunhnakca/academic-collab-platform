@@ -4,7 +4,7 @@
   layout:decorate="~{layout}"
 >
   <head>
-    <title th:text="${course.code + ' | Users'}">Users</title>
+    <title th:text="${course.code + ' | Students'}">Users</title>
   </head>
   <body>
     <section class="section-user-list" layout:fragment="content">
@@ -115,14 +115,15 @@
                   th:value="${keyword}"
                 />
                 <input
-                        type="hidden"
-                        name="courseCode"
-                        th:value="${course.getCode()}"
+                  type="hidden"
+                  name="courseCode"
+                  th:value="${course.getCode()}"
                 />
 
                 <!--
                     th:value="${course.getCode()}"
                 -->
+                <input type="hidden" name="courseCode" />
                 <button type="submit" class="search__btn">
                   <ion-icon
                     class="search__icon"
