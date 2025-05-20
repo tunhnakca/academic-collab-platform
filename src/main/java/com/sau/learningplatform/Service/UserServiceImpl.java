@@ -1,6 +1,7 @@
 package com.sau.learningplatform.Service;
 
 import com.sau.learningplatform.Entity.CourseRegistration;
+import com.sau.learningplatform.Entity.Semester;
 import com.sau.learningplatform.Entity.User;
 import com.sau.learningplatform.EntityResponse.MessageResponseWithStatus;
 import com.sau.learningplatform.EntityResponse.UserPageResponse;
@@ -72,6 +73,17 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public UserPageResponse searchUsersPaged(String courseCode,String role, String keyword, int pageNo, int pageSize) {
+        Semester currentSemester = semesterService.getCurrentSemester();
+        Pageable pageable = PageRequest.of(pageNo, pageSize);
+
+        Page<User> userPage = userRepository.searchUsersByCourseAndRoleAndNameOrSurnamePaged(
+                courseCode, currentSemester, role,keyword, pageable);
+
+        return usersToPageResponse(pageNo, pageSize, userPage);
+    }
+
+    @Override
     public void saveAll(List<User> users) {
         userRepository.saveAll(users);
     }
@@ -93,15 +105,12 @@ public class UserServiceImpl implements UserService {
 
             log.warn("Incorrect password, change request has been denied!");
             return new MessageResponseWithStatus("Incorrect current password!", false);
-
         }
 
         if (newPassword.equals(user.getNumber())) {
 
             log.warn("Your new password cannot be same as your number!");
             return new MessageResponseWithStatus("New password cannot be same as your number!", false);
-
-
         }
 
         user.setPassword(encoder.encode(newPassword));
@@ -110,7 +119,6 @@ public class UserServiceImpl implements UserService {
 
         log.info("password has been updated successfully! ");
         return new MessageResponseWithStatus("Your password has been updated successfully!", true);
-
 
     }
 
@@ -126,11 +134,6 @@ public class UserServiceImpl implements UserService {
                 .build();
     }
 
-
-
-
-
-
     @Override
     public void saveUser(User user) {
         userRepository.save(user);
@@ -144,7 +147,6 @@ public class UserServiceImpl implements UserService {
         }
         return students.stream().map(this::mapToUserResponse).toList();
     }
-
 
 
     @Override
@@ -172,14 +174,12 @@ public class UserServiceImpl implements UserService {
         return response;
     }
 
-
     @Override
     public UserPageResponse getPaginatedUsers(int pageNo, int pageSize) {
         Pageable pageable= PageRequest.of(pageNo,pageSize);
         Page<User> users=userRepository.findAll(pageable);
 
         return usersToPageResponse(pageNo,pageSize,users);
-
     }
 
     private UserPageResponse usersToPageResponse(int pageNo, int pageSize, Page<User>users){
@@ -196,6 +196,5 @@ public class UserServiceImpl implements UserService {
         return userPageResponse;
 
     }
-
 
 }

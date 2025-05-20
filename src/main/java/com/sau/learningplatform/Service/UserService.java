@@ -29,6 +29,8 @@ public interface UserService {
     List<UserResponse> getAllStudents();
 
     public UserPageResponse getPaginatedUsers(int pageNo, int pageSize);
+
+    UserPageResponse searchUsersPaged(String courseCode, String role,String keyword, int pageNo, int pageSize);
     UserPageResponse getPaginatedUsersByCourseCodeAndRole(String courseCode, String role, int pageNo, int pageSize);
 
 }
