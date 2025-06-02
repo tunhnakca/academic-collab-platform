@@ -102,11 +102,16 @@
 
           <div class="post-list">
             <div class="post-metadata">
-              <span class="post-author">Ahmet Ozmen</span>
-              <span class="post-date">15:03, 20/01/2025</span>
-            </div>
-            <div class="post-box">
-              <div class="post-content" th:utext="${project.description}"></div>
+              <div class="project-info">
+                <span class="post-author">Ahmet Ozmen</span>
+                <span class="post-date">15:03, 20/01/2025</span>
+              </div>
+              <div class="post-box">
+                <div
+                  class="post-content"
+                  th:utext="${project.description}"
+                ></div>
+              </div>
             </div>
           </div>
         </div>

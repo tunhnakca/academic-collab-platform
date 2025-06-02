@@ -72,6 +72,25 @@ hljs.registerLanguage("dockerfile", dockerfile);
 hljs.registerLanguage("nginx", nginx);
 hljs.registerLanguage("apache", apache);
 
+// ---------- Color code blocks ----------
+export function highlightCodeBlocks(container) {
+  (container || document).querySelectorAll("pre code").forEach((block) => {
+    hljs.highlightElement(block);
+
+    const languageClass = Array.from(block.classList).find((className) =>
+      className.startsWith("language-")
+    );
+    if (languageClass) {
+      block.parentElement.setAttribute(
+        "data-language",
+        languageClass.replace("language-", "")
+      );
+    } else {
+      block.parentElement.removeAttribute("data-language");
+    }
+  });
+}
+
 export function setupMarkdownEditor(textAreaId) {
   const textArea = document.getElementById(textAreaId);
   if (!textArea) {
@@ -107,42 +126,13 @@ export function setupMarkdownEditor(textAreaId) {
     autosave: {
       enabled: true,
       delay: 1000,
-      uniqueId: "projectDescription",
+      uniqueId: "textAreaId",
     },
     previewRender: function (plainText, preview) {
       const htmlContent = this.parent.markdown(plainText);
       preview.innerHTML = htmlContent;
 
-      preview.querySelectorAll("pre code").forEach((block) => {
-        // First process with highlight.js
-        hljs.highlightElement(block);
-
-        // Check classes after highlight.js processing
-        // Check both language- class and hljs language- class
-        const languageClass = Array.from(block.classList).find(
-          (className) =>
-            className.startsWith("language-") ||
-            (className.startsWith("hljs") && className !== "hljs")
-        );
-
-        // Extract language
-        let language = null;
-        if (languageClass) {
-          if (languageClass.startsWith("language-")) {
-            language = languageClass.split("-")[1];
-          } else if (languageClass.startsWith("hljs")) {
-            language = languageClass.replace("hljs", "").trim();
-          }
-        }
-
-        // Show if language exists and is not undefined
-        if (language && language !== "undefined") {
-          block.parentElement.setAttribute("data-language", language);
-        } else {
-          block.parentElement.removeAttribute("data-language");
-        }
-      });
-
+      highlightCodeBlocks(preview);
       return preview.innerHTML;
     },
   });

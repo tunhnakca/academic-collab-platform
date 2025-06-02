@@ -1,5 +1,6 @@
 // import "./components/alert-bar.js";
 import showAlert from "./components/show-alert-bar.js";
+import { highlightCodeBlocks } from "./components/markdownEditor";
 import {
   showLoginInfoModal,
   handleLoginAlerts,
@@ -195,4 +196,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Update Date Formats
   updateProjectDateTimeOnPosts();
+
+  // Highlight code blocks
+  highlightCodeBlocks();
 });
