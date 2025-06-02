@@ -60,7 +60,7 @@ public class CourseController {
     }
 
     @PostMapping("/courses/add")
-    public RedirectView addCourse(Principal principal,     RedirectAttributes redirectAttributes,
+    public RedirectView addCourse(Principal principal,RedirectAttributes redirectAttributes,
                                                      @RequestParam("courseName") String courseName,
                                                      @RequestParam("courseCode") String courseCode,
                                                      @RequestParam("file") MultipartFile studentFile

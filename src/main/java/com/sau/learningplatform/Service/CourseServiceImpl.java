@@ -80,6 +80,11 @@ public class CourseServiceImpl implements CourseService {
 
             return new MessageResponseWithStatus("The course with given code is already exists!", false);
 
+        }
+        if (!semesterService.isThereActiveSemester()) {
+            log.warn("The course with given code is already exists!");
+
+            return new MessageResponseWithStatus("The semester has not started yet!", false);
 
         }
 
@@ -234,7 +239,13 @@ public class CourseServiceImpl implements CourseService {
         if (course.isEmpty()){
             return new ResponseEntity<>(new MessageResponse("There is no such a course with given code!"), HttpStatus.NOT_FOUND);
         }
+        if (!semesterService.isThereActiveSemester()) {
+            log.warn("The course with given code is already exists!");
 
+            //return new MessageResponseWithStatus("The semester has not started yet!", false);
+
+        }
+        student.setNumber(student.getNumber().toUpperCase());
         User user=student;
 
         if (userService.existsByNumber(student.getNumber())) {
