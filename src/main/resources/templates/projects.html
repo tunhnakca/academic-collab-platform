@@ -141,7 +141,7 @@
                   class="project"
                   th:each="project : ${projects}"
                   th:data-project-id="${project.id}"
-                  th:classappend="${project.isValid} ? 'project--opened' : 'project--closed'"
+                  th:classappend="${project.isActive} ? 'project--opened' : 'project--closed'"
                 >
                   <a
                     th:href="@{'/post/' + ${project.id}}"
