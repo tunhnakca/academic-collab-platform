@@ -101,16 +101,36 @@
           </div>
 
           <div class="post-list">
-            <div class="post-metadata">
-              <div class="project-info">
-                <span class="post-author">Ahmet Ozmen</span>
-                <span class="post-date">15:03, 20/01/2025</span>
+            <div class="post project-info">
+              <div class="post-metadata">
+                <span
+                  class="post-author"
+                  th:text="${project.course.owner}"
+                ></span>
+                <span
+                  class="post-date"
+                  th:data-date="${project.startDate}"
+                ></span>
               </div>
               <div class="post-box">
                 <div
                   class="post-content"
                   th:utext="${project.description}"
                 ></div>
+              </div>
+            </div>
+            <div class="post">
+              <div class="post-metadata">
+                <span class="post-author">Tunahan Akça</span>
+                <span class="post-date">19:04, 30/02/2025</span>
+              </div>
+              <div class="post-box">
+                <div class="post-content">
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                  Consectetur mollitia reprehenderit magni provident eius optio
+                  odit reiciendis commodi, impedit voluptatum omnis vero maxime
+                  et amet voluptates esse magnam quo adipisci.
+                </div>
               </div>
             </div>
           </div>

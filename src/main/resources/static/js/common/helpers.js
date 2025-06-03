@@ -49,15 +49,60 @@ export function showEmptyMessage(containerSelector, message) {
 export function formatDateTime(
   classNames,
   locale = navigator.language,
-  options = {}
+  options = {},
+  mode = "default" // "smart" or "default"
 ) {
-  const formatter = new Intl.DateTimeFormat(locale, options);
+  const now = new Date();
   classNames.forEach((className) => {
     const elements = document.querySelectorAll(`.${className}`);
     elements.forEach((el) => {
       const dateStr = el.dataset.date;
-      if (dateStr) {
-        const date = new Date(dateStr);
+      if (!dateStr) return;
+      const date = new Date(dateStr);
+
+      if (mode === "smart") {
+        // Check the difference by day (hours/minutes are not important)
+        const isToday =
+          date.getDate() === now.getDate() &&
+          date.getMonth() === now.getMonth() &&
+          date.getFullYear() === now.getFullYear();
+
+        // To find yesterday's day...
+        const yesterday = new Date(now);
+        yesterday.setDate(now.getDate() - 1);
+        const isYesterday =
+          date.getDate() === yesterday.getDate() &&
+          date.getMonth() === yesterday.getMonth() &&
+          date.getFullYear() === yesterday.getFullYear();
+
+        let timeStr = date
+          .toLocaleTimeString(locale, {
+            hour: "2-digit",
+            minute: "2-digit",
+            hour12: false,
+          })
+          .replace(/^0/, ""); // unnecessary leading zero
+
+        if (isToday) {
+          el.textContent =
+            (locale.startsWith("tr") ? "Bugün" : "Today") + ", " + timeStr;
+        } else if (isYesterday) {
+          el.textContent =
+            (locale.startsWith("tr") ? "Dün" : "Yesterday") + ", " + timeStr;
+        } else {
+          // Older history
+          el.textContent =
+            date.toLocaleDateString(locale, {
+              day: "2-digit",
+              month: "2-digit",
+              year: "numeric",
+            }) +
+            ", " +
+            timeStr;
+        }
+      } else {
+        // classic: continue the old method
+        const formatter = new Intl.DateTimeFormat(locale, options);
         el.textContent = formatter.format(date);
       }
     });
