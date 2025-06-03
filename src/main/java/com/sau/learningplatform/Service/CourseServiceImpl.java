@@ -91,6 +91,10 @@ public class CourseServiceImpl implements CourseService {
         // Parse the uploaded Excel file
         List<User> users = getStudentsFromExcelAndCreateNonExists(studentFile);
 
+        if (users.isEmpty()){
+            return new MessageResponseWithStatus("There was a problem with excel! please reconsider the example given", false);
+        }
+
         User owner = userService.findByNumber(ownerNumber);
         String ownerName = owner.getName() + " ".concat(owner.getSurname());
 
@@ -208,6 +212,7 @@ public class CourseServiceImpl implements CourseService {
                     String name = row.getCell(0).getStringCellValue();
                     String surname = row.getCell(1).getStringCellValue();
                     String number = row.getCell(2).getStringCellValue();
+                    number=number.toUpperCase();
 
                     User student;
 
@@ -224,7 +229,9 @@ public class CourseServiceImpl implements CourseService {
                 }
             }
         } catch (Exception e) {
-            throw new RuntimeException(e.getMessage());
+            log.warn(e.getMessage());
+
+            return new ArrayList<>();
         }
 
 

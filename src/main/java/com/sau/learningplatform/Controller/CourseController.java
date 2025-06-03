@@ -4,10 +4,12 @@ import com.sau.learningplatform.Entity.User;
 import com.sau.learningplatform.EntityResponse.CourseResponse;
 import com.sau.learningplatform.EntityResponse.MessageResponseWithStatus;
 import com.sau.learningplatform.Service.CourseService;
+import com.sau.learningplatform.Service.SemesterService;
 import com.sau.learningplatform.Service.UserService;
 import com.sau.learningplatform.EntityResponse.MessageResponse;
 
 import lombok.extern.slf4j.Slf4j;
+import ognl.security.UserMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -29,9 +31,12 @@ public class CourseController {
 
     private UserService userService;
 
-    public CourseController(CourseService courseService, UserService userService) {
+    private SemesterService semesterService;
+
+    public CourseController(CourseService courseService, UserService userService, SemesterService semesterService) {
         this.courseService = courseService;
         this.userService = userService;
+        this.semesterService = semesterService;
     }
 
     @GetMapping("/courses")
@@ -39,7 +44,10 @@ public class CourseController {
         String number = principal.getName();
         User user = userService.findByNumber(number);
         List<CourseResponse> courses;
-        if (user.getRole().toLowerCase().equals("admin") || user.getRole().toLowerCase().equals("admın")) {
+        if (user.getRole().equalsIgnoreCase("admin")) {
+            if(!semesterService.isThereActiveSemester()){
+                return "redirect:/semester/add";
+            }
             courses = courseService.getAllCourseResponses();
         } else {
             courses = courseService.getActiveCourseResponsesByUser(user);
