@@ -14,13 +14,12 @@ export class AlertService {
 
     // Set icon based on alert type
     const alertIcon = alertElement.querySelector(".alert-icon");
-    if (type === "danger") {
+    if (type === "error") {
       alertIcon.setAttribute("name", "alert-circle-outline");
     } else if (type === "success") {
       alertIcon.setAttribute("name", "checkmark-circle-outline");
     }
 
-    pg; // Add click event listener for close button
     const closeButton = alertElement.querySelector(".alert-close");
     closeButton.addEventListener("click", () => {
       alertElement.remove();
