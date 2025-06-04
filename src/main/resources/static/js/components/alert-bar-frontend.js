@@ -20,7 +20,6 @@ export class AlertService {
       alertIcon.setAttribute("name", "checkmark-circle-outline");
     }
 
-    pg; // Add click event listener for close button
     const closeButton = alertElement.querySelector(".alert-close");
     closeButton.addEventListener("click", () => {
       alertElement.remove();
