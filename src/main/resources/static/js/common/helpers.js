@@ -85,20 +85,20 @@ export function formatDateTime(
 
         if (isToday) {
           el.textContent =
-            (locale.startsWith("tr") ? "Bugün" : "Today") + ", " + timeStr;
+            timeStr + " , " + (locale.startsWith("tr") ? "Bugün" : "Today");
         } else if (isYesterday) {
           el.textContent =
-            (locale.startsWith("tr") ? "Dün" : "Yesterday") + ", " + timeStr;
+            timeStr + " , " + (locale.startsWith("tr") ? "Dün" : "Yesterday");
         } else {
           // Older history
           el.textContent =
+            timeStr +
+            " , " +
             date.toLocaleDateString(locale, {
               day: "2-digit",
               month: "2-digit",
               year: "numeric",
-            }) +
-            ", " +
-            timeStr;
+            });
         }
       } else {
         // classic: continue the old method

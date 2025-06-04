@@ -108,10 +108,8 @@
                   class="post-author"
                   th:text="${project.course.owner}"
                 ></span>
-                <span
-                  class="post-date"
-                  th:data-date="${project.startDate}"
-                ></span>
+                <span>|</span>
+                <span class="badge badge--instructor">Instructor</span>
               </div>
               <div class="post-box">
                 <div
@@ -119,12 +117,19 @@
                   th:utext="${project.description}"
                 ></div>
               </div>
+              <div class="post-metadata">
+                <span
+                  class="post-date"
+                  th:data-date="${project.startDate}"
+                ></span>
+              </div>
             </div>
             <!-- MESSAGES LOOP -->
-            <div class="post post-right">
+            <div class="post post--right post--student">
               <div class="post-metadata">
                 <span class="post-author">B201202056</span>
-                <span class="post-date">19:04, 30/02/2025</span>
+                <span>|</span>
+                <span class="badge badge--student">Student</span>
               </div>
               <div class="post-box">
                 <div class="post-content">
@@ -133,6 +138,39 @@
                   odit reiciendis commodi, impedit voluptatum omnis vero maxime
                   et amet voluptates esse magnam quo adipisci.
                 </div>
+              </div>
+              <div class="post-metadata">
+                <span class="post-date">19:04, 30/02/2025</span>
+              </div>
+            </div>
+            <div class="post post--left post--admin">
+              <div class="post-metadata">
+                <span class="post-author">B201202056</span>
+                <span>|</span>
+                <span class="badge badge--admin">Admin</span>
+              </div>
+              <div class="post-box">
+                <div class="post-content">
+                  Hatanın farkındayız. Gerekli işlemleri sağlıyoruz.
+                </div>
+              </div>
+              <div class="post-metadata">
+                <span class="post-date">19:05, 30/03/2025</span>
+              </div>
+            </div>
+            <div class="post post--left post--student">
+              <div class="post-metadata">
+                <span class="post-author">G201202057</span>
+                <span>|</span>
+                <span class="badge badge--instructor">Instructor</span>
+              </div>
+              <div class="post-box">
+                <div class="post-content">
+                  Derhal herkes projeye cevap versin.
+                </div>
+              </div>
+              <div class="post-metadata">
+                <span class="post-date">19:07, 30/03/2025</span>
               </div>
             </div>
           </div>

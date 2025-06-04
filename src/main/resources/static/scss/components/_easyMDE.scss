@@ -140,7 +140,7 @@
           [data-language=""]
         ) {
         &::before {
-          display: block; // Sadece geçerli dil varsa göster
+          display: block; // Show only if valid language is available
         }
       }
 
