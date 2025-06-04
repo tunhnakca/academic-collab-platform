@@ -14,7 +14,7 @@ export class AlertService {
 
     // Set icon based on alert type
     const alertIcon = alertElement.querySelector(".alert-icon");
-    if (type === "danger") {
+    if (type === "error") {
       alertIcon.setAttribute("name", "alert-circle-outline");
     } else if (type === "success") {
       alertIcon.setAttribute("name", "checkmark-circle-outline");

@@ -84,6 +84,8 @@
   .users-header {
     .search {
       background-color: #fff;
+      border: none;
+      @include box-shadow(rgba(0, 0, 0, 0.06));
     }
 
     margin-bottom: 2.4rem;
@@ -96,7 +98,7 @@
   }
 
   .post {
-    max-width: 70%;
+    max-width: 75%;
     display: flex;
     gap: 0.8rem;
     flex-direction: column;
@@ -111,6 +113,11 @@
       background: #fff;
       border-radius: 1.2rem;
       padding: 1.6rem 2rem;
+
+      .project-name {
+        font-weight: 700;
+        font-size: 3.2rem;
+      }
 
       h1,
       h2,
@@ -269,13 +276,57 @@
         background: #eafcff;
       }
     }
+
+    &:last-child {
+      margin-bottom: 4.6rem;
+    }
   }
 
   .project-info {
     align-self: flex-start;
+    max-width: 100%;
+    border-bottom: 1px solid $color-grey-light-4;
+    padding-bottom: 4.6rem;
 
     .post-box {
       border-left: 6px solid #4d90fe;
+    }
+  }
+
+  .post-heading--secondary {
+    font-size: 2.4rem;
+    font-weight: 400;
+    margin-bottom: 0;
+  }
+
+  .post-heading--answer {
+    padding-top: 3.2rem; // Equal to the post row gap
+    border-top: 1px solid $color-grey-light-4;
+    margin-bottom: 2rem;
+  }
+
+  .form-post {
+    gap: 1.4rem; // For button gap
+
+    .form-group {
+      textarea {
+        resize: vertical;
+        overflow-x: hidden;
+      }
+    }
+
+    .btn__post {
+      align-self: end;
+
+      font-size: 1.6rem;
+
+      padding: 1rem 1.6rem;
+
+      &:disabled {
+        background-color: $color-disable;
+        color: $color-grey-light-6;
+        cursor: not-allowed;
+      }
     }
   }
 }

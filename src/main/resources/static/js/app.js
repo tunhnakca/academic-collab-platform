@@ -38,6 +38,7 @@ import {
 import {
   updateSectionPostsHeight,
   updateProjectDateTimeOnPosts,
+  initializePostsMarkdownEditor,
 } from "./pages/posts";
 
 ///////////////////////////
@@ -199,4 +200,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Highlight code blocks
   highlightCodeBlocks();
+
+  // Initialize markdown editor for answer
+  initializePostsMarkdownEditor();
 });
