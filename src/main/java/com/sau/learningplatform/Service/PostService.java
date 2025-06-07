@@ -6,7 +6,7 @@ import com.sau.learningplatform.EntityResponse.PostResponse;
 import java.util.List;
 
 public interface PostService {
-    List<PostResponse> getPostResponsesByProjectId(int id);
+    List<PostResponse> getParentPostResponsesByProjectId(int id);
 
     void deleteById(int id);
 

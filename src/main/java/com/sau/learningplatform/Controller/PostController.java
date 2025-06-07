@@ -1,6 +1,5 @@
 package com.sau.learningplatform.Controller;
 
-import com.sau.learningplatform.Entity.Post;
 import com.sau.learningplatform.Entity.User;
 import com.sau.learningplatform.EntityResponse.PostResponse;
 import com.sau.learningplatform.EntityResponse.ProjectResponse;
@@ -16,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.security.Principal;
 import java.util.List;
 
-@Controller
+@RestController
 public class PostController {
     private PostService postService;
 
@@ -32,18 +31,19 @@ public class PostController {
     }
 
     @GetMapping("/post/{projectId}")
-    public String postsByProject(Principal principal, Model model, @PathVariable int projectId){
+    public List<PostResponse> postsByProject(Principal principal, Model model, @PathVariable int projectId){
         String number = principal.getName();
         User user = userService.findByNumber(number);
         model.addAttribute("loggedUser", user);
 
-        List<PostResponse> posts=postService.getPostResponsesByProjectId(projectId);
+        List<PostResponse> posts=postService.getParentPostResponsesByProjectId(projectId);
         ProjectResponse projectResponse=projectService.getResponseById(projectId);
 
         model.addAttribute("posts",posts);
         model.addAttribute("project",projectResponse);
 
-        return "posts";
+        //return "posts";
+        return posts;
 
     }
 
