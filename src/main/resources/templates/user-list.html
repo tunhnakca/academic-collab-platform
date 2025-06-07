@@ -99,6 +99,49 @@
               </button>
             </form>
           </div>
+          <div
+            th:if="${#strings.toLowerCase(loggedUser.role).replace('ı', 'i') == 'admin' or #strings.toLowerCase(loggedUser.role).replace('ı', 'i') == 'instructor'}"
+            class="user-list__sidebar-course__information user-list__sidebar-course__information--user-management"
+          >
+            <p class="user-list__sidebar-course__information__heading">
+              Add Students in Bulk:
+            </p>
+            <form
+              method="post"
+              class="form form-add-user"
+              name="add-user"
+              enctype="multipart/form-data"
+            >
+              <input
+                type="hidden"
+                name="courseCode"
+                th:value="${course.code}"
+              />
+
+              <div class="form-group">
+                <input
+                  type="file"
+                  id="fileUserList"
+                  name="fileUserList"
+                  accept=".xlsx"
+                  required
+                />
+                <small class="file-hint"
+                  >Accepted formats: .xlsx <br />
+                  <a href="/downloads/StudentListTemplate.xlsx" download
+                    >📄 Download Student Excel Template
+                  </a>
+                  <br />
+                  &#9432; File format should be Name | Surname | Number
+                </small>
+                <br />
+              </div>
+
+              <button type="submit" class="btn btn__add-user btn--success">
+                Add Students
+              </button>
+            </form>
+          </div>
         </div>
       </div>
 
