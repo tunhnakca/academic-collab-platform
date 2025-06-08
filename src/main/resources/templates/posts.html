@@ -129,6 +129,18 @@
                   class="post-content"
                   th:utext="${project.description}"
                 ></div>
+                <div class="post-actions">
+                  <button class="post-actions__item post-actions__item--delete">
+                    <ion-icon name="trash"></ion-icon>
+                  </button>
+                  <button class="post-actions__item post-actions__item--reply">
+                    <ion-icon
+                      class="post-actions__item--reply__icon"
+                      name="arrow-undo"
+                    ></ion-icon>
+                    <span>Reply</span>
+                  </button>
+                </div>
               </div>
             </div>
             <h2 class="post-heading--secondary post-heading--answers">
@@ -154,6 +166,18 @@
                   odit reiciendis commodi, impedit voluptatum omnis vero maxime
                   et amet voluptates esse magnam quo adipisci.
                 </div>
+                <div class="post-actions">
+                  <button class="post-actions__item post-actions__item--delete">
+                    <ion-icon name="trash"></ion-icon>
+                  </button>
+                  <button class="post-actions__item post-actions__item--reply">
+                    <ion-icon
+                      class="post-actions__item--reply__icon"
+                      name="arrow-undo"
+                    ></ion-icon>
+                    <span>Reply</span>
+                  </button>
+                </div>
               </div>
             </div>
             <div class="post">
@@ -171,6 +195,18 @@
                 </div>
                 <div class="post-content">
                   Hatanın farkındayız. Gerekli işlemleri sağlıyoruz.
+                </div>
+                <div class="post-actions">
+                  <button class="post-actions__item post-actions__item--delete">
+                    <ion-icon name="trash"></ion-icon>
+                  </button>
+                  <button class="post-actions__item post-actions__item--reply">
+                    <ion-icon
+                      class="post-actions__item--reply__icon"
+                      name="arrow-undo"
+                    ></ion-icon>
+                    <span>Reply</span>
+                  </button>
                 </div>
               </div>
             </div>
@@ -190,13 +226,31 @@
                 <div class="post-content">
                   Derhal herkes projeye cevap versin.
                 </div>
+                <div class="post-actions">
+                  <button class="post-actions__item post-actions__item--delete">
+                    <ion-icon name="trash"></ion-icon>
+                  </button>
+                  <button class="post-actions__item post-actions__item--reply">
+                    <ion-icon
+                      class="post-actions__item--reply__icon"
+                      name="arrow-undo"
+                    ></ion-icon>
+                    <span>Reply</span>
+                  </button>
+                </div>
               </div>
             </div>
           </div>
           <h2 class="post-heading--secondary post-heading--answer">
             Your Answer
           </h2>
-          <form action="" method="post" name="post" class="form form-post">
+          <form
+            action=""
+            method="post"
+            name="post"
+            class="form form-post"
+            id="reply-form"
+          >
             <div class="form-group">
               <textarea
                 id="post"
