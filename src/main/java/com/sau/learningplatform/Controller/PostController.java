@@ -10,12 +10,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
 
 import java.security.Principal;
 import java.util.List;
 
-@RestController
+@Controller
 public class PostController {
     private PostService postService;
 
@@ -31,7 +30,7 @@ public class PostController {
     }
 
     @GetMapping("/post/{projectId}")
-    public List<PostResponse> postsByProject(Principal principal, Model model, @PathVariable int projectId){
+    public String postsByProject(Principal principal, Model model, @PathVariable int projectId){
         String number = principal.getName();
         User user = userService.findByNumber(number);
         model.addAttribute("loggedUser", user);
@@ -42,8 +41,8 @@ public class PostController {
         model.addAttribute("posts",posts);
         model.addAttribute("project",projectResponse);
 
-        //return "posts";
-        return posts;
+        return "posts";
+
 
     }
 

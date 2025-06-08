@@ -152,6 +152,31 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
+    public MessageResponseWithStatus addUsersToCourse(List<User> users, String courseCode) {
+
+        Optional<Course> course=courseRepository.findByCode(courseCode);
+
+        if (course.isEmpty()){
+            log.error("Invalid course code given!");
+            return new MessageResponseWithStatus("Invalid course code given!",false);
+        }
+
+        for (User u:users){
+            if (!courseRegistrationRepository.existsByUserIdAndCourseIdAndSemester(u.getId(),course.get().getId(),semesterService.getCurrentSemester())){
+
+                CourseRegistration courseRegistration=new CourseRegistration();
+                courseRegistration.setSemester(semesterService.getCurrentSemester());
+                courseRegistration.setUser(u);
+                courseRegistration.setCourse(course.get());
+
+                courseRegistrationRepository.save(courseRegistration);
+            }
+
+        }
+        return new MessageResponseWithStatus("Users have been saved to course!",true);
+    }
+
+    @Override
     public ResponseEntity<MessageResponse> removeUserFromCourseInActiveSemester(String courseCode, String userNumber) {
         Optional<Course> course=courseRepository.findByCode(courseCode);
         User user=userService.findByNumber(userNumber);
@@ -239,18 +264,17 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public ResponseEntity<MessageResponse> addStudentToCourseAndSaveNonExistingStudent(User student, String courseCode) {
+    public MessageResponseWithStatus addStudentToCourseAndSaveNonExistingStudent(User student, String courseCode) {
 
         Optional<Course> course=courseRepository.findByCode(courseCode);
 
         if (course.isEmpty()){
-            return new ResponseEntity<>(new MessageResponse("There is no such a course with given code!"), HttpStatus.NOT_FOUND);
+            return new MessageResponseWithStatus(("There is no such a course with given code!"), false);
         }
         if (!semesterService.isThereActiveSemester()) {
             log.warn("The course with given code is already exists!");
 
-            //return new MessageResponseWithStatus("The semester has not started yet!", false);
-
+            return new MessageResponseWithStatus("The semester has not started yet!", false);
         }
         student.setNumber(student.getNumber().toUpperCase());
         User user=student;
@@ -258,7 +282,10 @@ public class CourseServiceImpl implements CourseService {
         if (userService.existsByNumber(student.getNumber())) {
 
             user=userService.findByNumber(student.getNumber());
-
+            if (courseRegistrationRepository.existsByUserIdAndCourseIdAndSemester(user.getId(), course.get().getId(), semesterService.getCurrentSemester())) {
+                log.warn("Student is already registered to this course in current semester");
+                return new MessageResponseWithStatus("Student is already registered to this course", false);
+            }
         }
         else {
             user.setPassword(user.getNumber());
@@ -274,8 +301,9 @@ public class CourseServiceImpl implements CourseService {
         courseRegistrationRepository.save(courseRegistration);
 
         log.info("a new course registry has been saved for {}",course.get().getTitle());
-        return new ResponseEntity<>(new MessageResponse("New registry has been saved successfully"), HttpStatus.OK);
+        return new MessageResponseWithStatus(("New registry has been saved successfully"), true);
     }
+
 
 
     private CourseResponse courseToResponse(Course course) {
