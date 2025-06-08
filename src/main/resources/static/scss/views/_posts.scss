@@ -76,227 +76,243 @@
 .container-posts {
   max-width: calc(120rem);
   width: 100%;
-  padding: 4.8rem;
+  padding: 0 4.8rem 4.8rem 4.8rem;
   margin: 0 auto;
 
-  background-color: #fff;
   overflow: hidden;
-  border-radius: 1rem;
-  @include box-shadow(rgba(0, 0, 0, 0.06));
+
+  .users-header {
+    .search {
+      background-color: #fff;
+      border: none;
+      @include box-shadow(rgba(0, 0, 0, 0.06));
+    }
+  }
 
   .post-list {
     display: flex;
     flex-direction: column;
-    gap: 3.2rem;
     margin-top: 3.2rem;
-  }
 
-  .post {
-    max-width: 75%;
-    display: flex;
-    gap: 0.8rem;
-    flex-direction: column;
-    align-self: flex-start;
+    .post {
+      padding: 2.8rem 0;
+      border-bottom: 1px solid $color-grey-light-4;
 
-    .post-box {
-      font-size: 1.4rem;
-      font-weight: 400;
-      line-height: 1.6;
-      @include box-shadow(rgba(0, 0, 0, 0.06));
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 1.6rem;
+      align-items: start;
 
-      background: #fff;
-      border-radius: 1.2rem;
-      padding: 1.6rem 2rem;
-
-      .project-name {
-        font-weight: 700;
-        font-size: 3.2rem;
+      &:first-child {
+        border-top: 1px solid $color-grey-light-4;
       }
 
-      h1,
-      h2,
-      h3,
-      h4,
-      h5,
-      h6 {
-        margin-top: 2.2rem;
-        margin-bottom: 1.4rem;
-        font-weight: 500;
-        line-height: 1.3;
+      // // Remove border and padding for first post and project-info
+      &:first-child.project-info {
+        border-bottom: none;
+        padding-bottom: 0;
       }
 
-      /* If title is the first element of .post-content, reset margin-top */
-      > h1:first-child,
-      > h2:first-child,
-      > h3:first-child,
-      > h4:first-child,
-      > h5:first-child,
-      > h6:first-child {
-        margin-top: 0;
-      }
-
-      h1 {
-        font-size: 2.8rem;
-      }
-      h2 {
-        font-size: 2.4rem;
-      }
-      h3 {
-        font-size: 2.2rem;
-      }
-      h4 {
-        font-size: 2rem;
-      }
-      h5 {
+      &__avatar {
+        width: 4.8rem;
+        height: 4.8rem;
+        color: #fff;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
         font-size: 1.8rem;
-      }
-      h6 {
-        font-size: 1.6rem;
-      }
+        font-weight: 500;
+        flex-shrink: 0;
 
-      p {
-        margin-bottom: 1.4rem;
-        line-height: 1.6;
-      }
-
-      ul,
-      ol {
-        margin-bottom: 1.4rem;
-        padding-left: 2.4rem;
-      }
-
-      // Links
-      a {
-        text-decoration: none;
-        transition: all 0.2s;
-
-        &:hover {
-          text-decoration: underline;
+        &--admin {
+          background-color: $color-admin;
+        }
+        &--instructor {
+          background-color: $color-instructor;
+        }
+        &--mediator {
+          background-color: $color-mediator;
+        }
+        &--student {
+          background-color: $color-student;
         }
       }
 
-      img {
-        max-width: 100%;
-        height: auto;
-        border-radius: 0.6rem;
-        margin: 1.4rem 0;
-      }
-
-      pre {
-        margin: 1.4rem 0;
-        border-radius: 0.6rem;
-        overflow: hidden;
-        background: #282c34 !important;
-        position: relative;
-        font-family: "Monaco", "Menlo", "Ubuntu Mono", monospace !important;
-
-        // Language label
-        &::before {
-          content: attr(data-language);
-          display: none;
-          background: #3f3f46;
-          padding: 0.8rem 1.2rem;
-          color: #f8f9fa;
-          font-size: 1.2rem;
-          font-family: inherit;
-          text-transform: uppercase;
-        }
-
-        &[data-language]:not([data-language="undefined"]):not(
-            [data-language=""]
-          ) {
-          &::before {
-            display: block; // Sadece geçerli dil varsa göster
-          }
-        }
-
-        code {
-          display: block;
-          padding: 1.6rem;
-          font-family: "Monaco", "Menlo", "Ubuntu Mono", monospace;
-          font-size: 1.4rem;
-          line-height: 1.5;
-          overflow-x: auto;
-          white-space: pre; // don't break the lines!
-          color: #abb2bf !important;
-        }
-      }
-
-      // Inline code
-      :not(pre) > code {
-        background: #282c34;
-        padding: 0.2rem 0.6rem;
-        border-radius: 0.4rem;
-        font-size: 1.4rem;
-        font-family: "Monaco", "Menlo", "Ubuntu Mono", monospace;
-        color: #abb2bf;
-      }
-    }
-
-    .post-metadata {
-      display: flex;
-      align-items: center;
-
-      gap: 0.6rem;
-      font-size: 1.2rem;
-      font-weight: 400;
-
-      span {
-        display: block;
-      }
-
-      .badge {
-        font-size: 0.9rem;
-        padding: 0.2rem 0.6rem;
-        letter-spacing: 0.12rem;
-      }
-    }
-
-    &--right {
-      align-self: flex-end;
-
-      .post-box {
-        background: #e7f4ef;
+      &___body {
+        display: grid;
+        grid-template-rows: auto 1fr;
       }
 
       .post-metadata {
-        align-self: flex-end;
+        display: grid;
+        grid-template-columns: 1fr auto;
+        align-items: center;
+        gap: 2rem;
+        margin-bottom: 1.6rem;
+        font-size: 1.4rem;
+        font-weight: 700;
+        color: $color-grey-light-6;
+
+        span {
+          display: block;
+        }
+
+        &__user-info {
+          display: flex;
+          align-items: center;
+          gap: 0.8rem;
+
+          .badge {
+            font-size: 0.9rem;
+            padding: 0.2rem 0.6rem;
+            letter-spacing: 0.12rem;
+          }
+        }
+
+        &__post-date {
+          justify-self: end;
+          white-space: nowrap;
+        }
       }
-    }
-    &--left {
-      align-self: flex-start;
 
-      .post-box {
-        background: #eafcff;
+      .post-content {
+        font-size: 1.4rem;
+        font-weight: 400;
+        line-height: 1.6;
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+          margin-top: 2.2rem;
+          margin-bottom: 1.4rem;
+          font-weight: 500;
+          line-height: 1.3;
+        }
+
+        /* If title is the first element of .post-content, reset margin-top */
+        > h1:first-child,
+        > h2:first-child,
+        > h3:first-child,
+        > h4:first-child,
+        > h5:first-child,
+        > h6:first-child {
+          margin-top: 0;
+        }
+
+        h1 {
+          font-size: 2.8rem;
+        }
+        h2 {
+          font-size: 2.4rem;
+        }
+        h3 {
+          font-size: 2.2rem;
+        }
+        h4 {
+          font-size: 2rem;
+        }
+        h5 {
+          font-size: 1.8rem;
+        }
+        h6 {
+          font-size: 1.6rem;
+        }
+
+        p {
+          margin-bottom: 1.4rem;
+          line-height: 1.6;
+        }
+
+        ul,
+        ol {
+          margin-bottom: 1.4rem;
+          padding-left: 2.4rem;
+        }
+
+        // Links
+        a {
+          text-decoration: none;
+          transition: all 0.2s;
+
+          &:hover {
+            text-decoration: underline;
+          }
+        }
+
+        img {
+          max-width: 100%;
+          height: auto;
+          border-radius: 0.6rem;
+          margin: 1.4rem 0;
+        }
+
+        pre {
+          margin: 1.4rem 0;
+          border-radius: 0.6rem;
+          overflow: hidden;
+          background: #282c34 !important;
+          position: relative;
+          font-family: "Monaco", "Menlo", "Ubuntu Mono", monospace !important;
+
+          // Language label
+          &::before {
+            content: attr(data-language);
+            display: none;
+            background: #3f3f46;
+            padding: 0.8rem 1.2rem;
+            color: #f8f9fa;
+            font-size: 1.2rem;
+            font-family: inherit;
+            text-transform: uppercase;
+          }
+
+          &[data-language]:not([data-language="undefined"]):not(
+              [data-language=""]
+            ) {
+            &::before {
+              display: block; // Sadece geçerli dil varsa göster
+            }
+          }
+
+          code {
+            display: block;
+            padding: 1.6rem;
+            font-family: "Monaco", "Menlo", "Ubuntu Mono", monospace;
+            font-size: 1.4rem;
+            line-height: 1.5;
+            overflow-x: auto;
+            white-space: pre; // don't break the lines!
+            color: #abb2bf !important;
+          }
+        }
+
+        // Inline code
+        :not(pre) > code {
+          background: #282c34;
+          padding: 0.2rem 0.6rem;
+          border-radius: 0.4rem;
+          font-size: 1.4rem;
+          font-family: "Monaco", "Menlo", "Ubuntu Mono", monospace;
+          color: #abb2bf;
+        }
       }
-    }
-
-    &:last-child {
-      margin-bottom: 4.6rem;
-    }
-  }
-
-  .project-info {
-    align-self: flex-start;
-    max-width: 100%;
-    border-bottom: 1px solid $color-grey-light-4;
-    padding-bottom: 4.6rem;
-
-    .post-box {
-      border-left: 6px solid #4d90fe;
     }
   }
 
   .post-heading--secondary {
     font-size: 2.4rem;
     font-weight: 400;
-    margin-bottom: 0;
+    padding-top: 2.8rem;
   }
 
-  .post-heading--answer {
-    padding-top: 3.2rem; // Equal to the post row gap
-    border-top: 1px solid $color-grey-light-4;
-    margin-bottom: 2rem;
+  .post-heading--answers {
+    border-bottom: 1px solid $color-grey-light-4;
+    padding-bottom: 2.8rem;
+    margin-bottom: 0; // Margin'i sıfırlayın
   }
 
   .form-post {
