@@ -39,6 +39,7 @@ import {
   updateSectionPostsHeight,
   updateProjectDateTimeOnPosts,
   initializePostsMarkdownEditor,
+  initializeReplyScrollToForm,
 } from "./pages/posts";
 
 ///////////////////////////
@@ -203,4 +204,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Initialize markdown editor for answer
   initializePostsMarkdownEditor();
+
+  // Scrolling form
+  initializeReplyScrollToForm();
 });

@@ -53,3 +53,40 @@ export function initializePostsMarkdownEditor() {
     });
   }
 }
+
+export function initializeReplyScrollToForm() {
+  // Select the reply button in project-info
+  const projectInfoReplyBtn = document.querySelector(
+    ".project-info .post-actions__item--reply"
+  );
+  const replyForm = document.getElementById("reply-form");
+
+  if (!projectInfoReplyBtn || !replyForm) return;
+
+  if (projectInfoReplyBtn && replyForm) {
+    projectInfoReplyBtn.addEventListener("click", function (e) {
+      e.preventDefault();
+
+      // Scroll to form
+      replyForm.scrollIntoView({
+        behavior: "smooth",
+        block: "center",
+      });
+
+      // Focus on CodeMirror's textarea
+      setTimeout(() => {
+        // Select CodeMirror's textarea directly
+        const cmTextarea = document.querySelector(".CodeMirror textarea");
+
+        if (!cmTextarea) return;
+
+        if (cmTextarea) {
+          cmTextarea.focus();
+          cmTextarea.click();
+        }
+      }, 600);
+    });
+  } else {
+    return;
+  }
+}

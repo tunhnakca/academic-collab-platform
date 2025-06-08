@@ -291,6 +291,23 @@ h5 {
         font-weight: 300;
       }
     }
+
+    a:link,
+    a:visited {
+      text-decoration: none;
+      display: inline-block;
+      font-family: inherit;
+      font-weight: 400;
+      @extend .transition-hover-effect;
+      cursor: pointer;
+      color: $color-primary;
+      border-bottom: 1px solid transparent;
+    }
+
+    a:hover,
+    a:active {
+      border-bottom: 1px solid currentColor;
+    }
   }
 }
 
