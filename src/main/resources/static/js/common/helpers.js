@@ -85,15 +85,15 @@ export function formatDateTime(
 
         if (isToday) {
           el.textContent =
-            timeStr + " , " + (locale.startsWith("tr") ? "Bugün" : "Today");
+            timeStr + ", " + (locale.startsWith("tr") ? "Bugün" : "Today");
         } else if (isYesterday) {
           el.textContent =
-            timeStr + " , " + (locale.startsWith("tr") ? "Dün" : "Yesterday");
+            timeStr + ", " + (locale.startsWith("tr") ? "Dün" : "Yesterday");
         } else {
           // Older history
           el.textContent =
             timeStr +
-            " , " +
+            ", " +
             date.toLocaleDateString(locale, {
               day: "2-digit",
               month: "2-digit",
