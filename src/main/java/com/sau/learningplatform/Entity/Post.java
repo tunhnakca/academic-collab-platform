@@ -7,6 +7,7 @@ import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -28,15 +29,18 @@ public class Post {
     @JoinColumn(name = "project_id", nullable = false)
     private Project project;
 
-    /*
-    @OneToMany
-    @JoinColumn(name = "child_post_id")
-    private List<Post> childPost;
-*/
+    @ManyToOne
+    @JoinColumn(name = "parent_post_id")
+    private Post parentPost;
+
+    @OneToMany(mappedBy = "parentPost", cascade = CascadeType.ALL)
+    private List<Post> replies = new ArrayList<>();
+
+    @Column(name = "replied_to_number")
+    private String RepliedToNumber;
     @Column(name = "text")
     private String text;
-    @Column(name = "status")
-    private String status;
+
     @Column(name = "date_created")
 
     @CreationTimestamp
@@ -76,13 +80,6 @@ public class Post {
         this.text = text;
     }
 
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
 
     public LocalDateTime getDateCreated() {
         return dateCreated;
@@ -98,5 +95,29 @@ public class Post {
 
     public void setDeleted(Boolean deleted) {
         isDeleted = deleted;
+    }
+
+    public Post getParentPost() {
+        return parentPost;
+    }
+
+    public void setParentPost(Post parentPost) {
+        this.parentPost = parentPost;
+    }
+
+    public List<Post> getReplies() {
+        return replies;
+    }
+
+    public void setReplies(List<Post> replies) {
+        this.replies = replies;
+    }
+
+    public String getRepliedToNumber() {
+        return RepliedToNumber;
+    }
+
+    public void setRepliedToNumber(String repliedToNumber) {
+        RepliedToNumber = repliedToNumber;
     }
 }

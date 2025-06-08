@@ -31,7 +31,9 @@ public interface CourseService {
 
     Course getByCode(String code);
 
-    ResponseEntity<MessageResponse> addStudentToCourseAndSaveNonExistingStudent(User user, String courseCode);
+    MessageResponseWithStatus addUsersToCourse(List<User> users,String courseCode);
+
+    MessageResponseWithStatus addStudentToCourseAndSaveNonExistingStudent(User user, String courseCode);
     ResponseEntity<MessageResponse> removeUserFromCourseInActiveSemester(String courseCode, String userNumber);
 
     void transferInstructorsAndAdminsToNewSemester(Semester closestPastSemester, Semester newSemester);

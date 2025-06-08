@@ -82,6 +82,20 @@ public class CourseController {
         return new RedirectView("/courses/add");
     }
 
+    @PostMapping("/course/add/student")
+    public RedirectView addStudentToCourse(Principal principal,RedirectAttributes redirectAttributes,
+                                  @RequestParam("courseCode") String courseCode,
+                                  @ModelAttribute("addStudent")User student)
+    {
+
+        MessageResponseWithStatus messageResponseWithStatus=courseService.addStudentToCourseAndSaveNonExistingStudent(student,courseCode);
+        redirectAttributes.addFlashAttribute("messageResponseWithStatus", messageResponseWithStatus);
+
+        //return "redirect:/courses";
+        return new RedirectView("/student/list?courseCode="+courseCode);
+
+    }
+
 
 
 

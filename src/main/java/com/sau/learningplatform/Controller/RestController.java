@@ -49,7 +49,6 @@ public class RestController {
     public ResponseEntity<MessageResponse> deleteCourse(@PathVariable("courseId") int courseId) {
 
         return courseService.deleteByIdAndReturnResponse(courseId);
-        //location.reload lazım yok ise
 
     }
     
@@ -59,10 +58,7 @@ public class RestController {
 
         return projectService.deleteById(id);
 
-
-        //location.reload lazım yok ise
     }
-
 
 
 

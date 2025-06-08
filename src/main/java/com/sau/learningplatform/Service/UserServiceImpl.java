@@ -20,6 +20,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -160,13 +161,14 @@ public class UserServiceImpl implements UserService {
         List<UserResponse> userResponses = registrations.getContent().stream()
                 .map(CourseRegistration::getUser)
                 .map(this::mapToUserResponse)
-                .toList();
+                .collect(Collectors.toList());
 
         if(userResponses.isEmpty()){
             log.info("paginated users are empty.");
         }
         else {
             userResponses.sort(Comparator.comparing(UserResponse::getName));
+
         }
 
         UserPageResponse response = new UserPageResponse();

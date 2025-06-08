@@ -18,4 +18,6 @@ public interface CourseRegistrationRepository extends JpaRepository<CourseRegist
     Page<CourseRegistration> findByCourseCodeAndUserRoleAndSemester(String courseCode, String role, Semester semester, Pageable pageable);
     List<CourseRegistration> findByUserRoleIgnoreCaseAndSemester(String userRole, Semester semester);
 
+    boolean existsByUserIdAndCourseIdAndSemester(int userId,int courseId, Semester semester);
+
 }
