@@ -4,21 +4,19 @@ import lombok.Builder;
 import lombok.Data;
 
 import java.time.LocalDateTime;
-import java.util.List;
-
 
 @Data
 @Builder
-public class PostResponse {
+public class ReplyResponse {
 
-    private int id;
+    private int parentPostId;
     private String name;
 
     private String surname;
 
     private String number;
 
-    private List<ReplyResponse> replies;
+    private String repliedToNumber;
 
     private String text;
 

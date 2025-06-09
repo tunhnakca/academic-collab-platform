@@ -1,6 +1,5 @@
 package com.sau.learningplatform.Controller;
 
-import com.sau.learningplatform.Entity.Post;
 import com.sau.learningplatform.Entity.User;
 import com.sau.learningplatform.EntityResponse.PostResponse;
 import com.sau.learningplatform.EntityResponse.ProjectResponse;
@@ -11,7 +10,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
 
 import java.security.Principal;
 import java.util.List;
@@ -37,13 +35,14 @@ public class PostController {
         User user = userService.findByNumber(number);
         model.addAttribute("loggedUser", user);
 
-        List<PostResponse> posts=postService.getPostResponsesByProjectId(projectId);
+        List<PostResponse> posts=postService.getParentPostResponsesByProjectId(projectId);
         ProjectResponse projectResponse=projectService.getResponseById(projectId);
 
         model.addAttribute("posts",posts);
         model.addAttribute("project",projectResponse);
 
         return "posts";
+
 
     }
 

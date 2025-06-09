@@ -1,10 +1,8 @@
 package com.sau.learningplatform.EntityResponse;
 
-import com.sau.learningplatform.Entity.Course;
 import lombok.Builder;
 import lombok.Data;
 
-import java.sql.Time;
 import java.time.LocalDateTime;
 
 
@@ -22,7 +20,7 @@ public class ProjectResponse {
 
     private LocalDateTime endDate;
 
-    private boolean isValid;
+    private boolean isActive;
 
     private String description;
 }
