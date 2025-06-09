@@ -16,8 +16,11 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -107,7 +110,7 @@ public class UserServiceImpl implements UserService {
             return new MessageResponseWithStatus("Incorrect current password!", false);
         }
 
-        if (newPassword.equals(user.getNumber())) {
+        if (newPassword.equalsIgnoreCase(user.getNumber())) {
 
             log.warn("Your new password cannot be same as your number!");
             return new MessageResponseWithStatus("New password cannot be same as your number!", false);
@@ -158,10 +161,14 @@ public class UserServiceImpl implements UserService {
         List<UserResponse> userResponses = registrations.getContent().stream()
                 .map(CourseRegistration::getUser)
                 .map(this::mapToUserResponse)
-                .toList();
+                .collect(Collectors.toList());
 
         if(userResponses.isEmpty()){
             log.info("paginated users are empty.");
+        }
+        else {
+            userResponses.sort(Comparator.comparing(UserResponse::getName));
+
         }
 
         UserPageResponse response = new UserPageResponse();

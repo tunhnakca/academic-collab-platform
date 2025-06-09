@@ -23,17 +23,28 @@ public class SemesterServiceImpl implements SemesterService{
         this.semesterRepository = semesterRepository;
     }
 
-
     @Override
-    public Semester getCurrentSemester() {
+    public Boolean isThereActiveSemester() {
         List<Semester> semesterList=semesterRepository.findActiveSemesters(LocalDateTime.now());
 
         if (semesterList.size()<1){
-            throw new RuntimeException("There is no active Semester !");
+            log.warn("There is no active Semester !");
+            return false;
         }
         if (semesterList.size()>1){
-            throw new RuntimeException("There are multiple active Semesters !");
+            log.error("There are multiple active Semesters !");
+            return false;
         }
+        return true;
+    }
+
+
+    @Override
+    public Semester getCurrentSemester() {
+        if(!isThereActiveSemester()){
+            throw new RuntimeException("There is no active Semester !");
+        }
+        List<Semester> semesterList=semesterRepository.findActiveSemesters(LocalDateTime.now());
 
         return semesterList.get(0);
 
@@ -100,6 +111,7 @@ public class SemesterServiceImpl implements SemesterService{
         }
         return optionalPastSemester.get();
     }
+
 
 
     private SemesterResponse mapToSemesterResponse(Semester semester){

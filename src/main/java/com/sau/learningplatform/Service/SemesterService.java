@@ -12,4 +12,6 @@ public interface SemesterService {
     SemesterAndMessageResponseWithStatusDTO saveOrUpdateResponse(SemesterResponse semesterResponse);
 
     Semester getClosestPastSemester();
+
+    Boolean isThereActiveSemester();
 }
