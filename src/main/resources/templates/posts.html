@@ -101,16 +101,171 @@
           </div>
 
           <div class="post-list">
-            <div class="post-metadata">
-              <span class="post-author">Ahmet Ozmen</span>
-              <span class="post-date">15:03, 20/01/2025</span>
+            <!-- PROJECT INFO - ONLY show if page 1 and NO search -->
+            <div class="post project-info">
+              <div
+                class="post__avatar post__avatar--instructor"
+                th:text="${#strings.substring(#strings.arraySplit(project.course.owner, ' ')[0], 0, 1) + 
+              #strings.substring(#strings.arraySplit(project.course.owner, ' ')[#strings.arraySplit(project.course.owner, ' ').length - 1], 0, 1)}"
+              ></div>
+              <div class="post__body">
+                <div class="post-metadata">
+                  <div class="post-metadata__user-info">
+                    <span
+                      class="post-author"
+                      th:text="${project.course.owner}"
+                    ></span>
+                    <span>|</span>
+                    <span class="badge badge--instructor">Instructor</span>
+                  </div>
+                  <div class="post-metadata__post-date">
+                    <span
+                      class="post-date"
+                      th:data-date="${project.startDate}"
+                    ></span>
+                  </div>
+                </div>
+                <div
+                  class="post-content"
+                  th:utext="${project.description}"
+                ></div>
+                <div class="post-actions">
+                  <button class="post-actions__item post-actions__item--delete">
+                    <ion-icon name="trash"></ion-icon>
+                  </button>
+                  <button class="post-actions__item post-actions__item--reply">
+                    <ion-icon
+                      class="post-actions__item--reply__icon"
+                      name="arrow-undo"
+                    ></ion-icon>
+                    <span>Reply</span>
+                  </button>
+                </div>
+              </div>
             </div>
-            <div class="post-box">
-              <div class="post-content" th:utext="${project.description}"></div>
+            <h2 class="post-heading--secondary post-heading--answers">
+              <span>3</span> Answers
+            </h2>
+            <!-- MESSAGES LOOP -->
+            <div class="post">
+              <div class="post__avatar post__avatar--student">TA</div>
+              <div class="post__body">
+                <div class="post-metadata">
+                  <div class="post-metadata__user-info">
+                    <span class="post-author">B201202056</span>
+                    <span>|</span>
+                    <span class="badge badge--student">Student</span>
+                  </div>
+                  <div class="post-metadata__post-date">
+                    <span class="post-date">19:04, 30/02/2025</span>
+                  </div>
+                </div>
+                <div class="post-content">
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                  Consectetur mollitia reprehenderit magni provident eius optio
+                  odit reiciendis commodi, impedit voluptatum omnis vero maxime
+                  et amet voluptates esse magnam quo adipisci.
+                </div>
+                <div class="post-actions">
+                  <button class="post-actions__item post-actions__item--delete">
+                    <ion-icon name="trash"></ion-icon>
+                  </button>
+                  <button class="post-actions__item post-actions__item--reply">
+                    <ion-icon
+                      class="post-actions__item--reply__icon"
+                      name="arrow-undo"
+                    ></ion-icon>
+                    <span>Reply</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div class="post">
+              <div class="post__avatar post__avatar--admin">TA</div>
+              <div class="post__body">
+                <div class="post-metadata">
+                  <div class="post-metadata__user-info">
+                    <span class="post-author">B201202056</span>
+                    <span>|</span>
+                    <span class="badge badge--admin">Admin</span>
+                  </div>
+                  <div class="post-metadata__post-date">
+                    <span class="post-date">19:05, 30/03/2025</span>
+                  </div>
+                </div>
+                <div class="post-content">
+                  Hatanın farkındayız. Gerekli işlemleri sağlıyoruz.
+                </div>
+                <div class="post-actions">
+                  <button class="post-actions__item post-actions__item--delete">
+                    <ion-icon name="trash"></ion-icon>
+                  </button>
+                  <button class="post-actions__item post-actions__item--reply">
+                    <ion-icon
+                      class="post-actions__item--reply__icon"
+                      name="arrow-undo"
+                    ></ion-icon>
+                    <span>Reply</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div class="post">
+              <div class="post__avatar post__avatar--instructor">AO</div>
+              <div class="post__body">
+                <div class="post-metadata">
+                  <div class="post-metadata__user-info">
+                    <span class="post-author">G201202057</span>
+                    <span>|</span>
+                    <span class="badge badge--instructor">Instructor</span>
+                  </div>
+                  <div class="post-metadata__post-date">
+                    <span class="post-date">19:07, 30/03/2025</span>
+                  </div>
+                </div>
+                <div class="post-content">
+                  Derhal herkes projeye cevap versin.
+                </div>
+                <div class="post-actions">
+                  <button class="post-actions__item post-actions__item--delete">
+                    <ion-icon name="trash"></ion-icon>
+                  </button>
+                  <button class="post-actions__item post-actions__item--reply">
+                    <ion-icon
+                      class="post-actions__item--reply__icon"
+                      name="arrow-undo"
+                    ></ion-icon>
+                    <span>Reply</span>
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
+          <h2 class="post-heading--secondary post-heading--answer">
+            Your Answer
+          </h2>
+          <form
+            action=""
+            method="post"
+            name="post"
+            class="form form-post"
+            id="reply-form"
+          >
+            <div class="form-group">
+              <textarea
+                id="post"
+                placeholder="Enter your answer"
+                rows="12"
+              ></textarea>
+            </div>
+            <button type="submit" class="btn btn__post btn--success">
+              Post Your Answer
+            </button>
+          </form>
         </div>
       </div>
     </section>
   </body>
 </html>
+
+<!--th:text="${#strings.substring(user.name, 0, 1) + #strings.substring(user.surname, 0, 1)}"-->
