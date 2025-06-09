@@ -42,7 +42,6 @@ public class Post {
     private String text;
 
     @Column(name = "date_created")
-
     @CreationTimestamp
     private LocalDateTime dateCreated;
     @Column(name = "is_deleted")
@@ -119,5 +118,13 @@ public class Post {
 
     public void setRepliedToNumber(String repliedToNumber) {
         RepliedToNumber = repliedToNumber;
+    }
+
+    public void addReply(Post reply){
+
+        if (replies.isEmpty()){
+            replies=new ArrayList<>();
+        }
+        replies.add(reply);
     }
 }

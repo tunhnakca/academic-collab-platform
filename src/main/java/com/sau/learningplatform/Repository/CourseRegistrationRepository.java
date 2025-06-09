@@ -1,7 +1,9 @@
 package com.sau.learningplatform.Repository;
 
+import com.sau.learningplatform.Entity.Course;
 import com.sau.learningplatform.Entity.CourseRegistration;
 import com.sau.learningplatform.Entity.Semester;
+import com.sau.learningplatform.Entity.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -18,6 +20,6 @@ public interface CourseRegistrationRepository extends JpaRepository<CourseRegist
     Page<CourseRegistration> findByCourseCodeAndUserRoleAndSemester(String courseCode, String role, Semester semester, Pageable pageable);
     List<CourseRegistration> findByUserRoleIgnoreCaseAndSemester(String userRole, Semester semester);
 
-    boolean existsByUserIdAndCourseIdAndSemester(int userId,int courseId, Semester semester);
+    boolean existsByUserAndCourseAndSemester(User user, Course course, Semester semester);
 
 }

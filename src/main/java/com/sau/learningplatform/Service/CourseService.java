@@ -39,4 +39,6 @@ public interface CourseService {
     void transferInstructorsAndAdminsToNewSemester(Semester closestPastSemester, Semester newSemester);
 
     ResponseEntity<MessageResponse> deleteByIdAndReturnResponse(int courseId);
+
+    MessageResponseWithStatus addStudentsToCourseByExcelAndSaveNonExistingStudents(MultipartFile file, String courseCode) throws IOException;
 }
