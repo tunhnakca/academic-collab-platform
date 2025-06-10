@@ -12,11 +12,14 @@ import java.util.List;
 public class PostResponse {
 
     private int id;
+
     private String name;
 
     private String surname;
 
     private String number;
+
+    private String userRole;
 
     private List<ReplyResponse> replies;
 
