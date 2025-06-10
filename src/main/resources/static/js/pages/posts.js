@@ -27,31 +27,49 @@ export function updateProjectDateTimeOnPosts() {
 }
 
 export function initializePostsMarkdownEditor() {
-  const editor = setupMarkdownEditor("postInput");
-  const form = document.querySelector(".form-post");
+  // Find all answer forms on the page
+  document.querySelectorAll(".form-post").forEach((form) => {
+    const textArea = form.querySelector("textarea");
+    const editor = setupMarkdownEditor(textArea);
 
-  // Handle form submission
-  if (form) {
     form.addEventListener("submit", (e) => {
       e.preventDefault();
 
-      const textArea = document.getElementById("postInput");
-
-      // Validate description
+      // Ensure the answer is not empty
       if (!editor.value().trim()) {
-        console.warn("Your answer cannot be empty");
         AlertService.showAlert("Your answer cannot be empty", "error");
         editor.codemirror.focus();
         return;
       }
 
-      if (textArea && editor) {
-        textArea.value = editor.value();
-      }
-
+      // Copy markdown editor value into original textarea before submit
+      textArea.value = editor.value();
       form.submit();
     });
-  }
+  });
+}
+
+export function initializeReplyMarkdownEditor() {
+  // Find all reply forms on the page
+  document.querySelectorAll(".form-reply").forEach((form) => {
+    const textArea = form.querySelector("textarea");
+    const editor = setupMarkdownEditor(textArea);
+
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+
+      // Ensure the reply is not empty
+      if (!editor.value().trim()) {
+        AlertService.showAlert("Your reply cannot be empty", "error");
+        editor.codemirror.focus();
+        return;
+      }
+
+      // Copy markdown editor value into original textarea before submit
+      textArea.value = editor.value();
+      form.submit();
+    });
+  });
 }
 
 export function initializeReplyScrollToForm() {
@@ -89,4 +107,41 @@ export function initializeReplyScrollToForm() {
   } else {
     return;
   }
+}
+
+// This function toggles (shows/hides) replies when either Reply or Replies button is clicked.
+export function initializeRepliesToggle() {
+  document
+    .querySelectorAll(
+      ".post-actions__item--reply__parent-post, .post-actions__item--toggle-replies"
+    )
+    .forEach(function (btn) {
+      btn.addEventListener("click", function (e) {
+        // Only proceed if data-post-id exists (skip project-info/general reply button)
+        const postId = btn.dataset.postId;
+
+        if (!postId) return;
+
+        // Find the closest .post-wrapper (the answer container)
+        const postWrapper = btn.closest(".post-wrapper");
+        if (!postWrapper) return;
+
+        // Find the replies container inside this answer
+        const repliesDiv = postWrapper.querySelector(".post-replies");
+        if (!repliesDiv) return;
+
+        // Prevent default button behavior (form submission, etc.)
+        e.preventDefault();
+
+        // Toggle the display: if hidden, show; if shown, hide
+        if (
+          repliesDiv.style.display === "none" ||
+          repliesDiv.style.display === ""
+        ) {
+          repliesDiv.style.display = "block";
+        } else {
+          repliesDiv.style.display = "none";
+        }
+      });
+    });
 }

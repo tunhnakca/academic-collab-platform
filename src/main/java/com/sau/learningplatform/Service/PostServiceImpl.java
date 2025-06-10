@@ -90,6 +90,7 @@ public class PostServiceImpl implements PostService{
         }
 
         return PostResponse.builder()
+                .id(post.getId())
                 .text(post.getText())
                 .name(user.getName())
                 .surname(user.getSurname())

@@ -40,6 +40,8 @@ import {
   updateProjectDateTimeOnPosts,
   initializePostsMarkdownEditor,
   initializeReplyScrollToForm,
+  initializeRepliesToggle,
+  initializeReplyMarkdownEditor,
 } from "./pages/posts";
 
 ///////////////////////////
@@ -205,6 +207,12 @@ document.addEventListener("DOMContentLoaded", function () {
   // Initialize markdown editor for answer
   initializePostsMarkdownEditor();
 
+  // Initialize markdown editor for reply
+  initializeReplyMarkdownEditor();
+
   // Scrolling form
   initializeReplyScrollToForm();
+
+  // Showing replies block
+  initializeRepliesToggle();
 });
