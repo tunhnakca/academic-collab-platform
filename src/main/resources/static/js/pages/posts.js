@@ -27,7 +27,7 @@ export function updateProjectDateTimeOnPosts() {
 }
 
 export function initializePostsMarkdownEditor() {
-  const editor = setupMarkdownEditor("post");
+  const editor = setupMarkdownEditor("postInput");
   const form = document.querySelector(".form-post");
 
   // Handle form submission
@@ -35,7 +35,7 @@ export function initializePostsMarkdownEditor() {
     form.addEventListener("submit", (e) => {
       e.preventDefault();
 
-      const textArea = document.getElementById("post");
+      const textArea = document.getElementById("postInput");
 
       // Validate description
       if (!editor.value().trim()) {
@@ -59,7 +59,7 @@ export function initializeReplyScrollToForm() {
   const projectInfoReplyBtn = document.querySelector(
     ".project-info .post-actions__item--reply"
   );
-  const replyForm = document.getElementById("reply-form");
+  const replyForm = document.getElementById("post-form");
 
   if (!projectInfoReplyBtn || !replyForm) return;
 

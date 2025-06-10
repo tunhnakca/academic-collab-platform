@@ -67,8 +67,4 @@ public class PostController {
         return new RedirectView("/post/"+request.getProjectId());
 
     }
-
-
-
-
 }
