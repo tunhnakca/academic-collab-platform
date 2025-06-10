@@ -83,7 +83,7 @@ public class CourseController {
     }
 
     @PostMapping("/course/add/student")
-    public RedirectView addStudentToCourse(Principal principal,RedirectAttributes redirectAttributes,
+    public RedirectView addStudentToCourse(RedirectAttributes redirectAttributes,
                                   @RequestParam("courseCode") String courseCode,
                                   @ModelAttribute("addStudent")User student)
     {
@@ -91,7 +91,18 @@ public class CourseController {
         MessageResponseWithStatus messageResponseWithStatus=courseService.addStudentToCourseAndSaveNonExistingStudent(student,courseCode);
         redirectAttributes.addFlashAttribute("messageResponseWithStatus", messageResponseWithStatus);
 
-        //return "redirect:/courses";
+        return new RedirectView("/student/list?courseCode="+courseCode);
+
+    }
+
+    @PostMapping("/course/add/student/excel")
+    public RedirectView addStudentsByExcelToCourse(RedirectAttributes redirectAttributes,
+                                           @RequestParam("courseCode") String courseCode,
+                                           @RequestParam("fileUserList") MultipartFile file) throws IOException {
+
+        MessageResponseWithStatus messageResponseWithStatus=courseService.addStudentsToCourseByExcelAndSaveNonExistingStudents(file,courseCode);
+        redirectAttributes.addFlashAttribute("messageResponseWithStatus", messageResponseWithStatus);
+
         return new RedirectView("/student/list?courseCode="+courseCode);
 
     }

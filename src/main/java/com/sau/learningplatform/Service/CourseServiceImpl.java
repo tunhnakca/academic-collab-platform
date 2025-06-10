@@ -101,15 +101,11 @@ public class CourseServiceImpl implements CourseService {
         // get a course, save and associate students with it
         Course course = new Course(courseName, ownerName, courseCode);
 
+        userService.saveAll(users);
+
         users.add(owner);
 
-        for(User user:users){
-            CourseRegistration courseRegistration=new CourseRegistration();
-            courseRegistration.setCourse(course);
-            courseRegistration.setUser(user);
-            courseRegistration.setSemester(semesterService.getCurrentSemester());
-            courseRegistrationRepository.save(courseRegistration);
-        }
+        createRegistriesForUsers(users,course,semesterService.getCurrentSemester());
 
         log.info("course registries have been saved !");
         return new MessageResponseWithStatus("Course has been added successfully", true);
@@ -161,18 +157,8 @@ public class CourseServiceImpl implements CourseService {
             return new MessageResponseWithStatus("Invalid course code given!",false);
         }
 
-        for (User u:users){
-            if (!courseRegistrationRepository.existsByUserIdAndCourseIdAndSemester(u.getId(),course.get().getId(),semesterService.getCurrentSemester())){
+        createRegistriesForUsers(users,course.get(),semesterService.getCurrentSemester());
 
-                CourseRegistration courseRegistration=new CourseRegistration();
-                courseRegistration.setSemester(semesterService.getCurrentSemester());
-                courseRegistration.setUser(u);
-                courseRegistration.setCourse(course.get());
-
-                courseRegistrationRepository.save(courseRegistration);
-            }
-
-        }
         return new MessageResponseWithStatus("Users have been saved to course!",true);
     }
 
@@ -226,17 +212,24 @@ public class CourseServiceImpl implements CourseService {
     }
 
 
+
     public List<User> getStudentsFromExcelAndCreateNonExists(MultipartFile file) throws IOException {
         List<User> students = new ArrayList<>();
 
         try (Workbook workbook = new XSSFWorkbook(file.getInputStream())) {
             Sheet sheet = workbook.getSheetAt(0); // Get the first sheet
+
             for (int rowIndex = 1; rowIndex < sheet.getPhysicalNumberOfRows(); rowIndex++) { // Skip header row
                 Row row = sheet.getRow(rowIndex);
                 if (row != null) {
                     String name = row.getCell(0).getStringCellValue();
                     String surname = row.getCell(1).getStringCellValue();
                     String number = row.getCell(2).getStringCellValue();
+
+                    if (number.isEmpty()||surname.isEmpty()||name.isEmpty()){
+                        continue;
+                    }
+
                     number=number.toUpperCase();
 
                     User student;
@@ -245,7 +238,7 @@ public class CourseServiceImpl implements CourseService {
                     if (userService.existsByNumber(number)) {
                         student = userService.findByNumber(number);
                     }
-                    // if it's not exists create a new user
+                    // if it's not exists create a new user object
                     else {
                         student = new User(number, name, surname, number, "student");
                         //userService.register(student);
@@ -259,9 +252,50 @@ public class CourseServiceImpl implements CourseService {
             return new ArrayList<>();
         }
 
-
         return students;
     }
+
+    @Override
+    public MessageResponseWithStatus addStudentsToCourseByExcelAndSaveNonExistingStudents(MultipartFile file, String courseCode) throws IOException {
+        List<User>users=getStudentsFromExcelAndCreateNonExists(file);
+
+        if (users.isEmpty()){
+            return new MessageResponseWithStatus("There was a problem with excel! please reconsider the example given", false);
+        }
+
+        Optional<Course>course=courseRepository.findByCode(courseCode);
+        if (course.isEmpty()){
+            log.error("invalid courseCode!");
+            return new MessageResponseWithStatus("There was a problem with Course!", false);
+        }
+        if (!semesterService.isThereActiveSemester()) {
+            log.warn("The course with given code is already exists!");
+
+            return new MessageResponseWithStatus("The semester has not started yet!", false);
+        }
+
+        userService.saveAll(users);
+
+        createRegistriesForUsers(users,course.get(),semesterService.getCurrentSemester());
+
+        log.info("course registries have been saved !");
+        return new MessageResponseWithStatus("Users have been added successfully", true);
+
+    }
+
+    private void createRegistriesForUsers(List<User>users,Course course,Semester currentSemester) {
+
+        for (User user : users) {
+            if (!courseRegistrationRepository.existsByUserAndCourseAndSemester(user, course, currentSemester)) {
+                CourseRegistration courseRegistration = new CourseRegistration();
+                courseRegistration.setCourse(course);
+                courseRegistration.setUser(user);
+                courseRegistration.setSemester(semesterService.getCurrentSemester());
+                courseRegistrationRepository.save(courseRegistration);
+            }
+        }
+    }
+
 
     @Override
     public MessageResponseWithStatus addStudentToCourseAndSaveNonExistingStudent(User student, String courseCode) {
@@ -282,7 +316,7 @@ public class CourseServiceImpl implements CourseService {
         if (userService.existsByNumber(student.getNumber())) {
 
             user=userService.findByNumber(student.getNumber());
-            if (courseRegistrationRepository.existsByUserIdAndCourseIdAndSemester(user.getId(), course.get().getId(), semesterService.getCurrentSemester())) {
+            if (courseRegistrationRepository.existsByUserAndCourseAndSemester(user, course.get(), semesterService.getCurrentSemester())) {
                 log.warn("Student is already registered to this course in current semester");
                 return new MessageResponseWithStatus("Student is already registered to this course", false);
             }

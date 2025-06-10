@@ -8,5 +8,5 @@ import java.util.List;
 
 @Repository
 public interface PostRepository extends JpaRepository<Post,Integer> {
-    List<Post> findByProjectIdAndParentPostIsNull(int id);
+    List<Post> findByProjectIdAndParentPostIsNullOrderByDateCreatedAsc(int id);
 }
