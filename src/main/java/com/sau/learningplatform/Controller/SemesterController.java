@@ -3,6 +3,7 @@ package com.sau.learningplatform.Controller;
 import com.sau.learningplatform.Entity.User;
 import com.sau.learningplatform.EntityResponse.SemesterAndMessageResponseWithStatusDTO;
 import com.sau.learningplatform.EntityResponse.SemesterResponse;
+import com.sau.learningplatform.Repository.PostRepository;
 import com.sau.learningplatform.Service.CourseService;
 import com.sau.learningplatform.Service.SemesterService;
 import com.sau.learningplatform.Service.UserService;
@@ -23,6 +24,7 @@ public class SemesterController {
     final private SemesterService semesterService;
 
     private CourseService courseService;
+
 
     public SemesterController(UserService userService, SemesterService semesterService, CourseService courseService) {
         this.userService = userService;
@@ -48,6 +50,7 @@ public class SemesterController {
         SemesterAndMessageResponseWithStatusDTO semesterAndMessageResponseWithStatusDTO =semesterService.saveOrUpdateResponse(semesterResponse);
 
         if (semesterAndMessageResponseWithStatusDTO.getSemester().getId()==null){
+
             courseService.transferInstructorsAndAdminsToNewSemester(semesterService.getClosestPastSemester(),semesterAndMessageResponseWithStatusDTO.getSemester());
         }
 

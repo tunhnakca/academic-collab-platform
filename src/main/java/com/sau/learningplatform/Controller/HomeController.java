@@ -31,13 +31,6 @@ public class HomeController {
         this.semesterService = semesterService;
     }
 
-    //Bunu kullan artık ************************************************************************
-    @GetMapping("/get/user")
-    User getUserInfo(Principal principal,Model model){
-        String number = principal.getName();
-        User user = userService.findByNumber(number);
-        return user;
-    }
 
     @GetMapping("/login")
     String loginPage() {
