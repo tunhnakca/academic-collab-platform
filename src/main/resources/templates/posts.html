@@ -226,22 +226,104 @@
 
               <!-- Replies Container (initially hidden) -->
               <div class="post-replies d-none">
-                <div
-                  class="post post--reply"
-                  th:each="reply : ${post.replies}"
-                ></div>
+                <div class="post post--reply" th:each="reply : ${post.replies}">
+                  <div
+                    class="post__avatar"
+                    th:classappend="${'post__avatar--' + #strings.toLowerCase(reply.userRole).replace('ı', 'i')}"
+                    th:text="${#strings.substring(reply.name, 0, 1) + #strings.substring(reply.surname, 0, 1)}"
+                  ></div>
+                  <div class="post__body">
+                    <div class="post-metadata">
+                      <div class="post-metadata__user-info">
+                        <span
+                          class="post-author"
+                          th:text="${#strings.toLowerCase(reply.userRole).replace('ı', 'i') == 'instructor' or 
+                                     #strings.toLowerCase(reply.userRole).replace('ı', 'i') == 'admin' 
+                                     ? reply.name + ' ' + reply.surname 
+                                     : reply.number}"
+                        ></span>
+                        <span>|</span>
+                        <span
+                          class="badge"
+                          th:classappend="${'badge--' + #strings.toLowerCase(reply.userRole).replace('ı', 'i')}"
+                          th:text="${reply.userRole}"
+                        ></span>
+                      </div>
+                      <div class="post-metadata__post-date">
+                        <span
+                          class="post-date"
+                          th:data-date="${reply.dateCreated}"
+                        ></span>
+                      </div>
+                    </div>
+                    <div class="post-content" th:utext="${reply.text}"></div>
+                    <div class="post-actions">
+                      <div class="post-actions__right">
+                        <!-- Delete button for reply -->
+                        <button
+                          class="post-actions__item post-actions__item--delete"
+                          th:if="${reply.number == loggedUser.number or #strings.toLowerCase(loggedUser.role).replace('ı', 'i') == 'admin'}"
+                        >
+                          <ion-icon name="trash"></ion-icon>
+                        </button>
+                        <button
+                          class="post-actions__item post-actions__item--reply"
+                        >
+                          <ion-icon
+                            class="post-actions__item--reply__icon"
+                            name="arrow-undo"
+                          ></ion-icon>
+                          <span>Reply</span>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <h2 class="post-heading--secondary post-heading--answer">
+                  Your Reply
+                </h2>
+                <form
+                  th:action="@{/post/save}"
+                  method="post"
+                  class="form form-reply"
+                >
+                  <input
+                    type="hidden"
+                    name="projectId"
+                    th:value="${project.id}"
+                  />
+
+                  <input
+                    type="hidden"
+                    name="parentPostId"
+                    th:value="${post.id}"
+                  />
+
+                  <input
+                    type="hidden"
+                    name="repliedToNumber"
+                    th:value="${post.number}"
+                  />
+
+                  <div class="form-group">
+                    <textarea
+                      class="replyInput"
+                      name="text"
+                      placeholder="Enter your reply"
+                      rows="8"
+                    ></textarea>
+                  </div>
+                  <button type="submit" class="btn btn__post btn--success">
+                    Post Your Reply
+                  </button>
+                </form>
               </div>
             </div>
           </div>
           <h2 class="post-heading--secondary post-heading--answer">
             Your Answer
           </h2>
-          <form
-            th:action="@{/post/save}"
-            method="post"
-            class="form form-post"
-            id="post-form"
-          >
+          <form th:action="@{/post/save}" method="post" class="form form-post">
             <input type="hidden" name="projectId" th:value="${project.id}" />
 
             <div class="form-group">

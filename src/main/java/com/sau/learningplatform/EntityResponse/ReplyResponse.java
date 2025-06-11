@@ -17,6 +17,8 @@ public class ReplyResponse {
 
     private String number;
 
+    private String userRole;
+
     private String repliedToNumber;
 
     private String text;

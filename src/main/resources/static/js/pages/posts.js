@@ -77,7 +77,7 @@ export function initializeReplyScrollToForm() {
   const projectInfoReplyBtn = document.querySelector(
     ".project-info .post-actions__item--reply"
   );
-  const replyForm = document.getElementById("post-form");
+  const replyForm = document.querySelector(".form-post");
 
   if (!projectInfoReplyBtn || !replyForm) return;
 
@@ -114,13 +114,13 @@ export function initializeRepliesToggle() {
   document
     .querySelector(".container-posts")
     .addEventListener("click", function (e) {
-      // Only proceed if one of the reply/replies toggle buttons is clicked
+      // Only continue if one of the Reply/Replies toggle buttons was clicked
       const btn = e.target.closest(
         ".post-actions__item--reply__parent-post, .post-actions__item--toggle-replies"
       );
       if (!btn) return;
 
-      // Find the closest post-wrapper (the container for the answer)
+      // Find the closest post-wrapper (the answer's container)
       const postWrapper = btn.closest(".post-wrapper");
       if (!postWrapper) return;
 
@@ -130,33 +130,41 @@ export function initializeRepliesToggle() {
 
       e.preventDefault();
 
-      // If the "Replies" toggle button (left icon button) was clicked: toggle replies and change icon accordingly
+      // Helpers: show/hide replies and set is-open class accordingly
+      function openReplies() {
+        repliesDiv.classList.remove("d-none");
+        repliesDiv.classList.add("d-block");
+        postWrapper.classList.add("is-open");
+      }
+      function closeReplies() {
+        repliesDiv.classList.add("d-none");
+        repliesDiv.classList.remove("d-block");
+        postWrapper.classList.remove("is-open");
+      }
+      function isRepliesOpen() {
+        return !repliesDiv.classList.contains("d-none");
+      }
+
+      // If the "Replies" toggle button (left chevron) was clicked, toggle (show/hide) replies and update the icon
       if (btn.classList.contains("post-actions__item--toggle-replies")) {
         const icon = btn.querySelector(
           ".post-actions__item--toggle-replies__icon"
         );
-        if (repliesDiv.classList.contains("d-none")) {
-          // Show the replies and set icon to "up"
-          repliesDiv.classList.remove("d-none");
-          repliesDiv.classList.add("d-block");
+        if (!isRepliesOpen()) {
+          openReplies();
           if (icon) icon.setAttribute("name", "chevron-up-outline");
         } else {
-          // Hide the replies and set icon to "down"
-          repliesDiv.classList.add("d-none");
-          repliesDiv.classList.remove("d-block");
+          closeReplies();
           if (icon) icon.setAttribute("name", "chevron-down-outline");
         }
       }
-      // If the right "Reply" button was clicked: only open replies (do not close),
-      // but if replies were closed, also update icon to "up"
+      // If the right-side "Reply" button was clicked, only open (never close) the replies; update icon if necessary
       else if (
         btn.classList.contains("post-actions__item--reply__parent-post")
       ) {
-        if (repliesDiv.classList.contains("d-none")) {
-          // Only open if it was closed; do not close if already open
-          repliesDiv.classList.remove("d-none");
-          repliesDiv.classList.add("d-block");
-          // Update icon if toggle button exists
+        if (!isRepliesOpen()) {
+          openReplies();
+          // If there's a toggle button, update the chevron icon to up
           const toggleBtn = postWrapper.querySelector(
             ".post-actions__item--toggle-replies"
           );
@@ -167,7 +175,6 @@ export function initializeRepliesToggle() {
             if (icon) icon.setAttribute("name", "chevron-up-outline");
           }
         }
-        // If already open, do nothing and leave icon as it is (should be "up")
       }
     });
 }
