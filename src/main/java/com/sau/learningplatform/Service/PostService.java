@@ -4,16 +4,10 @@ package com.sau.learningplatform.Service;
 import com.sau.learningplatform.Entity.Post;
 import com.sau.learningplatform.Entity.Project;
 import com.sau.learningplatform.Entity.User;
-import com.sau.learningplatform.EntityResponse.MessageResponse;
-import com.sau.learningplatform.EntityResponse.MessageResponseWithStatus;
-import com.sau.learningplatform.EntityResponse.PostRequest;
-import com.sau.learningplatform.EntityResponse.PostResponse;
-
-import java.util.List;
-import java.util.Optional;
+import com.sau.learningplatform.EntityResponse.*;
+import org.springframework.data.domain.Page;
 
 public interface PostService {
-    List<PostResponse> getParentPostResponsesByProjectId(int id);
 
     void deleteById(int id);
 
@@ -21,4 +15,10 @@ public interface PostService {
     Post findById(int parentPostId);
 
     MessageResponseWithStatus savePostRequest(User user, Project project, PostRequest request);
+
+    PostPageResponse postsPagesToPageResponse(int pageNo, int pageSize, Page<Post>PostPages);
+
+    PostPageResponse getParentPostsAsPostPageResponseByProjectId(int projectId, int pageNo, int pageSize);
+
+    PostPageResponse searchParentPostsAsPostPageResponseByProjectId(String keyword, int projectId, int pageNo, int pageSize);
 }

@@ -9,6 +9,7 @@ import com.sau.learningplatform.EntityResponse.MessageResponse;
 import com.sau.learningplatform.EntityResponse.MessageResponseWithStatus;
 import com.sau.learningplatform.Repository.CourseRegistrationRepository;
 import com.sau.learningplatform.Repository.CourseRepository;
+import com.sau.learningplatform.Repository.PostRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -35,11 +36,14 @@ public class CourseServiceImpl implements CourseService {
 
     private SemesterService semesterService;
 
-    public CourseServiceImpl(CourseRepository courseRepository, UserService userService, CourseRegistrationRepository courseRegistrationRepository, SemesterService semesterService) {
+    private PostRepository postRepository;
+
+    public CourseServiceImpl(CourseRepository courseRepository, UserService userService, CourseRegistrationRepository courseRegistrationRepository, SemesterService semesterService, PostRepository postRepository) {
         this.courseRepository = courseRepository;
         this.userService = userService;
         this.courseRegistrationRepository = courseRegistrationRepository;
         this.semesterService = semesterService;
+        this.postRepository = postRepository;
     }
 
     @Override
@@ -196,6 +200,8 @@ public class CourseServiceImpl implements CourseService {
             courseRegistrationRepository.save(newRegistry);
         }
 
+        postRepository.deleteAll();
+        log.info("past posts have been deleted");
     }
 
     @Override
