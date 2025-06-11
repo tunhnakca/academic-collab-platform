@@ -95,6 +95,9 @@
     margin-top: 3.2rem;
 
     .post-wrapper {
+      &:first-child {
+        border-top: 1px solid $color-grey-light-4;
+      }
     }
 
     .post {
@@ -106,14 +109,11 @@
       gap: 1.6rem;
       align-items: start;
 
-      &:first-child {
-        border-top: 1px solid $color-grey-light-4;
-      }
-
       // // Remove border and padding for first post and project-info
       &:first-child.project-info {
         border-bottom: none;
         padding-bottom: 0;
+        border-top: 1px solid $color-grey-light-4;
       }
 
       &__avatar {

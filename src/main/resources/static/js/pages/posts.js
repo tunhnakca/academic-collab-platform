@@ -112,36 +112,62 @@ export function initializeReplyScrollToForm() {
 // This function toggles (shows/hides) replies when either Reply or Replies button is clicked.
 export function initializeRepliesToggle() {
   document
-    .querySelectorAll(
-      ".post-actions__item--reply__parent-post, .post-actions__item--toggle-replies"
-    )
-    .forEach(function (btn) {
-      btn.addEventListener("click", function (e) {
-        // Only proceed if data-post-id exists (skip project-info/general reply button)
-        const postId = btn.dataset.postId;
+    .querySelector(".container-posts")
+    .addEventListener("click", function (e) {
+      // Only proceed if one of the reply/replies toggle buttons is clicked
+      const btn = e.target.closest(
+        ".post-actions__item--reply__parent-post, .post-actions__item--toggle-replies"
+      );
+      if (!btn) return;
 
-        if (!postId) return;
+      // Find the closest post-wrapper (the container for the answer)
+      const postWrapper = btn.closest(".post-wrapper");
+      if (!postWrapper) return;
 
-        // Find the closest .post-wrapper (the answer container)
-        const postWrapper = btn.closest(".post-wrapper");
-        if (!postWrapper) return;
+      // Find the replies container within this answer
+      const repliesDiv = postWrapper.querySelector(".post-replies");
+      if (!repliesDiv) return;
 
-        // Find the replies container inside this answer
-        const repliesDiv = postWrapper.querySelector(".post-replies");
-        if (!repliesDiv) return;
+      e.preventDefault();
 
-        // Prevent default button behavior (form submission, etc.)
-        e.preventDefault();
-
-        // Toggle the display: if hidden, show; if shown, hide
-        if (
-          repliesDiv.style.display === "none" ||
-          repliesDiv.style.display === ""
-        ) {
-          repliesDiv.style.display = "block";
+      // If the "Replies" toggle button (left icon button) was clicked: toggle replies and change icon accordingly
+      if (btn.classList.contains("post-actions__item--toggle-replies")) {
+        const icon = btn.querySelector(
+          ".post-actions__item--toggle-replies__icon"
+        );
+        if (repliesDiv.classList.contains("d-none")) {
+          // Show the replies and set icon to "up"
+          repliesDiv.classList.remove("d-none");
+          repliesDiv.classList.add("d-block");
+          if (icon) icon.setAttribute("name", "chevron-up-outline");
         } else {
-          repliesDiv.style.display = "none";
+          // Hide the replies and set icon to "down"
+          repliesDiv.classList.add("d-none");
+          repliesDiv.classList.remove("d-block");
+          if (icon) icon.setAttribute("name", "chevron-down-outline");
         }
-      });
+      }
+      // If the right "Reply" button was clicked: only open replies (do not close),
+      // but if replies were closed, also update icon to "up"
+      else if (
+        btn.classList.contains("post-actions__item--reply__parent-post")
+      ) {
+        if (repliesDiv.classList.contains("d-none")) {
+          // Only open if it was closed; do not close if already open
+          repliesDiv.classList.remove("d-none");
+          repliesDiv.classList.add("d-block");
+          // Update icon if toggle button exists
+          const toggleBtn = postWrapper.querySelector(
+            ".post-actions__item--toggle-replies"
+          );
+          if (toggleBtn) {
+            const icon = toggleBtn.querySelector(
+              ".post-actions__item--toggle-replies__icon"
+            );
+            if (icon) icon.setAttribute("name", "chevron-up-outline");
+          }
+        }
+        // If already open, do nothing and leave icon as it is (should be "up")
+      }
     });
 }
