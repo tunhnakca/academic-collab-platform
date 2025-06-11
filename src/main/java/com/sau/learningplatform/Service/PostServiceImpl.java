@@ -90,6 +90,7 @@ public class PostServiceImpl implements PostService{
         }
 
         return PostResponse.builder()
+                .id(post.getId())
                 .text(post.getText())
                 .name(user.getName())
                 .surname(user.getSurname())
@@ -110,6 +111,7 @@ public class PostServiceImpl implements PostService{
                 .name(user.getName())
                 .surname(user.getSurname())
                 .number(user.getNumber())
+                .userRole(user.getRole().toString().toLowerCase())
                 .repliedToNumber(post.getRepliedToNumber())
                 .dateCreated(post.getDateCreated())
                 .parentPostId(post.getParentPost().getId())

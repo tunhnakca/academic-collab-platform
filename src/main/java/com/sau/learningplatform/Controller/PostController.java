@@ -50,7 +50,6 @@ public class PostController {
         model.addAttribute("project",projectResponse);
 
         return "posts";
-
     }
 
     @PostMapping("/post/save")
