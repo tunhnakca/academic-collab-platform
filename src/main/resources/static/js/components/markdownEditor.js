@@ -91,15 +91,14 @@ export function highlightCodeBlocks(container) {
   });
 }
 
-export function setupMarkdownEditor(textAreaId) {
-  const textArea = document.getElementById(textAreaId);
-  if (!textArea) {
-    console.warn(`Textarea with id '${textAreaId}' not found`);
+export function setupMarkdownEditor(textAreaElement) {
+  if (!textAreaElement) {
+    console.warn(`Textarea element not found`);
     return;
   }
 
   const editor = new EasyMDE({
-    element: textArea,
+    element: textAreaElement,
     spellChecker: false,
     autofocus: false,
     toolbar: [
@@ -124,14 +123,11 @@ export function setupMarkdownEditor(textAreaId) {
       "guide",
     ],
     autosave: {
-      enabled: true,
-      delay: 1000,
-      uniqueId: "textAreaId",
+      enabled: false, // Autosave can cause confusion for multiple forms; better set 'false'
     },
     previewRender: function (plainText, preview) {
       const htmlContent = this.parent.markdown(plainText);
       preview.innerHTML = htmlContent;
-
       highlightCodeBlocks(preview);
       return preview.innerHTML;
     },

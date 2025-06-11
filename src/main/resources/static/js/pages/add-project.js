@@ -97,29 +97,23 @@ export function setupDateValidation() {
 }
 
 export function initializeAddProjectMarkdownEditor() {
-  const editor = setupMarkdownEditor("projectDescription");
   const form = document.querySelector(".form-add-project");
+  if (!form) return;
+  const textArea = form.querySelector("textarea");
+  const editor = setupMarkdownEditor(textArea);
 
-  // Handle form submission
-  if (form) {
-    form.addEventListener("submit", (e) => {
-      e.preventDefault();
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
 
-      const textArea = document.getElementById("projectDescription");
+    // Ensure the project description is not empty
+    if (!editor.value().trim()) {
+      AlertService.showAlert("Project description is required", "error");
+      editor.codemirror.focus();
+      return;
+    }
 
-      // Validate description
-      if (!editor.value().trim()) {
-        console.warn("Project description is required");
-        AlertService.showAlert("Project description is required", "error");
-        editor.codemirror.focus();
-        return;
-      }
-
-      if (textArea && editor) {
-        textArea.value = editor.value();
-      }
-
-      form.submit();
-    });
-  }
+    // Sync to textarea before submit
+    textArea.value = editor.value();
+    form.submit();
+  });
 }
