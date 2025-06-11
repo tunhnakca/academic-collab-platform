@@ -14,6 +14,27 @@
     border-radius: 0.6rem;
     border: 1px solid $color-grey-light-2;
     padding: 1.2rem;
+
+    .protected-mention {
+      background-color: #e3f2fd;
+      border-radius: 3px;
+      padding: 2px 4px;
+      color: #1976d2;
+      font-weight: 500;
+      pointer-events: none;
+      user-select: none;
+    }
+
+    .protected-mention::before {
+      content: "🔒 ";
+      font-size: 0.8em;
+      opacity: 0.6;
+    }
+
+    .protected-mention:hover {
+      background-color: #bbdefb;
+      cursor: not-allowed;
+    }
   }
 
   // Placeholder text style

@@ -226,7 +226,11 @@
 
               <!-- Replies Container (initially hidden) -->
               <div class="post-replies d-none">
-                <div class="post post--reply" th:each="reply : ${post.replies}">
+                <div
+                  class="post post--reply"
+                  th:each="reply : ${post.replies}"
+                  th:data-reply-user-number="${reply.number}"
+                >
                   <div
                     class="post__avatar"
                     th:classappend="${'post__avatar--' + #strings.toLowerCase(reply.userRole).replace('ı', 'i')}"
@@ -267,7 +271,7 @@
                           <ion-icon name="trash"></ion-icon>
                         </button>
                         <button
-                          class="post-actions__item post-actions__item--reply"
+                          class="post-actions__item post-actions__item--reply post-actions__item--reply__child-post"
                         >
                           <ion-icon
                             class="post-actions__item--reply__icon"
