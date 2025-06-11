@@ -94,6 +94,7 @@ public class PostServiceImpl implements PostService{
                 .name(user.getName())
                 .surname(user.getSurname())
                 .number(user.getNumber())
+                .userRole(user.getRole().toString().toLowerCase())
                 .replies(replies)
                 .dateCreated(post.getDateCreated())
                 .build();

@@ -130,9 +130,6 @@
                   th:utext="${project.description}"
                 ></div>
                 <div class="post-actions">
-                  <button class="post-actions__item post-actions__item--delete">
-                    <ion-icon name="trash"></ion-icon>
-                  </button>
                   <button class="post-actions__item post-actions__item--reply">
                     <ion-icon
                       class="post-actions__item--reply__icon"
@@ -144,90 +141,49 @@
               </div>
             </div>
             <h2 class="post-heading--secondary post-heading--answers">
-              <span>3</span> Answers
+              <span th:text="${#lists.size(posts)}">0</span>
+              <span th:text="${#lists.size(posts) == 1 ? 'Answer' : 'Answers'}"
+                >Answers</span
+              >
             </h2>
             <!-- MESSAGES LOOP -->
-            <div class="post">
-              <div class="post__avatar post__avatar--student">TA</div>
+            <div class="post" th:each="post : ${posts}">
+              <div
+                class="post__avatar"
+                th:classappend="${'post__avatar--' + #strings.toLowerCase(post.userRole).replace('ı', 'i')}"
+                th:text="${#strings.substring(post.name, 0, 1) + #strings.substring(post.surname, 0, 1)}"
+              ></div>
               <div class="post__body">
                 <div class="post-metadata">
                   <div class="post-metadata__user-info">
-                    <span class="post-author">B201202056</span>
+                    <span
+                      class="post-author"
+                      th:text="${#strings.toLowerCase(post.userRole).replace('ı', 'i') == 'instructor' or 
+                    #strings.toLowerCase(post.userRole).replace('ı', 'i') == 'admin' 
+                    ? post.name + ' ' + post.surname 
+                    : post.number}"
+                    ></span>
                     <span>|</span>
-                    <span class="badge badge--student">Student</span>
+                    <span
+                      class="badge"
+                      th:classappend="${'badge--' + #strings.toLowerCase(post.userRole).replace('ı', 'i')}"
+                      th:text="${post.userRole}"
+                    ></span>
                   </div>
                   <div class="post-metadata__post-date">
-                    <span class="post-date">19:04, 30/02/2025</span>
+                    <span
+                      class="post-date"
+                      th:data-date="${post.dateCreated}"
+                    ></span>
                   </div>
                 </div>
-                <div class="post-content">
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  Consectetur mollitia reprehenderit magni provident eius optio
-                  odit reiciendis commodi, impedit voluptatum omnis vero maxime
-                  et amet voluptates esse magnam quo adipisci.
-                </div>
+                <div class="post-content" th:utext="${post.text}"></div>
                 <div class="post-actions">
-                  <button class="post-actions__item post-actions__item--delete">
-                    <ion-icon name="trash"></ion-icon>
-                  </button>
-                  <button class="post-actions__item post-actions__item--reply">
-                    <ion-icon
-                      class="post-actions__item--reply__icon"
-                      name="arrow-undo"
-                    ></ion-icon>
-                    <span>Reply</span>
-                  </button>
-                </div>
-              </div>
-            </div>
-            <div class="post">
-              <div class="post__avatar post__avatar--admin">TA</div>
-              <div class="post__body">
-                <div class="post-metadata">
-                  <div class="post-metadata__user-info">
-                    <span class="post-author">B201202056</span>
-                    <span>|</span>
-                    <span class="badge badge--admin">Admin</span>
-                  </div>
-                  <div class="post-metadata__post-date">
-                    <span class="post-date">19:05, 30/03/2025</span>
-                  </div>
-                </div>
-                <div class="post-content">
-                  Hatanın farkındayız. Gerekli işlemleri sağlıyoruz.
-                </div>
-                <div class="post-actions">
-                  <button class="post-actions__item post-actions__item--delete">
-                    <ion-icon name="trash"></ion-icon>
-                  </button>
-                  <button class="post-actions__item post-actions__item--reply">
-                    <ion-icon
-                      class="post-actions__item--reply__icon"
-                      name="arrow-undo"
-                    ></ion-icon>
-                    <span>Reply</span>
-                  </button>
-                </div>
-              </div>
-            </div>
-            <div class="post">
-              <div class="post__avatar post__avatar--instructor">AO</div>
-              <div class="post__body">
-                <div class="post-metadata">
-                  <div class="post-metadata__user-info">
-                    <span class="post-author">G201202057</span>
-                    <span>|</span>
-                    <span class="badge badge--instructor">Instructor</span>
-                  </div>
-                  <div class="post-metadata__post-date">
-                    <span class="post-date">19:07, 30/03/2025</span>
-                  </div>
-                </div>
-                <div class="post-content">
-                  Derhal herkes projeye cevap versin.
-                </div>
-                <div class="post-actions">
-                  <button class="post-actions__item post-actions__item--delete">
+                  <!-- Delete button - show only for own posts or admin -->
+                  <button
+                    class="post-actions__item post-actions__item--delete"
+                    th:if="${post.number == loggedUser.number or #strings.toLowerCase(loggedUser.role).replace('ı', 'i') == 'admin'}"
+                  >
                     <ion-icon name="trash"></ion-icon>
                   </button>
                   <button class="post-actions__item post-actions__item--reply">
@@ -245,15 +201,17 @@
             Your Answer
           </h2>
           <form
-            action=""
+            th:action="@{/post/save}"
             method="post"
-            name="post"
             class="form form-post"
-            id="reply-form"
+            id="post-form"
           >
+            <input type="hidden" name="projectId" th:value="${project.id}" />
+
             <div class="form-group">
               <textarea
-                id="post"
+                id="postInput"
+                name="text"
                 placeholder="Enter your answer"
                 rows="12"
               ></textarea>
@@ -267,5 +225,3 @@
     </section>
   </body>
 </html>
-
-<!--th:text="${#strings.substring(user.name, 0, 1) + #strings.substring(user.surname, 0, 1)}"-->
