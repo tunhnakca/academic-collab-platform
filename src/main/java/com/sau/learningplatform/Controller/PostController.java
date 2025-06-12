@@ -1,21 +1,14 @@
 package com.sau.learningplatform.Controller;
 
-import com.sau.learningplatform.Entity.Post;
 import com.sau.learningplatform.Entity.Project;
 import com.sau.learningplatform.Entity.User;
-import com.sau.learningplatform.EntityResponse.MessageResponseWithStatus;
-import com.sau.learningplatform.EntityResponse.PostRequest;
-import com.sau.learningplatform.EntityResponse.PostResponse;
-import com.sau.learningplatform.EntityResponse.ProjectResponse;
+import com.sau.learningplatform.EntityResponse.*;
 import com.sau.learningplatform.Service.PostService;
 import com.sau.learningplatform.Service.ProjectService;
 import com.sau.learningplatform.Service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
@@ -38,15 +31,34 @@ public class PostController {
     }
 
     @GetMapping("/post/{projectId}")
-    public String getPostsByProject(Principal principal, Model model, @PathVariable int projectId){
+    public String getPostsByProject(Principal principal, Model model, @PathVariable int projectId,@RequestParam(defaultValue = "0") int pageNo,
+                                    @RequestParam(defaultValue = "10") int pageSize){
         String number = principal.getName();
         User user = userService.findByNumber(number);
         model.addAttribute("loggedUser", user);
 
-        List<PostResponse> posts=postService.getParentPostResponsesByProjectId(projectId);
+        PostPageResponse postPageResponse=postService.getParentPostsAsPostPageResponseByProjectId(projectId,pageNo,pageSize);
+
         ProjectResponse projectResponse=projectService.getResponseById(projectId);
 
-        model.addAttribute("posts",posts);
+        model.addAttribute("postPageResponse",postPageResponse);
+        model.addAttribute("project",projectResponse);
+
+        return "posts";
+    }
+
+    @GetMapping("/post/search/{projectId}")
+    public String searchPostsByText(Principal principal, Model model, @PathVariable int projectId,@RequestParam(defaultValue = "0") int pageNo,
+                                    @RequestParam(defaultValue = "10") int pageSize,@RequestParam String keyword){
+        String number = principal.getName();
+        User user = userService.findByNumber(number);
+        model.addAttribute("loggedUser", user);
+
+        PostPageResponse postPageResponse=postService.searchParentPostsAsPostPageResponseByProjectId(keyword,projectId,pageNo,pageSize);
+
+        ProjectResponse projectResponse=projectService.getResponseById(projectId);
+
+        model.addAttribute("postPageResponse",postPageResponse);
         model.addAttribute("project",projectResponse);
 
         return "posts";
