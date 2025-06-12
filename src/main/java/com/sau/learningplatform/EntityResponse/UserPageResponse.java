@@ -14,7 +14,7 @@ public class UserPageResponse {
 
     private int pageSize;
 
-    private int PageNo;
+    private int pageNo;
 
     private int totalPages;
 

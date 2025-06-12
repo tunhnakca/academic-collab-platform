@@ -10,6 +10,8 @@ import java.time.LocalDateTime;
 public class ReplyResponse {
 
     private int parentPostId;
+
+    private int id;
     
     private String name;
 
