@@ -73,11 +73,11 @@
       <div class="posts-wrapper">
         <div class="container-posts">
           <div class="users-header">
-            <!--
-<form th:action="@{/users/search}" method="GET" class="search">
-            -->
-
-            <form method="GET" class="search">
+            <form
+              th:action="@{/post/search/{projectId}(projectId=${project.id})}"
+              method="GET"
+              class="search"
+            >
               <input
                 type="text"
                 name="keyword"
@@ -85,14 +85,6 @@
                 placeholder="Search..."
                 th:value="${keyword}"
               />
-
-              <!--
-                <input
-                type="hidden"
-                name="courseCode"
-                th:value="${course.code}"
-                />
-              -->
 
               <button type="submit" class="search__btn">
                 <ion-icon class="search__icon" name="search-outline"></ion-icon>
@@ -102,53 +94,90 @@
 
           <div class="post-list">
             <!-- PROJECT INFO - ONLY show if page 1 and NO search -->
-            <div class="post project-info">
-              <div
-                class="post__avatar post__avatar--instructor"
-                th:text="${#strings.substring(#strings.arraySplit(project.course.owner, ' ')[0], 0, 1) + 
-              #strings.substring(#strings.arraySplit(project.course.owner, ' ')[#strings.arraySplit(project.course.owner, ' ').length - 1], 0, 1)}"
-              ></div>
-              <div class="post__body">
-                <div class="post-metadata">
-                  <div class="post-metadata__user-info">
-                    <span
-                      class="post-author"
-                      th:text="${project.course.owner}"
-                    ></span>
-                    <span>|</span>
-                    <span class="badge badge--instructor">Instructor</span>
-                  </div>
-                  <div class="post-metadata__post-date">
-                    <span
-                      class="post-date"
-                      th:data-date="${project.startDate}"
-                    ></span>
-                  </div>
-                </div>
+            <th:block
+              th:if="${#strings.isEmpty(keyword) and #strings.isEmpty(param.keyword) and postPageResponse.pageNo == 0}"
+            >
+              <div class="post project-info">
                 <div
-                  class="post-content"
-                  th:utext="${project.description}"
+                  class="post__avatar post__avatar--instructor"
+                  th:text="${#strings.substring(#strings.arraySplit(project.course.owner, ' ')[0], 0, 1) + 
+              #strings.substring(#strings.arraySplit(project.course.owner, ' ')[#strings.arraySplit(project.course.owner, ' ').length - 1], 0, 1)}"
                 ></div>
-                <div class="post-actions">
-                  <button class="post-actions__item post-actions__item--reply">
-                    <ion-icon
-                      class="post-actions__item--reply__icon"
-                      name="arrow-undo"
-                    ></ion-icon>
-                    <span>Reply</span>
-                  </button>
+                <div class="post__body">
+                  <div class="post-metadata">
+                    <div class="post-metadata__user-info">
+                      <span
+                        class="post-author"
+                        th:text="${project.course.owner}"
+                      ></span>
+                      <span>|</span>
+                      <span class="badge badge--instructor">Instructor</span>
+                    </div>
+                    <div class="post-metadata__post-date">
+                      <span
+                        class="post-date"
+                        th:data-date="${project.startDate}"
+                      ></span>
+                    </div>
+                  </div>
+                  <div
+                    class="post-content"
+                    th:utext="${project.description}"
+                  ></div>
+                  <div class="post-actions" th:if="${project.isActive}">
+                    <button
+                      class="post-actions__item post-actions__item--reply"
+                    >
+                      <ion-icon
+                        class="post-actions__item--reply__icon"
+                        name="arrow-undo"
+                      ></ion-icon>
+                      <span>Reply</span>
+                    </button>
+                  </div>
                 </div>
               </div>
-            </div>
+            </th:block>
+
             <h2 class="post-heading--secondary post-heading--answers">
-              <span th:text="${#lists.size(posts)}">0</span>
-              <span th:text="${#lists.size(posts) == 1 ? 'Answer' : 'Answers'}"
-                >Answers</span
+              <!-- If there is no result -->
+              <span
+                th:if="${postPageResponse.totalPages == 0 or #lists.isEmpty(postPageResponse.posts)}"
               >
+                <span>0</span>
+                <span> Answers</span>
+              </span>
+
+              <!-- If there are many pages -->
+              <span th:if="${postPageResponse.totalPages > 1}">
+                <span
+                  th:text="${'Showing ' + ((postPageResponse.pageNo * postPageResponse.pageSize) + 1) + '-' + 
+                          ((postPageResponse.pageNo * postPageResponse.pageSize) + #lists.size(postPageResponse.posts))}"
+                  >Showing 1-10</span
+                >
+                <span th:text="' Answers'">Answers</span>
+                <span
+                  th:text="${'(Page ' + (postPageResponse.pageNo + 1) + ' of ' + postPageResponse.totalPages + ')'}"
+                ></span>
+              </span>
+
+              <!-- If there is only one page -->
+              <span
+                th:if="${postPageResponse.totalPages == 1 and !#lists.isEmpty(postPageResponse.posts)}"
+              >
+                <span th:text="${#lists.size(postPageResponse.posts)}">0</span>
+                <span
+                  th:text="${#lists.size(postPageResponse.posts) == 1 ? 'Answer' : 'Answers'}"
+                  >Answers</span
+                >
+              </span>
             </h2>
 
             <!-- MESSAGES LOOP -->
-            <div class="post-wrapper" th:each="post : ${posts}">
+            <div
+              class="post-wrapper"
+              th:each="post : ${postPageResponse.posts}"
+            >
               <!-- Main Post -->
               <div class="post" th:data-post-id="${post.id}">
                 <div
@@ -206,12 +235,13 @@
                       <!-- Delete button - show only for own posts or admin -->
                       <button
                         class="post-actions__item post-actions__item--delete"
-                        th:if="${post.number == loggedUser.number or #strings.toLowerCase(loggedUser.role).replace('ı', 'i') == 'admin'}"
+                        th:if="${(post.number == loggedUser.number and project.isActive) or #strings.toLowerCase(loggedUser.role).replace('ı', 'i') == 'admin'}"
                       >
                         <ion-icon name="trash"></ion-icon>
                       </button>
                       <button
                         class="post-actions__item post-actions__item--reply post-actions__item--reply__parent-post"
+                        th:if="${project.isActive}"
                       >
                         <ion-icon
                           class="post-actions__item--reply__icon"
@@ -266,12 +296,13 @@
                         <!-- Delete button for reply -->
                         <button
                           class="post-actions__item post-actions__item--delete"
-                          th:if="${reply.number == loggedUser.number or #strings.toLowerCase(loggedUser.role).replace('ı', 'i') == 'admin'}"
+                          th:if="${(reply.number == loggedUser.number and project.isActive) or #strings.toLowerCase(loggedUser.role).replace('ı', 'i') == 'admin'}"
                         >
                           <ion-icon name="trash"></ion-icon>
                         </button>
                         <button
                           class="post-actions__item post-actions__item--reply post-actions__item--reply__child-post"
+                          th:if="${project.isActive}"
                         >
                           <ion-icon
                             class="post-actions__item--reply__icon"
@@ -283,65 +314,112 @@
                     </div>
                   </div>
                 </div>
-                <h2 class="post-heading--secondary post-heading--answer">
-                  Your Reply
-                </h2>
-                <form
-                  th:action="@{/post/save}"
-                  method="post"
-                  class="form form-reply"
-                >
-                  <input
-                    type="hidden"
-                    name="projectId"
-                    th:value="${project.id}"
-                  />
+                <th:block th:if="${project.isActive}"
+                  ><h2 class="post-heading--secondary post-heading--answer">
+                    Your Reply
+                  </h2>
+                  <form
+                    th:action="@{/post/save}"
+                    method="post"
+                    class="form form-reply"
+                  >
+                    <input
+                      type="hidden"
+                      name="projectId"
+                      th:value="${project.id}"
+                    />
 
-                  <input
-                    type="hidden"
-                    name="parentPostId"
-                    th:value="${post.id}"
-                  />
+                    <input
+                      type="hidden"
+                      name="parentPostId"
+                      th:value="${post.id}"
+                    />
 
-                  <input
-                    type="hidden"
-                    name="repliedToNumber"
-                    th:value="${post.number}"
-                  />
+                    <input
+                      type="hidden"
+                      name="repliedToNumber"
+                      th:value="${post.number}"
+                    />
 
-                  <div class="form-group">
-                    <textarea
-                      class="replyInput"
-                      name="text"
-                      placeholder="Enter your reply"
-                      rows="8"
-                    ></textarea>
-                  </div>
-                  <button type="submit" class="btn btn__post btn--success">
-                    Post Your Reply
-                  </button>
-                </form>
+                    <div class="form-group">
+                      <textarea
+                        class="replyInput"
+                        name="text"
+                        placeholder="Enter your reply"
+                        rows="8"
+                      ></textarea>
+                    </div>
+                    <button type="submit" class="btn btn__post btn--success">
+                      Post Your Reply
+                    </button>
+                  </form>
+                </th:block>
               </div>
             </div>
           </div>
-          <h2 class="post-heading--secondary post-heading--answer">
-            Your Answer
-          </h2>
-          <form th:action="@{/post/save}" method="post" class="form form-post">
-            <input type="hidden" name="projectId" th:value="${project.id}" />
 
-            <div class="form-group">
-              <textarea
-                class="postInput"
-                name="text"
-                placeholder="Enter your answer"
-                rows="12"
-              ></textarea>
+          <div
+            class="pagination posts-pagination"
+            th:if="${postPageResponse.totalPages > 0}"
+          >
+            <!-- Prev -->
+            <a
+              th:href="${postPageResponse.pageNo <= 0} ? '#' : @{/post/{projectId}(projectId=${project.id}, pageNo=${postPageResponse.pageNo - 1}, pageSize=${postPageResponse.pageSize})}"
+              th:classappend="${postPageResponse.pageNo <= 0} ? ' disabled-link' : ''"
+              class="pagination__link-btn pagination__link-btn--prev"
+            >
+              <button
+                class="pagination__btn pagination__btn--prev"
+                th:disabled="${postPageResponse.pageNo <= 0}"
+              >
+                Prev
+              </button>
+            </a>
+
+            <!-- Page Info -->
+            <div class="pagination__page-number">
+              <span th:text="${postPageResponse.pageNo + 1}"></span>
+              <span>/</span>
+              <span th:text="${postPageResponse.totalPages}"></span>
             </div>
-            <button type="submit" class="btn btn__post btn--success">
-              Post Your Answer
-            </button>
-          </form>
+
+            <!-- Next -->
+            <a
+              th:href="${postPageResponse.pageNo + 1 >= postPageResponse.totalPages} ? '#' : @{/post/{projectId}(projectId=${project.id}, pageNo=${postPageResponse.pageNo + 1}, pageSize=${postPageResponse.pageSize})}"
+            >
+              <button
+                class="pagination__btn pagination__btn--next"
+                th:disabled="${postPageResponse.pageNo + 1 >= postPageResponse.totalPages}"
+              >
+                Next
+              </button></a
+            >
+          </div>
+
+          <th:block th:if="${project.isActive}"
+            ><h2 class="post-heading--secondary post-heading--answer">
+              Your Answer
+            </h2>
+            <form
+              th:action="@{/post/save}"
+              method="post"
+              class="form form-post"
+            >
+              <input type="hidden" name="projectId" th:value="${project.id}" />
+
+              <div class="form-group">
+                <textarea
+                  class="postInput"
+                  name="text"
+                  placeholder="Enter your answer"
+                  rows="12"
+                ></textarea>
+              </div>
+              <button type="submit" class="btn btn__post btn--success">
+                Post Your Answer
+              </button>
+            </form>
+          </th:block>
         </div>
       </div>
     </section>
