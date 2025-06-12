@@ -7,7 +7,6 @@ import com.sau.learningplatform.EntityResponse.MessageResponseWithStatus;
 import com.sau.learningplatform.EntityResponse.UserPageResponse;
 import com.sau.learningplatform.EntityResponse.UserResponse;
 import com.sau.learningplatform.Repository.CourseRegistrationRepository;
-import com.sau.learningplatform.Repository.CourseRepository;
 import com.sau.learningplatform.Repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -16,7 +15,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;

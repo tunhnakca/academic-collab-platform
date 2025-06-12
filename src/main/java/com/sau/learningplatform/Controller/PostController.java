@@ -64,8 +64,12 @@ public class PostController {
         return "posts";
     }
 
+
+    //page no alınmalı
     @PostMapping("/post/save")
-    public RedirectView savePost(Principal principal, @ModelAttribute PostRequest request, RedirectAttributes redirectAttributes){
+    public RedirectView savePost(Principal principal
+            ,@ModelAttribute PostRequest request, RedirectAttributes redirectAttributes
+            ,@RequestParam(defaultValue = "0") int pageNo){
 
         String number = principal.getName();
         User user = userService.findByNumber(number);
@@ -75,7 +79,36 @@ public class PostController {
         redirectAttributes.addFlashAttribute("messageResponseWithStatus", messageResponseWithStatus);
 
 
-        return new RedirectView("/post/"+request.getProjectId());
+        return new RedirectView("/post/"+request.getProjectId()+"?pageNo="+pageNo);
 
     }
+
+    //current page no, projectId ve silinecek postId alınmalı
+    @DeleteMapping("/post/delete")
+    public RedirectView deletePost(Principal principal
+            ,@RequestParam int postId
+            ,@RequestParam int projectId
+            ,@RequestParam(defaultValue = "0") int pageNo
+            ,RedirectAttributes redirectAttributes){
+
+        String number = principal.getName();
+        User loggedUser = userService.findByNumber(number);
+
+
+        MessageResponseWithStatus messageResponseWithStatus=postService.deletePost(loggedUser,postId);
+
+        redirectAttributes.addFlashAttribute("messageResponseWithStatus", messageResponseWithStatus);
+
+
+        return new RedirectView("/post/"+projectId+"?pageNo="+pageNo);
+
+    }
+
+
+
+
+
+
+
+
 }

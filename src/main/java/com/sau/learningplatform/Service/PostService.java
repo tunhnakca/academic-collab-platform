@@ -21,4 +21,6 @@ public interface PostService {
     PostPageResponse getParentPostsAsPostPageResponseByProjectId(int projectId, int pageNo, int pageSize);
 
     PostPageResponse searchParentPostsAsPostPageResponseByProjectId(String keyword, int projectId, int pageNo, int pageSize);
+
+    MessageResponseWithStatus deletePost(User loggedUser, int postId);
 }
