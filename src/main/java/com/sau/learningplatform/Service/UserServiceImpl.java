@@ -220,11 +220,11 @@ public class UserServiceImpl implements UserService {
         String subject = "Password Reset Request";
         String resetLink = "http://localhost:8080/reset-password?token=" + token;
 
-        String body = "Hi " + user.getName() + ",\n\n"
+        String body = "Hi " + user.getName()+","+ "\n\n"
                 + "To reset your password, click the link below:\n"
-                + resetLink + "\n\n"
-                + "If you did not request a password reset, please ignore this email.\n\n"
-                + "Best regards,\nYour App Team";
+                + resetLink + "\n"
+                + "If you did not request a password reset, please ignore this email.\n"
+                + "Best regards,\n Collab Learning Team";
 
         sendEmail(subject, body, user.getNumber());
 

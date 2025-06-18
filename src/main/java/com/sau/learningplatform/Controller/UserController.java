@@ -88,7 +88,7 @@ public class UserController {
 /*
     @GetMapping("/reset-password")
     public String showResetPasswordForm(@RequestParam String token) {
-        return "reset-password"; 
+        return "reset-password";
     }
 */
     @PostMapping("/reset-password")
