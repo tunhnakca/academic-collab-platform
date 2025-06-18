@@ -9,34 +9,45 @@ import com.sau.learningplatform.EntityResponse.UserResponse;
 import com.sau.learningplatform.Repository.CourseRegistrationRepository;
 import com.sau.learningplatform.Repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
 @Slf4j
 public class UserServiceImpl implements UserService {
     private UserRepository userRepository;
-
-
+    
     private SemesterService semesterService;
 
     private CourseRegistrationRepository courseRegistrationRepository;
 
-    final private BCryptPasswordEncoder encoder;
+    final private BCryptPasswordEncoder passwordEncoder;
+    @Autowired
+    private JavaMailSender mailSender;
 
-    public UserServiceImpl(UserRepository userRepository, SemesterService semesterService, CourseRegistrationRepository courseRegistrationRepository, BCryptPasswordEncoder encoder) {
+    @Value("${spring.mail.username}")
+    private String fromEmail;
+
+
+    public UserServiceImpl(UserRepository userRepository, SemesterService semesterService, CourseRegistrationRepository courseRegistrationRepository, BCryptPasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.semesterService = semesterService;
         this.courseRegistrationRepository = courseRegistrationRepository;
-        this.encoder = encoder;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
@@ -54,7 +65,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void encodePasswordAndSaveUser(User user) {
-        String hashedPassword = encoder.encode(user.getPassword());
+        String hashedPassword = passwordEncoder.encode(user.getPassword());
         user.setPassword(hashedPassword);
         userRepository.save(user);
         log.info("New user has been registered !");
@@ -71,6 +82,12 @@ public class UserServiceImpl implements UserService {
 
         return result.get();
 
+    }
+
+    @Override
+    public Optional<User> findByNumberOptional(String number) {
+
+        return userRepository.findByNumber(number);
     }
 
     @Override
@@ -102,7 +119,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public MessageResponseWithStatus updatePassword(User user, String currentPassword, String newPassword) {
 
-        if (!encoder.matches(currentPassword, user.getPassword())) {
+        if (!passwordEncoder.matches(currentPassword, user.getPassword())) {
 
             log.warn("Incorrect password, change request has been denied!");
             return new MessageResponseWithStatus("Incorrect current password!", false);
@@ -114,7 +131,7 @@ public class UserServiceImpl implements UserService {
             return new MessageResponseWithStatus("New password cannot be same as your number!", false);
         }
 
-        user.setPassword(encoder.encode(newPassword));
+        user.setPassword(passwordEncoder.encode(newPassword));
 
         userRepository.save(user);
 
@@ -185,6 +202,103 @@ public class UserServiceImpl implements UserService {
         Page<User> users=userRepository.findAll(pageable);
 
         return usersToPageResponse(pageNo,pageSize,users);
+    }
+
+
+    public MessageResponseWithStatus sendResetPasswordEmail(User user) {
+    try {
+        // create token
+        String token = UUID.randomUUID().toString();
+        LocalDateTime expiryDate = LocalDateTime.now().plusMinutes(30); // valid for 30 minutes
+
+        // update user
+        user.setResetToken(token);
+        user.setTokenExpiryDate(expiryDate);
+        userRepository.save(user);
+
+        //create email
+        String subject = "Password Reset Request";
+        String resetLink = "http://localhost:8080/reset-password?token=" + token;
+
+        String body = "Hi " + user.getName() + ",\n\n"
+                + "To reset your password, click the link below:\n"
+                + resetLink + "\n\n"
+                + "If you did not request a password reset, please ignore this email.\n\n"
+                + "Best regards,\nYour App Team";
+
+        sendEmail(subject, body, user.getNumber());
+
+        log.info("Email sent successfully to {}", user.getName());
+
+        return new MessageResponseWithStatus("Password reset email sent successfully.\n" +
+                "Please check your inbox to continue.",true);
+    }
+    catch (Exception e){
+        log.warn("Failed to send email to {}: {}", user.getName(), e.getMessage());
+        return new MessageResponseWithStatus("An error occurred while sending the password reset email. Please contact support if the problem persists. ",false);
+    }
+
+    }
+
+    public void sendEmail(String subject, String body,String number){
+
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setTo(number.toLowerCase()+"@sakarya.edu.tr");
+        message.setSubject(subject);
+        message.setText(body);
+        message.setFrom(fromEmail);
+        mailSender.send(message);
+
+    }
+
+    public Boolean isThereActiveToken(User user){
+        if (user.getTokenExpiryDate()!=null && user.getTokenExpiryDate().isAfter(LocalDateTime.now())){
+            return true;
+        }
+        return false;
+    }
+
+
+    public Boolean isTokenValid(String token){
+        Optional<User> user = userRepository.findByResetToken(token);
+
+        if (user.isEmpty()){
+            log.info("There is no user found with given token");
+            return false;
+        }
+
+        if (user.get().getTokenExpiryDate().isBefore(LocalDateTime.now())) {
+            log.info("Expired token.");
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public Optional<User> getUserByValidToken(String token) {
+        if(!isTokenValid(token)){
+            return Optional.empty();
+        }
+        Optional<User>user= userRepository.findByResetToken(token);
+        if (user.isEmpty()){
+            log.warn("any user not found with given token");
+        }
+        return user;
+    }
+
+    public MessageResponseWithStatus resetPassword(User user, String newPassword) {
+
+        if (newPassword.equalsIgnoreCase(user.getNumber())) {
+            log.warn("Your new password cannot be same as your number!");
+            return new MessageResponseWithStatus("New password cannot be same as your number!", false);
+        }
+
+        user.setPassword(passwordEncoder.encode(newPassword));
+        user.setResetToken(null);
+        user.setTokenExpiryDate(null);
+        userRepository.save(user);
+
+        return new MessageResponseWithStatus("Your password has been updated successfully!", true);
     }
 
     private UserPageResponse usersToPageResponse(int pageNo, int pageSize, Page<User>users){

@@ -35,6 +35,7 @@ public class PostController {
                                     @RequestParam(defaultValue = "10") int pageSize){
         String number = principal.getName();
         User user = userService.findByNumber(number);
+
         model.addAttribute("loggedUser", user);
 
         PostPageResponse postPageResponse=postService.getParentPostsAsPostPageResponseByProjectId(projectId,pageNo,pageSize);
