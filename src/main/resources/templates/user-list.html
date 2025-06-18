@@ -230,8 +230,24 @@
               class="pagination user-list-pagination"
               th:if="${usersPage.totalPages > 0}"
             >
-              <!-- Prev -->
+              <!-- Prev (with search) -->
               <a
+                th:if="${not #strings.isEmpty(keyword) or not #strings.isEmpty(param.keyword)}"
+                th:href="${usersPage.pageNo <= 0} ? '#' : @{/users/search(courseCode=${course.code}, keyword=${keyword ?: param.keyword}, pageNo=${usersPage.pageNo - 1}, pageSize=${usersPage.pageSize})}"
+                th:classappend="${usersPage.pageNo <= 0} ? ' disabled-link' : ''"
+                class="pagination__link-btn pagination__link-btn--prev"
+              >
+                <button
+                  class="pagination__btn pagination__btn--prev"
+                  th:disabled="${usersPage.pageNo <= 0}"
+                >
+                  Prev
+                </button>
+              </a>
+
+              <!-- Prev (without search) -->
+              <a
+                th:if="${#strings.isEmpty(keyword) and #strings.isEmpty(param.keyword)}"
                 th:href="${usersPage.pageNo <= 0} ? '#' : @{/student/list(courseCode=${course.code}, pageNo=${usersPage.pageNo - 1}, pageSize=${usersPage.pageSize})}"
                 th:classappend="${usersPage.pageNo <= 0} ? ' disabled-link' : ''"
                 class="pagination__link-btn pagination__link-btn--prev"
@@ -251,8 +267,24 @@
                 <span th:text="${usersPage.totalPages}"></span>
               </div>
 
-              <!-- Next -->
+              <!-- Next (with search) -->
               <a
+                th:if="${not #strings.isEmpty(keyword) or not #strings.isEmpty(param.keyword)}"
+                th:href="${usersPage.pageNo + 1 >= usersPage.totalPages} ? '#' : @{/users/search(courseCode=${course.code}, keyword=${keyword ?: param.keyword}, pageNo=${usersPage.pageNo + 1}, pageSize=${usersPage.pageSize})}"
+                th:classappend="${usersPage.pageNo + 1 >= usersPage.totalPages} ? ' disabled-link' : ''"
+                class="pagination__link-btn pagination__link-btn--next"
+              >
+                <button
+                  class="pagination__btn pagination__btn--next"
+                  th:disabled="${usersPage.pageNo + 1 >= usersPage.totalPages}"
+                >
+                  Next
+                </button>
+              </a>
+
+              <!-- Next (without search) -->
+              <a
+                th:if="${#strings.isEmpty(keyword) and #strings.isEmpty(param.keyword)}"
                 th:href="${usersPage.pageNo + 1 >= usersPage.totalPages} ? '#' : @{/student/list(courseCode=${course.code}, pageNo=${usersPage.pageNo + 1}, pageSize=${usersPage.pageSize})}"
                 th:classappend="${usersPage.pageNo + 1 >= usersPage.totalPages} ? ' disabled-link' : ''"
                 class="pagination__link-btn pagination__link-btn--next"
