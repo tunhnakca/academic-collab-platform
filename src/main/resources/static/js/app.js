@@ -42,6 +42,7 @@ import {
   initializeReplyScrollToForm,
   initializeRepliesToggle,
   initializeReplyMarkdownEditor,
+  deletePostOrReply,
 } from "./pages/posts";
 
 ///////////////////////////
@@ -215,4 +216,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Showing replies block
   initializeRepliesToggle();
+
+  //Deleting post or reply
+  deletePostOrReply();
 });

@@ -429,3 +429,25 @@
     margin-top: 3.2rem;
   }
 }
+
+.modal-delete-post {
+  @extend .modal;
+  display: flex;
+  flex-direction: column;
+  gap: 2.4rem;
+  align-items: center;
+
+  p {
+    font-size: 1.6rem;
+  }
+
+  &__buttons {
+    display: flex;
+    gap: 1.2rem;
+
+    button {
+      font-size: 1.8rem;
+      padding: 1.2rem 3.6rem;
+    }
+  }
+}
