@@ -42,6 +42,10 @@ public class ProjectController {
 
         CourseResponse course=courseService.getCourseResponseByCode(courseCode);
 
+        if (!courseService.isUserRegisteredToCourseInCurrentSemester(user,course.getId()) && !user.getRole().equalsIgnoreCase("admin")){
+            return "unauthorized";
+        }
+
         List<ProjectResponse> projectResponses=projectService.getProjectsByCourseId(course.getId());
 
         model.addAttribute("course",course);
@@ -57,6 +61,9 @@ public class ProjectController {
         User user = userService.findByNumber(number);
         model.addAttribute("loggedUser", user);
         CourseResponse course=courseService.getCourseResponseByCode(courseCode);
+        if (!courseService.isUserRegisteredToCourseInCurrentSemester(user,course.getId()) && !user.getRole().equalsIgnoreCase("admin")){
+            return "unauthorized";
+        }
         model.addAttribute("course",course);
         List<ProjectResponse> foundProjects = projectService.searchByCourseCodeAndProjectTitle(courseCode, keyword);
         model.addAttribute("projects", foundProjects);
@@ -68,6 +75,12 @@ public class ProjectController {
     public String addProjectPage(Principal principal, Model model,@RequestParam("courseCode") String courseCode) {
         String number = principal.getName();
         User user = userService.findByNumber(number);
+
+        CourseResponse course=courseService.getCourseResponseByCode(courseCode);
+
+        if (!courseService.isUserRegisteredToCourseInCurrentSemester(user,course.getId()) && !user.getRole().equalsIgnoreCase("admin")){
+            return "unauthorized";
+        }
         model.addAttribute("loggedUser", user);
         model.addAttribute("courseCode",courseCode);
         model.addAttribute("project",new Project());
@@ -76,13 +89,15 @@ public class ProjectController {
     }
 
 
-
     @GetMapping("/projects/filter")
     public String addProjectPage(Principal principal, Model model,@RequestParam("courseCode") String courseCode,@RequestParam("filter") String queryParam) {
         String number = principal.getName();
         User user = userService.findByNumber(number);
         model.addAttribute("loggedUser", user);
         CourseResponse course=courseService.getCourseResponseByCode(courseCode);
+        if (!courseService.isUserRegisteredToCourseInCurrentSemester(user,course.getId()) && !user.getRole().equalsIgnoreCase("admin")){
+            return "unauthorized";
+        }
         model.addAttribute("course",course);
         List<ProjectResponse>projects=projectService.filterOrSort(courseCode,queryParam);
         model.addAttribute("projects", projects);
@@ -92,8 +107,14 @@ public class ProjectController {
     }
 
     @PostMapping("/projects/add")
-    public RedirectView saveNewProject(@ModelAttribute Project project, @RequestParam("courseCode") String courseCode, RedirectAttributes redirectAttributes) {
+    public RedirectView saveNewProject(Principal principal, @ModelAttribute Project project, @RequestParam("courseCode") String courseCode, RedirectAttributes redirectAttributes) {
 
+        String number = principal.getName();
+        User user = userService.findByNumber(number);
+
+        if (!user.getRole().equalsIgnoreCase("admin") && !user.getRole().equalsIgnoreCase("instructor")){
+            return new RedirectView("unauthorized");
+        }
 
         MessageResponseWithStatus messageResponseWithStatus= projectService.saveProjectToCourseWithCode(project,courseCode);
         redirectAttributes.addFlashAttribute(messageResponseWithStatus);
@@ -104,4 +125,6 @@ public class ProjectController {
 
         //return "redirect:/projects?courseCode=" + courseCode;
     }
+
+
 }

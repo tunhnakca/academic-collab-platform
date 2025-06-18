@@ -87,10 +87,8 @@ public class UserController {
     }
 /*
     @GetMapping("/reset-password")
-    public String showResetPasswordForm(Principal principal,@RequestParam String token) {
-        String number = principal.getName();
-        User user = userService.findByNumber(number);
-
+    public String showResetPasswordForm(@RequestParam String token) {
+        return "reset-password"; 
     }
 */
     @PostMapping("/reset-password")

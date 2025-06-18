@@ -65,5 +65,10 @@ public class HomeController {
 
     }
 
+    @GetMapping("/unauthorized")
+    String showUnauthorizedPage(){
+        return "unauthorized";
+    }
+
 
 }
