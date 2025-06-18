@@ -236,6 +236,8 @@
                       <button
                         class="post-actions__item post-actions__item--delete"
                         th:if="${(post.number == loggedUser.number and project.isActive) or #strings.toLowerCase(loggedUser.role).replace('ı', 'i') == 'admin'}"
+                        th:data-post-id="${post.id}"
+                        th:data-project-id="${project.id}"
                       >
                         <ion-icon name="trash"></ion-icon>
                       </button>
@@ -260,6 +262,7 @@
                   class="post post--reply"
                   th:each="reply : ${post.replies}"
                   th:data-reply-user-number="${reply.number}"
+                  th:data-reply-id="${reply.id}"
                 >
                   <div
                     class="post__avatar"
@@ -297,6 +300,8 @@
                         <button
                           class="post-actions__item post-actions__item--delete"
                           th:if="${(reply.number == loggedUser.number and project.isActive) or #strings.toLowerCase(loggedUser.role).replace('ı', 'i') == 'admin'}"
+                          th:data-post-id="${reply.id}"
+                          th:data-project-id="${project.id}"
                         >
                           <ion-icon name="trash"></ion-icon>
                         </button>

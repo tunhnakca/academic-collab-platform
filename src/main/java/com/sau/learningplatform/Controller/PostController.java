@@ -98,7 +98,7 @@ public class PostController {
 
     }
 
-    //current page no, projectId ve silinecek postId alınmalı
+    //current page no, projectId, keyword ve silinecek postId alınmalı
     @DeleteMapping("/post/delete")
     public RedirectView deletePost(Principal principal
             ,@RequestParam int postId
