@@ -73,6 +73,8 @@ public class PostServiceImpl implements PostService{
         return new MessageResponseWithStatus("Your comment has been saved successfully",true);
     }
 
+
+
     @Override
     public PostPageResponse postsPagesToPageResponse(int pageNo, int pageSize, Page<Post> postsPages) {
 
@@ -104,6 +106,23 @@ public class PostServiceImpl implements PostService{
         return postsPagesToPageResponse(pageNo,pageSize,postPages);
     }
 
+    @Override
+    public MessageResponseWithStatus deletePost(User loggedUser, int postId) {
+        Optional<Post>postOptional=postRepository.findById(postId);
+        if(postOptional.isEmpty()){
+            log.error("invalid postId to delete");
+            return new MessageResponseWithStatus("There was an error while deleting your comment.",false);
+        }
+        if (postOptional.get().getUser().getId()!=loggedUser.getId()){
+            if(!loggedUser.getRole().equalsIgnoreCase("admin")){
+                return new MessageResponseWithStatus("You do not have permission to delete comments you do not own.",false);
+            }
+        }
+        postRepository.deleteById(postId);
+        log.info("The post has been deleted");
+        return new MessageResponseWithStatus("Your post has been deleted successfully",true);
+    }
+
 
     private PostResponse postToResponse(Post post){
 
@@ -132,6 +151,7 @@ public class PostServiceImpl implements PostService{
         User user=post.getUser();
 
         return ReplyResponse.builder()
+                .id(post.getId())
                 .text(post.getText())
                 .name(user.getName())
                 .surname(user.getSurname())
