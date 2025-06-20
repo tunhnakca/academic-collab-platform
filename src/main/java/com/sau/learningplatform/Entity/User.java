@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
+
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,6 +37,12 @@ public class User {
 
     @Column(name = "role")
     private String role;
+
+    @Column(name = "reset_token")
+    private String resetToken;
+
+    @Column(name = "token_expiry_date")
+    private LocalDateTime tokenExpiryDate;
 
     @Column(name = "is_deleted")
     private Boolean isDeleted = Boolean.FALSE;
@@ -108,6 +116,22 @@ public class User {
 
     public List<CourseRegistration> getCourseRegistrations() {
         return courseRegistrations;
+    }
+
+    public String getResetToken() {
+        return resetToken;
+    }
+
+    public void setResetToken(String resetToken) {
+        this.resetToken = resetToken;
+    }
+
+    public LocalDateTime getTokenExpiryDate() {
+        return tokenExpiryDate;
+    }
+
+    public void setTokenExpiryDate(LocalDateTime tokenExpiryDate) {
+        this.tokenExpiryDate = tokenExpiryDate;
     }
 
     public void setCourseRegistrations(List<CourseRegistration> courseRegistrations) {

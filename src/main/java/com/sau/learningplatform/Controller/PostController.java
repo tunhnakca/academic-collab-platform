@@ -3,6 +3,7 @@ package com.sau.learningplatform.Controller;
 import com.sau.learningplatform.Entity.Project;
 import com.sau.learningplatform.Entity.User;
 import com.sau.learningplatform.EntityResponse.*;
+import com.sau.learningplatform.Service.CourseService;
 import com.sau.learningplatform.Service.PostService;
 import com.sau.learningplatform.Service.ProjectService;
 import com.sau.learningplatform.Service.UserService;
@@ -24,10 +25,13 @@ public class PostController {
 
     private UserService userService;
 
-    public PostController(PostService postService, ProjectService projectService, UserService userService) {
+    private CourseService courseService;
+
+    public PostController(PostService postService, ProjectService projectService, UserService userService, CourseService courseService) {
         this.postService = postService;
         this.projectService = projectService;
         this.userService = userService;
+        this.courseService = courseService;
     }
 
     @GetMapping("/post/{projectId}")
@@ -35,11 +39,16 @@ public class PostController {
                                     @RequestParam(defaultValue = "10") int pageSize){
         String number = principal.getName();
         User user = userService.findByNumber(number);
+
         model.addAttribute("loggedUser", user);
 
-        PostPageResponse postPageResponse=postService.getParentPostsAsPostPageResponseByProjectId(projectId,pageNo,pageSize);
-
         ProjectResponse projectResponse=projectService.getResponseById(projectId);
+
+        if (!courseService.isUserRegisteredToCourseInCurrentSemester(user,projectResponse.getCourse().getId()) && !user.getRole().equalsIgnoreCase("admin")){
+            return "unauthorized";
+        }
+
+        PostPageResponse postPageResponse=postService.getParentPostsAsPostPageResponseByProjectId(projectId,pageNo,pageSize);
 
         model.addAttribute("postPageResponse",postPageResponse);
         model.addAttribute("project",projectResponse);
@@ -54,9 +63,12 @@ public class PostController {
         User user = userService.findByNumber(number);
         model.addAttribute("loggedUser", user);
 
-        PostPageResponse postPageResponse=postService.searchParentPostsAsPostPageResponseByProjectId(keyword,projectId,pageNo,pageSize);
-
         ProjectResponse projectResponse=projectService.getResponseById(projectId);
+        if (!courseService.isUserRegisteredToCourseInCurrentSemester(user,projectResponse.getCourse().getId()) && !user.getRole().equalsIgnoreCase("admin")){
+            return "unauthorized";
+        }
+
+        PostPageResponse postPageResponse=postService.searchParentPostsAsPostPageResponseByProjectId(keyword,projectId,pageNo,pageSize);
 
         model.addAttribute("postPageResponse",postPageResponse);
         model.addAttribute("project",projectResponse);
