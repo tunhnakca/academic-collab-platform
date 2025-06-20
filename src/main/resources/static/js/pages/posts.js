@@ -308,12 +308,11 @@ export function deletePostOrReply() {
     e.preventDefault();
 
     const postId = deleteBtn.dataset.postId;
-    const projectId = deleteBtn.dataset.projectId;
 
-    showDeletePostModal(postId, projectId);
+    showDeletePostModal(postId);
   });
 
-  function showDeletePostModal(postId, projectId) {
+  function showDeletePostModal(postId) {
     const modal = document.createElement("div");
     modal.classList.add("modal-delete-post");
     modal.innerHTML = `
@@ -331,7 +330,7 @@ export function deletePostOrReply() {
     modal
       .querySelector("#confirm-delete__post")
       .addEventListener("click", async function () {
-        await removePostFromServer(postId, projectId);
+        await removePostFromServer(postId);
         modal.remove();
         overlay.classList.add("d-none");
       });
@@ -344,17 +343,14 @@ export function deletePostOrReply() {
       });
   }
 
-  async function removePostFromServer(postId, projectId) {
+  async function removePostFromServer(postId) {
     try {
-      const response = await fetch(
-        `/api/posts/delete/post?projectId=${projectId}&postId=${postId}`,
-        {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
+      const response = await fetch(`/api/post/delete?postId=${postId}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
 
       const data = await response.json();
 
