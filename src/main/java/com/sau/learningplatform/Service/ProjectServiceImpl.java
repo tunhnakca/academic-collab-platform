@@ -77,7 +77,7 @@ public class ProjectServiceImpl implements ProjectService{
 
         } catch (Exception e) {
             log.error("Project could not be deleted");
-            return new ResponseEntity<>(new MessageResponse("Project could not be deleted"), HttpStatus.OK);
+            return new ResponseEntity<>(new MessageResponse("Project could not be deleted"), HttpStatus.BAD_REQUEST);
         }
     }
 

@@ -1,16 +1,21 @@
 package com.sau.learningplatform.Controller;
 
 import com.sau.learningplatform.Entity.User;
+import com.sau.learningplatform.EntityResponse.MessageResponseWithStatus;
 import com.sau.learningplatform.Service.CourseService;
 import com.sau.learningplatform.Service.UserService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.security.Principal;
+import java.util.Optional;
 
 @Controller
+@Slf4j
 public class UserController {
     private UserService userService;
 
@@ -63,6 +68,44 @@ public class UserController {
 
         return "user-list";
     }
+
+
+    @GetMapping("/forgot/password")
+    public MessageResponseWithStatus sentEmail(@RequestParam String number) {
+
+        Optional<User> user = userService.findByNumberOptional(number);
+
+        if(user.isEmpty()){
+            return new MessageResponseWithStatus("No user found with the given number. Please check and try again.",false);
+        }
+        if(userService.isThereActiveToken(user.get())){
+            return new MessageResponseWithStatus("We have already sent an active link, please check your email address.",true);
+        }
+
+        return userService.sendResetPasswordEmail(user.get());
+
+    }
+/*
+    @GetMapping("/reset-password")
+    public String showResetPasswordForm(@RequestParam String token) {
+        return "reset-password";
+    }
+*/
+    @PostMapping("/reset-password")
+    public String resetPasswordWithToken(@RequestParam String token,String newPassword) {
+
+        Optional<User>user=userService.getUserByValidToken(token);
+
+        //buraya bir sayfa lazım (token geçersiz veya süresi geçmiş)
+        if(user.isEmpty()){
+            return "unauthorized";
+        }
+
+        userService.resetPassword(user.get(),newPassword);
+
+        return "/login";
+    }
+
 
 
 }

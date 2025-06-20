@@ -19,13 +19,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.view.RedirectView;
+
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
+
 
 @Service
 @Slf4j
@@ -219,6 +219,9 @@ public class CourseServiceImpl implements CourseService {
 
 
 
+
+
+
     public List<User> getStudentsFromExcelAndCreateNonExists(MultipartFile file) throws IOException {
         List<User> students = new ArrayList<>();
 
@@ -287,6 +290,15 @@ public class CourseServiceImpl implements CourseService {
         log.info("course registries have been saved !");
         return new MessageResponseWithStatus("Users have been added successfully", true);
 
+    }
+
+    @Override
+    public boolean isUserRegisteredToCourseInCurrentSemester(User user, int courseId) {
+        Optional<Course> course=courseRepository.findById(courseId);
+        if (course.isEmpty()){
+            log.error("there is no course with given id");
+        }
+        return courseRegistrationRepository.existsByUserAndCourseAndSemester(user,course.get(), semesterService.getCurrentSemester());
     }
 
     private void createRegistriesForUsers(List<User>users,Course course,Semester currentSemester) {

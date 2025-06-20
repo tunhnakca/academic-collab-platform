@@ -41,4 +41,6 @@ public interface CourseService {
     ResponseEntity<MessageResponse> deleteByIdAndReturnResponse(int courseId);
 
     MessageResponseWithStatus addStudentsToCourseByExcelAndSaveNonExistingStudents(MultipartFile file, String courseCode) throws IOException;
+
+    boolean isUserRegisteredToCourseInCurrentSemester(User user, int courseId);
 }

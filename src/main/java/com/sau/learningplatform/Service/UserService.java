@@ -8,6 +8,7 @@ import com.sau.learningplatform.EntityResponse.UserResponse;
 import org.springframework.http.ResponseEntity;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface UserService {
     User findById(int id);
@@ -33,4 +34,16 @@ public interface UserService {
     UserPageResponse searchUsersPaged(String courseCode, String role,String keyword, int pageNo, int pageSize);
     UserPageResponse getPaginatedUsersByCourseCodeAndRole(String courseCode, String role, int pageNo, int pageSize);
 
+    void sendEmail(String subject, String body,String number);
+
+    MessageResponseWithStatus sendResetPasswordEmail(User user);
+
+    MessageResponseWithStatus resetPassword(User user, String newPassword);
+
+    Boolean isThereActiveToken(User user);
+    public Optional<User> findByNumberOptional(String number);
+
+    Boolean isTokenValid(String token);
+
+    Optional<User> getUserByValidToken(String token);
 }
