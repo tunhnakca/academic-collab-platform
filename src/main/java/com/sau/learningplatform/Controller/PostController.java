@@ -12,6 +12,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 
 import java.security.Principal;
 import java.util.List;
@@ -77,23 +79,34 @@ public class PostController {
     }
 
 
-    //page no alınmalı
+    
     @PostMapping("/post/save")
     public RedirectView savePost(Principal principal
             ,@ModelAttribute PostRequest request, RedirectAttributes redirectAttributes
-            ,@RequestParam(defaultValue = "0") int pageNo){
+            ,@RequestParam(defaultValue = "0") int pageNo,
+            @RequestParam(required = false) String keyword){
 
         String number = principal.getName();
         User user = userService.findByNumber(number);
         Project project = projectService.findById(request.getProjectId());
 
-        MessageResponseWithStatus messageResponseWithStatus=postService.savePostRequest(user,project,request);
+        MessageResponseWithStatus messageResponseWithStatus = postService.savePostRequest(user,project,request);
         redirectAttributes.addFlashAttribute("messageResponseWithStatus", messageResponseWithStatus);
 
+        String redirectUrl;
+        if (keyword != null && !keyword.isEmpty()) {
+            redirectUrl = "/post/search/" + request.getProjectId()
+                + "?keyword=" + URLEncoder.encode(keyword, StandardCharsets.UTF_8)
+                + "&pageNo=" + pageNo;
+        } else {
+            redirectUrl = "/post/" + request.getProjectId()
+                + "?pageNo=" + pageNo;
+        }
 
-        return new RedirectView("/post/"+request.getProjectId()+"?pageNo="+pageNo);
+        return new RedirectView(redirectUrl);
 
     }
+
 
 
 

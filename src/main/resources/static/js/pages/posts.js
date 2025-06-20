@@ -1,8 +1,11 @@
+import { async } from "regenerator-runtime";
+import { overlay } from "../common/config";
+import showAlert from "../components/show-alert-bar";
 import { formatDateTime, updateSectionHeight } from "../common/helpers.js";
 import { setupMarkdownEditor } from "../components/markdownEditor";
 import { AlertService } from "../components/alert-bar-frontend";
 
-// Updating section user-list height
+// Updating section posts height
 export function updateSectionPostsHeight() {
   updateSectionHeight("section-posts");
 }
@@ -288,4 +291,86 @@ export function initializeRepliesToggle() {
         }, 600);
       }
     });
+}
+
+export function deletePostOrReply() {
+  const postsContainer = document.querySelector(".container-posts");
+
+  if (!postsContainer) {
+    console.warn(`.container-posts couldn't find`);
+    return;
+  }
+
+  postsContainer.addEventListener("click", function (e) {
+    const deleteBtn = e.target.closest(".post-actions__item--delete");
+    if (!deleteBtn) return;
+
+    e.preventDefault();
+
+    const postId = deleteBtn.dataset.postId;
+    const projectId = deleteBtn.dataset.projectId;
+
+    showDeletePostModal(postId, projectId);
+  });
+
+  function showDeletePostModal(postId, projectId) {
+    const modal = document.createElement("div");
+    modal.classList.add("modal-delete-post");
+    modal.innerHTML = `
+      <p>Are you sure you want to delete this post/reply? This action cannot be undone!</p>
+      <div class="modal-delete-post__buttons">
+        <button class="btn btn--danger" id="confirm-delete__post">Yes</button>
+        <button class="btn btn--light" id="cancel-delete__post">No</button>
+      </div>
+    `;
+
+    document.body.appendChild(modal);
+    overlay.classList.remove("d-none");
+
+    // Yes, delete!
+    modal
+      .querySelector("#confirm-delete__post")
+      .addEventListener("click", async function () {
+        await removePostFromServer(postId, projectId);
+        modal.remove();
+        overlay.classList.add("d-none");
+      });
+    // No!
+    modal
+      .querySelector("#cancel-delete__post")
+      .addEventListener("click", function () {
+        modal.remove();
+        overlay.classList.add("d-none");
+      });
+  }
+
+  async function removePostFromServer(postId, projectId) {
+    try {
+      const response = await fetch(
+        `/api/posts/delete/post?projectId=${projectId}&postId=${postId}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      const data = await response.json();
+
+      if (response.ok) {
+        // Use localStorage for flash message, then reload or redirect as needed
+        localStorage.setItem(
+          "alertMessage",
+          JSON.stringify({ message: data.message, status: "success" })
+        );
+        location.reload();
+      } else {
+        showAlert(data.message || "Unexpected error", "error");
+      }
+    } catch (error) {
+      console.error(error.message);
+      showAlert("Network error or server unreachable", "error");
+    }
+  }
 }

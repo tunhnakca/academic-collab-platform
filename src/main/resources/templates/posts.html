@@ -236,6 +236,8 @@
                       <button
                         class="post-actions__item post-actions__item--delete"
                         th:if="${(post.number == loggedUser.number and project.isActive) or #strings.toLowerCase(loggedUser.role).replace('ı', 'i') == 'admin'}"
+                        th:data-post-id="${post.id}"
+                        th:data-project-id="${project.id}"
                       >
                         <ion-icon name="trash"></ion-icon>
                       </button>
@@ -260,6 +262,7 @@
                   class="post post--reply"
                   th:each="reply : ${post.replies}"
                   th:data-reply-user-number="${reply.number}"
+                  th:data-reply-id="${reply.id}"
                 >
                   <div
                     class="post__avatar"
@@ -297,6 +300,8 @@
                         <button
                           class="post-actions__item post-actions__item--delete"
                           th:if="${(reply.number == loggedUser.number and project.isActive) or #strings.toLowerCase(loggedUser.role).replace('ı', 'i') == 'admin'}"
+                          th:data-post-id="${reply.id}"
+                          th:data-project-id="${project.id}"
                         >
                           <ion-icon name="trash"></ion-icon>
                         </button>
@@ -341,6 +346,18 @@
                       th:value="${post.number}"
                     />
 
+                    <input
+                      type="hidden"
+                      name="pageNo"
+                      th:value="${postPageResponse.pageNo}"
+                    />
+                    <input
+                      type="hidden"
+                      name="keyword"
+                      th:if="${not #strings.isEmpty(keyword) or not #strings.isEmpty(param.keyword)}"
+                      th:value="${keyword ?: param.keyword}"
+                    />
+
                     <div class="form-group">
                       <textarea
                         class="replyInput"
@@ -362,8 +379,24 @@
             class="pagination posts-pagination"
             th:if="${postPageResponse.totalPages > 0}"
           >
-            <!-- Prev -->
+            <!-- Prev with search -->
             <a
+              th:if="${not #strings.isEmpty(keyword) or not #strings.isEmpty(param.keyword)}"
+              th:href="${postPageResponse.pageNo <= 0} ? '#' : @{/post/search/{projectId}(projectId=${project.id}, keyword=${keyword ?: param.keyword}, pageNo=${postPageResponse.pageNo - 1}, pageSize=${postPageResponse.pageSize})}"
+              th:classappend="${postPageResponse.pageNo <= 0} ? ' disabled-link' : ''"
+              class="pagination__link-btn pagination__link-btn--prev"
+            >
+              <button
+                class="pagination__btn pagination__btn--prev"
+                th:disabled="${postPageResponse.pageNo <= 0}"
+              >
+                Prev
+              </button>
+            </a>
+
+            <!-- Prev without search -->
+            <a
+              th:if="${#strings.isEmpty(keyword) and #strings.isEmpty(param.keyword)}"
               th:href="${postPageResponse.pageNo <= 0} ? '#' : @{/post/{projectId}(projectId=${project.id}, pageNo=${postPageResponse.pageNo - 1}, pageSize=${postPageResponse.pageSize})}"
               th:classappend="${postPageResponse.pageNo <= 0} ? ' disabled-link' : ''"
               class="pagination__link-btn pagination__link-btn--prev"
@@ -383,8 +416,22 @@
               <span th:text="${postPageResponse.totalPages}"></span>
             </div>
 
-            <!-- Next -->
+            <!-- Next with search -->
             <a
+              th:if="${not #strings.isEmpty(keyword) or not #strings.isEmpty(param.keyword)}"
+              th:href="${postPageResponse.pageNo + 1 >= postPageResponse.totalPages} ? '#' : @{/post/search/{projectId}(projectId=${project.id}, keyword=${keyword ?: param.keyword}, pageNo=${postPageResponse.pageNo + 1}, pageSize=${postPageResponse.pageSize})}"
+            >
+              <button
+                class="pagination__btn pagination__btn--next"
+                th:disabled="${postPageResponse.pageNo + 1 >= postPageResponse.totalPages}"
+              >
+                Next
+              </button>
+            </a>
+
+            <!-- Next without search -->
+            <a
+              th:if="${#strings.isEmpty(keyword) and #strings.isEmpty(param.keyword)}"
               th:href="${postPageResponse.pageNo + 1 >= postPageResponse.totalPages} ? '#' : @{/post/{projectId}(projectId=${project.id}, pageNo=${postPageResponse.pageNo + 1}, pageSize=${postPageResponse.pageSize})}"
             >
               <button
@@ -396,7 +443,8 @@
             >
           </div>
 
-          <th:block th:if="${project.isActive}"
+          <th:block
+            th:if="${project.isActive and #strings.isEmpty(keyword) and #strings.isEmpty(param.keyword)}"
             ><h2 class="post-heading--secondary post-heading--answer">
               Your Answer
             </h2>
@@ -406,6 +454,17 @@
               class="form form-post"
             >
               <input type="hidden" name="projectId" th:value="${project.id}" />
+              <input
+                type="hidden"
+                name="pageNo"
+                th:value="${postPageResponse.pageNo}"
+              />
+              <input
+                type="hidden"
+                name="keyword"
+                th:if="${not #strings.isEmpty(keyword) or not #strings.isEmpty(param.keyword)}"
+                th:value="${keyword ?: param.keyword}"
+              />
 
               <div class="form-group">
                 <textarea
