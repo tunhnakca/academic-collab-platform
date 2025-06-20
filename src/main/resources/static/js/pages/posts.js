@@ -1,7 +1,14 @@
 import { async } from "regenerator-runtime";
 import { overlay } from "../common/config";
 import showAlert from "../components/show-alert-bar";
-import { formatDateTime, updateSectionHeight } from "../common/helpers.js";
+import {
+  formatDateTime,
+  updateSectionHeight,
+  getQueryParam,
+  getCurrentItemsCount,
+  redirectToPreviousPage,
+  getDataSetInfo,
+} from "../common/helpers.js";
 import { setupMarkdownEditor } from "../components/markdownEditor";
 import { AlertService } from "../components/alert-bar-frontend";
 
@@ -297,7 +304,6 @@ export function deletePostOrReply() {
   const postsContainer = document.querySelector(".container-posts");
 
   if (!postsContainer) {
-    console.warn(`.container-posts couldn't find`);
     return;
   }
 
@@ -345,6 +351,10 @@ export function deletePostOrReply() {
 
   async function removePostFromServer(postId) {
     try {
+      const postsCount = getCurrentItemsCount(".post-wrapper");
+      const pageNo = getQueryParam("pageNo", "number", 0);
+      const projectId = getDataSetInfo(".section-posts", "projectId");
+
       const response = await fetch(`/api/post/delete?postId=${postId}`, {
         method: "DELETE",
         headers: {
@@ -360,6 +370,31 @@ export function deletePostOrReply() {
           "alertMessage",
           JSON.stringify({ message: data.message, status: "success" })
         );
+
+        // 1. If we are on the home page or ?pageNo=0: reload
+        if (pageNo === 0) {
+          location.reload();
+          return;
+        }
+
+        // 2. If there is only 1 post left and pageNo > 0: go to previous page
+        if (postsCount === 1 && pageNo > 0) {
+          const searchParams = new URLSearchParams(window.location.search);
+          searchParams.set("pageNo", pageNo - 1);
+
+          let baseUrl;
+
+          if (window.location.pathname.includes("/post/search/")) {
+            baseUrl = "/post/search";
+          } else {
+            baseUrl = "/post";
+          }
+
+          redirectToPreviousPage(baseUrl, searchParams, projectId);
+          return;
+        }
+
+        // 3. Other cases: reload
         location.reload();
       } else {
         showAlert(data.message || "Unexpected error", "error");

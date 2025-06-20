@@ -7,7 +7,11 @@
     <title th:text="${course.code + ' | Students'}">Users</title>
   </head>
   <body>
-    <section class="section-user-list" layout:fragment="content">
+    <section
+      class="section-user-list"
+      layout:fragment="content"
+      th:data-course-code="${course.code}"
+    >
       <!-- Left: Sidebar -->
       <div class="user-list__sidebar">
         <div class="user-list__sidebar-course__informations">

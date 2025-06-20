@@ -1,5 +1,10 @@
 import { async } from "regenerator-runtime";
-import { updateSectionHeight } from "../common/helpers.js";
+import {
+  updateSectionHeight,
+  getQueryParam,
+  getCurrentItemsCount,
+  redirectToPreviousPage,
+} from "../common/helpers.js";
 import { overlay } from "../common/config";
 import showAlert from "../components/show-alert-bar";
 
@@ -21,12 +26,18 @@ export function deleteUser() {
     return;
   }
 
+  if (!userList) {
+    console.warn(`User list couldn't find!`);
+    return;
+  }
+
   userList.addEventListener("click", function (e) {
     if (e.target.closest(".delete-user-btn")) {
       e.preventDefault();
+
       const selectedUser = e.target.closest("tr");
-      const userNumber = selectedUser.dataset.userNumber;
-      const courseCode = selectedUser.dataset.relatedCourse;
+      const userNumber = selectedUser?.dataset?.userNumber;
+      const courseCode = selectedUser?.dataset?.relatedCourse;
       const userName = selectedUser.querySelector(
         ".user-list__user-name"
       ).textContent;
@@ -60,8 +71,8 @@ export function deleteUser() {
 
     document
       .getElementById("confirm-delete__user")
-      .addEventListener("click", function () {
-        removeUserFromServer(userNumber, courseCode);
+      .addEventListener("click", async function () {
+        await removeUserFromServer(userNumber, courseCode);
         modal.remove();
         overlay.classList.add("d-none");
       });
@@ -76,6 +87,9 @@ export function deleteUser() {
 
   async function removeUserFromServer(userNumber, courseCode) {
     try {
+      const usersCount = getCurrentItemsCount(".user-list tbody tr");
+      const pageNo = getQueryParam("pageNo", "number", 0);
+
       const response = await fetch(
         `/api/courses/remove/user?courseCode=${courseCode}&userNumber=${userNumber}`,
         {
@@ -94,7 +108,30 @@ export function deleteUser() {
           "alertMessage",
           JSON.stringify({ message: data.message, status: "success" })
         );
-        // Reload the page
+
+        // 1. If it is on the homepage/pageNo=0 then reload
+        if (pageNo === 0) {
+          location.reload();
+          return;
+        }
+
+        // 2. If there is only one user left and he is deleted, the previous page
+        if (usersCount === 1 && pageNo > 0) {
+          const searchParams = new URLSearchParams(window.location.search);
+          searchParams.set("pageNo", pageNo - 1);
+
+          let baseUrl;
+          if (window.location.pathname.startsWith("/users/search")) {
+            baseUrl = "/users/search";
+          } else {
+            baseUrl = "/student/list";
+          }
+
+          redirectToPreviousPage(baseUrl, searchParams, null);
+          return;
+        }
+
+        // 3. Reload in all other cases
         location.reload();
       } else {
         showAlert(data.message || "Unexpected error", "error");

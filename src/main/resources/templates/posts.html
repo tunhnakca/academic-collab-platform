@@ -7,7 +7,11 @@
     <title th:text="${project.title + ' | Posts'}">Posts</title>
   </head>
   <body>
-    <section class="section-posts" layout:fragment="content">
+    <section
+      class="section-posts"
+      layout:fragment="content"
+      th:data-project-id="${project.id}"
+    >
       <!-- Left: Sidebar -->
       <div class="posts__sidebar">
         <div class="posts__sidebar-course__informations">
