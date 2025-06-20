@@ -4,12 +4,10 @@ import com.sau.learningplatform.Entity.Project;
 import com.sau.learningplatform.Entity.Semester;
 import com.sau.learningplatform.Entity.User;
 import com.sau.learningplatform.EntityResponse.MessageResponse;
+import com.sau.learningplatform.EntityResponse.MessageResponseWithStatus;
 import com.sau.learningplatform.EntityResponse.SemesterResponse;
-import com.sau.learningplatform.Service.CourseService;
+import com.sau.learningplatform.Service.*;
 
-import com.sau.learningplatform.Service.ProjectService;
-import com.sau.learningplatform.Service.SemesterService;
-import com.sau.learningplatform.Service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
@@ -31,12 +29,14 @@ public class RestController {
     private ProjectService projectService;
 
     private SemesterService semesterService;
+    private PostService postService;
 
-    public RestController(CourseService courseService, UserService userService, ProjectService projectService, SemesterService semesterService) {
+    public RestController(CourseService courseService, UserService userService, ProjectService projectService, SemesterService semesterService, PostService postService) {
         this.courseService = courseService;
         this.userService = userService;
         this.projectService = projectService;
         this.semesterService = semesterService;
+        this.postService = postService;
     }
 
     @PutMapping("/courses/remove/user")
@@ -60,6 +60,10 @@ public class RestController {
 
     }
 
+    @DeleteMapping("/post/delete")
+    public ResponseEntity<MessageResponse> deletePost(@RequestParam int postId) {
+        return postService.deleteById(postId);
+    }
 
 
 
