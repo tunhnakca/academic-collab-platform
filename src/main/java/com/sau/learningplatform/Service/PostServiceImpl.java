@@ -11,6 +11,8 @@ import org.commonmark.renderer.html.HtmlRenderer;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -25,12 +27,6 @@ public class PostServiceImpl implements PostService{
 
     public PostServiceImpl(PostRepository postRepository) {
         this.postRepository = postRepository;
-    }
-
-
-    @Override
-    public void deleteById(int id) {
-        postRepository.deleteById(id);
     }
 
 
@@ -73,6 +69,18 @@ public class PostServiceImpl implements PostService{
         return new MessageResponseWithStatus("Your comment has been saved successfully",true);
     }
 
+    @Override
+    public ResponseEntity<MessageResponse> deleteById(int id) {
+        try {
+            log.info("Post with id: {} is deleted!",id);
+            postRepository.deleteById(id);
+            return new ResponseEntity<>(new MessageResponse("Your comment deleted successfully"), HttpStatus.OK);
+
+        } catch (Exception e) {
+            log.error("Post could not be deleted");
+            return new ResponseEntity<>(new MessageResponse("Your comment could not be deleted"), HttpStatus.BAD_REQUEST);
+        }
+    }
 
 
     @Override
