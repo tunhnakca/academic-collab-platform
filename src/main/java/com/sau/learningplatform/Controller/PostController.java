@@ -79,31 +79,28 @@ public class PostController {
     }
 
 
-    
+
     @PostMapping("/post/save")
     public RedirectView savePost(Principal principal
-            ,@ModelAttribute PostRequest request, RedirectAttributes redirectAttributes
-            ,@RequestParam(defaultValue = "0") int pageNo,
-            @RequestParam(required = false) String keyword){
+            ,@ModelAttribute PostRequest request
+            ,RedirectAttributes redirectAttributes
+            ,@RequestParam(defaultValue = "0") int pageNo
+            ,@RequestParam(defaultValue = "10") int pageSize){
 
         String number = principal.getName();
         User user = userService.findByNumber(number);
         Project project = projectService.findById(request.getProjectId());
 
-        MessageResponseWithStatus messageResponseWithStatus = postService.savePostRequest(user,project,request);
+        MessageResponseWithStatus messageResponseWithStatus=postService.savePostRequest(user,project,request);
         redirectAttributes.addFlashAttribute("messageResponseWithStatus", messageResponseWithStatus);
 
-        String redirectUrl;
-        if (keyword != null && !keyword.isEmpty()) {
-            redirectUrl = "/post/search/" + request.getProjectId()
-                + "?keyword=" + URLEncoder.encode(keyword, StandardCharsets.UTF_8)
-                + "&pageNo=" + pageNo;
-        } else {
-            redirectUrl = "/post/" + request.getProjectId()
-                + "?pageNo=" + pageNo;
+        if(request.getParentPostId()==null){
+            int lastPageNo=postService.getParentPostsAsPostPageResponseByProjectId(request.getProjectId(),pageNo,pageSize).getTotalPages()-1;
+            return new RedirectView("/post/"+request.getProjectId()+"?pageNo="+lastPageNo);
         }
 
-        return new RedirectView(redirectUrl);
+
+        return new RedirectView("/post/"+request.getProjectId()+"?pageNo="+pageNo);
 
     }
 
