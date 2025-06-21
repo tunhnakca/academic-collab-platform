@@ -175,3 +175,44 @@ export function getDataSetInfo(selector, dataKey) {
     element.dataset[dataKey] || element.getAttribute(`data-${normalizedKey}`)
   );
 }
+
+////////////////////////////////////////
+// Showing Modal
+export function setupModal({
+  modalSelector,
+  openBtnSelector,
+  closeBtnSelector = ".modal-close",
+  overlaySelector = ".overlay",
+}) {
+  const modal = document.querySelector(modalSelector);
+  const overlay = document.querySelector(overlaySelector);
+  const btnClose = modal.querySelector(closeBtnSelector);
+  const btnsOpen = document.querySelectorAll(openBtnSelector);
+
+  if (!modal || !btnClose || !overlay) return;
+
+  const openModal = () => {
+    modal.classList.remove("d-none");
+    overlay.classList.remove("d-none");
+  };
+
+  const closeModal = () => {
+    modal.classList.add("d-none");
+    overlay.classList.add("d-none");
+  };
+
+  btnsOpen.forEach((btn) =>
+    btn.addEventListener("click", function (e) {
+      e.preventDefault();
+      openModal();
+    })
+  );
+  btnClose.addEventListener("click", closeModal);
+  overlay.addEventListener("click", closeModal);
+
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape" && !modal.classList.contains("d-none")) {
+      closeModal();
+    }
+  });
+}

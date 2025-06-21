@@ -36,7 +36,7 @@
         class="login-form"
         name="login"
       >
-        <div class="login-input-group">
+        <div class="login-input-group login-input-group--username">
           <label for="username">Username</label>
           <input
             type="text"
@@ -66,8 +66,6 @@
     </div>
 
     <p class="login-info">First time here? <span>Click</span> for info!</p>
-
-    <div class="overlay d-none"></div>
 
     <div class="modal-login d-none">
       <button class="modal-close">&times;</button>
@@ -99,8 +97,47 @@
         </div>
       </div>
     </div>
+
+    <div class="modal__forgot-password d-none">
+      <button class="modal-close">&times;</button>
+      <h2 class="modal__forgot-password__heading">Forgot Password</h2>
+      <form
+        th:action="@{/forgot/password}"
+        method="post"
+        class="forgot-password__form"
+      >
+        <div class="forgot-password__input-group">
+          <label for="numberInput">Number</label>
+          <input
+            type="text"
+            name="number"
+            id="numberInput"
+            placeholder="Enter your number (e.g., B201...)"
+            required
+          />
+        </div>
+
+        <div class="forgot-password__input-group">
+          <label for="confirmNumberInput">Confirm Number</label>
+          <input
+            type="text"
+            name="confirmNumber"
+            id="confirmNumberInput"
+            placeholder="Re-enter your number"
+            required
+          />
+        </div>
+
+        <button type="submit" class="btn btn__forgot-password btn--primary">
+          Reset Password
+        </button>
+      </form>
+    </div>
+
     <div
       th:replace="~{fragments/alert-bar-with-fetch :: alert-bar-with-fetch}"
     ></div>
+
+    <div class="overlay d-none"></div>
   </body>
 </html>
