@@ -332,6 +332,8 @@
                     method="post"
                     class="form form-reply"
                   >
+                    <input type="hidden" name="formType" value="reply" />
+
                     <input
                       type="hidden"
                       name="projectId"
@@ -457,6 +459,7 @@
               method="post"
               class="form form-post"
             >
+              <input type="hidden" name="formType" value="post" />
               <input type="hidden" name="projectId" th:value="${project.id}" />
               <input
                 type="hidden"
