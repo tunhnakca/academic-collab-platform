@@ -7,7 +7,11 @@
     <title th:text="${project.title + ' | Posts'}">Posts</title>
   </head>
   <body>
-    <section class="section-posts" layout:fragment="content">
+    <section
+      class="section-posts"
+      layout:fragment="content"
+      th:data-project-id="${project.id}"
+    >
       <!-- Left: Sidebar -->
       <div class="posts__sidebar">
         <div class="posts__sidebar-course__informations">
@@ -328,6 +332,8 @@
                     method="post"
                     class="form form-reply"
                   >
+                    <input type="hidden" name="formType" value="reply" />
+
                     <input
                       type="hidden"
                       name="projectId"
@@ -453,6 +459,7 @@
               method="post"
               class="form form-post"
             >
+              <input type="hidden" name="formType" value="post" />
               <input type="hidden" name="projectId" th:value="${project.id}" />
               <input
                 type="hidden"

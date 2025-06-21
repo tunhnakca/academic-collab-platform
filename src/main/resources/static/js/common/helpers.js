@@ -120,3 +120,58 @@ export function updateSectionHeight(sectionClassName) {
   const headerHeight = header.offsetHeight;
   sectionEl.style.height = `calc(100vh - ${headerHeight}px`;
 }
+
+////////////////////////////////////////
+// Getting Query Param from URL
+/**
+ * @param {string} key - Query param key (e.g., 'pageNo', 'keyword')
+ * @param {'string' | 'number' | 'boolean'} type - Desired type of value
+ * @param {*} defaultValue - Value to return if param is missing or invalid
+ * @returns {*} The parsed value or the default
+ */
+export function getQueryParam(key, type = "string", defaultValue = null) {
+  const params = new URLSearchParams(window.location.search);
+  const rawValue = params.get(key);
+
+  if (rawValue === null) return defaultValue;
+
+  switch (type) {
+    case "number":
+      const num = Number(rawValue);
+      return isNaN(num) ? defaultValue : num;
+
+    case "boolean":
+      return rawValue === "true" || rawValue === "1";
+
+    case "string":
+    default:
+      return rawValue;
+  }
+}
+////////////////////////////////////////
+// Getting Current Items Count from that Page
+export function getCurrentItemsCount(selector) {
+  return document.querySelectorAll(selector).length;
+}
+
+////////////////////////////////////////
+// Redirecting to Previous Page
+export function redirectToPreviousPage(baseUrl, searchParams, mainId) {
+  let url = baseUrl;
+  if (mainId) url += `/${mainId}`;
+  url += `?${searchParams.toString()}`;
+  window.location.href = url;
+}
+
+////////////////////////////////////////
+// Getting Data Set Info
+export function getDataSetInfo(selector, dataKey) {
+  const element = document.querySelector(selector);
+  if (!element) return null;
+
+  // Convert camelCase -> kebab-case to match data-* attributes if needed
+  const normalizedKey = dataKey.replace(/([A-Z])/g, "-$1").toLowerCase();
+  return (
+    element.dataset[dataKey] || element.getAttribute(`data-${normalizedKey}`)
+  );
+}
