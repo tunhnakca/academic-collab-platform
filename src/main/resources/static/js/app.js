@@ -5,6 +5,8 @@ import {
   showLoginInfoModal,
   handleLoginAlerts,
   removeLoginParams,
+  showForgotPasswordModal,
+  setupNumberValidation,
 } from "./pages/login";
 import { toggleDropdownHeader } from "./pages/header";
 import { setCurrentYear } from "./pages/footer";
@@ -73,6 +75,8 @@ if (window.location.pathname.includes("login")) {
     showLoginInfoModal();
     handleLoginAlerts();
     removeLoginParams();
+    showForgotPasswordModal();
+    setupNumberValidation();
   });
 }
 
