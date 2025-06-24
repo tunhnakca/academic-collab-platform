@@ -14,10 +14,10 @@ body:has(.container-login) {
 
 .container-login {
   background-color: #fff;
-  padding: 2.4rem;
+  padding: 2.4rem 2.8rem;
   border-radius: 10px;
   @include box-shadow(rgba(0, 0, 0, 0.06));
-  max-width: 35rem;
+  max-width: 40rem;
   width: 90%;
 }
 
@@ -41,6 +41,12 @@ body:has(.container-login) {
       color: #495057;
     }
 
+    &--username {
+      input {
+        text-transform: uppercase;
+      }
+    }
+
     input {
       width: 100%;
       padding: 0.8rem 1.2rem;
@@ -52,6 +58,7 @@ body:has(.container-login) {
 
       &::placeholder {
         color: $color-grey-light-4;
+        text-transform: none;
       }
     }
   }
@@ -144,4 +151,65 @@ body:has(.container-login) {
   cursor: pointer;
   border: none;
   background: none;
+}
+
+.modal__forgot-password {
+  @extend .modal;
+  max-width: 40rem; // Daha geniş bir modal
+  width: 95%;
+  padding: 3rem;
+
+  &__heading {
+    text-align: center;
+    font-size: 2.2rem;
+    font-weight: 500;
+  }
+
+  .modal-close {
+    position: absolute;
+    top: 0.6rem;
+    right: 1.6rem;
+  }
+
+  .forgot-password {
+    &__form {
+      @extend .login-form;
+    }
+
+    &__input-group {
+      @extend .login-input-group;
+
+      input {
+        text-transform: uppercase;
+
+        &::placeholder {
+          text-transform: none;
+        }
+      }
+    }
+  }
+
+  .btn__forgot-password {
+    @extend .login-button;
+    align-self: end;
+
+    &:disabled {
+      background-color: $color-disable;
+      color: $color-grey-light-6;
+      cursor: not-allowed;
+    }
+  }
+}
+
+.error-message {
+  color: $color-danger;
+  margin-top: 1rem;
+}
+
+.input-error {
+  border-color: $color-danger !important;
+
+  &::placeholder {
+    color: $color-danger !important;
+  }
 }

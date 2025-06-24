@@ -1,5 +1,6 @@
 import { overlay } from "../common/config";
 import showAlert from "../components/show-alert-bar";
+import { setupModal } from "../common/helpers";
 
 // Function that displays alerts based on login parameters
 export function handleLoginAlerts() {
@@ -33,29 +34,67 @@ export function removeLoginParams() {
 }
 
 export function showLoginInfoModal() {
-  const modal = document.querySelector(".modal-login");
-  const btnCloseModal = document.querySelector(".modal-close");
-  const btnsOpenModal = document.querySelectorAll(".login-info");
+  setupModal({
+    modalSelector: ".modal-login",
+    openBtnSelector: ".login-info",
+  });
+}
 
-  const openModal = function () {
-    modal.classList.remove("d-none");
-    overlay.classList.remove("d-none");
-  };
+export function showForgotPasswordModal() {
+  setupModal({
+    modalSelector: ".modal__forgot-password",
+    openBtnSelector: ".login-link__forgot-password",
+  });
+}
 
-  const closeModal = function () {
-    modal.classList.add("d-none");
-    overlay.classList.add("d-none");
-  };
+export function setupNumberValidation() {
+  const numberInput = document.getElementById("numberInput");
+  const confirmNumberInput = document.getElementById("confirmNumberInput");
+  const form = document.querySelector(".forgot-password__form");
+  const submitButton = form.querySelector(".btn__forgot-password");
 
-  for (let i = 0; i < btnsOpenModal.length; i++)
-    btnsOpenModal[i].addEventListener("click", openModal);
+  // Check if the required fields exist in the DOM
+  if (!numberInput || !confirmNumberInput || !form || !submitButton) {
+    console.warn("Required forgot password fields not found.");
+    return;
+  }
 
-  btnCloseModal.addEventListener("click", closeModal);
-  overlay.addEventListener("click", closeModal);
+  // Create and insert the error message element
+  const errorMessage = document.createElement("p");
+  errorMessage.textContent = "Numbers do not match!";
+  errorMessage.classList.add("error-message");
+  errorMessage.style.display = "none";
+  confirmNumberInput.insertAdjacentElement("afterend", errorMessage);
 
-  document.addEventListener("keydown", function (e) {
-    if (e.key === "Escape" && !modal.classList.contains("hidden")) {
-      closeModal();
+  function validateNumbers() {
+    if (numberInput.value || confirmNumberInput.value) {
+      if (numberInput.value !== confirmNumberInput.value) {
+        confirmNumberInput.classList.add("input-error");
+        errorMessage.style.display = "block";
+        confirmNumberInput.placeholder = "Numbers do not match!";
+        submitButton.disabled = true;
+      } else {
+        confirmNumberInput.classList.remove("input-error");
+        errorMessage.style.display = "none";
+        confirmNumberInput.placeholder = "Re-enter your number";
+        submitButton.disabled = false;
+      }
+    } else {
+      confirmNumberInput.classList.remove("input-error");
+      errorMessage.style.display = "none";
+      confirmNumberInput.placeholder = "Re-enter your number";
+      submitButton.disabled = true;
+    }
+  }
+
+  form.addEventListener("submit", function (e) {
+    if (numberInput.value !== confirmNumberInput.value) {
+      e.preventDefault();
+      confirmNumberInput.classList.add("input-error");
+      errorMessage.style.display = "block";
     }
   });
+
+  numberInput.addEventListener("input", validateNumbers);
+  confirmNumberInput.addEventListener("input", validateNumbers);
 }
