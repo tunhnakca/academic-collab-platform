@@ -8,6 +8,7 @@ import {
   showForgotPasswordModal,
   setupNumberValidation,
 } from "./pages/login";
+import { setupResetPasswordValidation } from "./pages/reset-password";
 import { toggleDropdownHeader } from "./pages/header";
 import { setCurrentYear } from "./pages/footer";
 import { setupPasswordValidation } from "./pages/profile";
@@ -79,6 +80,13 @@ if (window.location.pathname.includes("login")) {
     setupNumberValidation();
   });
 }
+
+///////////////////////////
+// Reset Password Page
+///////////////////////////
+document.addEventListener("DOMContentLoaded", (e) => {
+  setupResetPasswordValidation();
+});
 
 ///////////////////////////
 // Header
