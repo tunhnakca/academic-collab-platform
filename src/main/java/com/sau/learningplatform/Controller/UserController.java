@@ -106,6 +106,13 @@ public class UserController {
         return "/login";
     }
 
+    
 
-
+        @GetMapping("/reset-password")
+        public String getResetPasswordPage() {
+            return "reset-password"; // src/main/resources/templates/reset-password.html
+        }
+    
 }
+
+

@@ -163,6 +163,7 @@ body:has(.container-login) {
     text-align: center;
     font-size: 2.2rem;
     font-weight: 500;
+    margin-bottom: 1.6rem;
   }
 
   .modal-close {
@@ -174,6 +175,15 @@ body:has(.container-login) {
   .forgot-password {
     &__form {
       @extend .login-form;
+    }
+
+    &__description {
+      font-size: 1.2rem;
+      font-weight: 300;
+      display: inline-block;
+      text-align: center;
+      margin: 0 auto;
+      padding: 0 1rem;
     }
 
     &__input-group {
@@ -192,6 +202,7 @@ body:has(.container-login) {
   .btn__forgot-password {
     @extend .login-button;
     align-self: end;
+    margin-top: 1rem;
 
     &:disabled {
       background-color: $color-disable;
@@ -199,17 +210,17 @@ body:has(.container-login) {
       cursor: not-allowed;
     }
   }
-}
 
-.error-message {
-  color: $color-danger;
-  margin-top: 1rem;
-}
+  .error-message {
+    color: $color-danger;
+    margin-top: 1rem;
+  }
 
-.input-error {
-  border-color: $color-danger !important;
+  .input-error {
+    border-color: $color-danger !important;
 
-  &::placeholder {
-    color: $color-danger !important;
+    &::placeholder {
+      color: $color-danger !important;
+    }
   }
 }
