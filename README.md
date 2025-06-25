@@ -79,3 +79,16 @@ spring.web.resources.chain.strategy.content.paths=/**
 ```
 
 These settings append a hash to your static asset filenames, ensuring browsers always fetch the latest versions of your files after updates.
+
+## 🔐 Environment Variables Setup
+
+This project uses a `.env` file to load mail credentials.
+
+1. Copy the example:
+```bash
+cp .env.example .env
+
+then fill in your values:
+
+MAIL_USERNAME=your_email@gmail.com
+MAIL_PASSWORD=your_app_password
