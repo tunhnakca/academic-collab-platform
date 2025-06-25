@@ -67,8 +67,11 @@ export function setupNumberValidation() {
   confirmNumberInput.insertAdjacentElement("afterend", errorMessage);
 
   function validateNumbers() {
+    const numberVal = numberInput.value.toUpperCase();
+    const confirmVal = confirmNumberInput.value.toUpperCase();
+
     if (numberInput.value || confirmNumberInput.value) {
-      if (numberInput.value !== confirmNumberInput.value) {
+      if (numberVal !== confirmVal) {
         confirmNumberInput.classList.add("input-error");
         errorMessage.style.display = "block";
         confirmNumberInput.placeholder = "Numbers do not match!";
@@ -88,7 +91,9 @@ export function setupNumberValidation() {
   }
 
   form.addEventListener("submit", function (e) {
-    if (numberInput.value !== confirmNumberInput.value) {
+    const numberVal = numberInput.value.toUpperCase();
+    const confirmVal = confirmNumberInput.value.toUpperCase();
+    if (numberVal !== confirmVal) {
       e.preventDefault();
       confirmNumberInput.classList.add("input-error");
       errorMessage.style.display = "block";
