@@ -36,16 +36,6 @@
           th:if="${#strings.toLowerCase(loggedUser.role).replace('ı', 'i') == 'admin'}"
         >
           <li>
-            <a href="#" class="user-info__dropdown__link">
-              <ion-icon
-                class="user-info__dropdown__link__icon"
-                name="people-circle-outline"
-              >
-                > ></ion-icon
-              ><span>Users</span></a
-            >
-          </li>
-          <li>
             <a th:href="@{/semester/add}" class="user-info__dropdown__link">
               <ion-icon
                 class="user-info__dropdown__link__icon"
