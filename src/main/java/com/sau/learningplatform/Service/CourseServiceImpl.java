@@ -10,6 +10,7 @@ import com.sau.learningplatform.EntityResponse.MessageResponseWithStatus;
 import com.sau.learningplatform.Repository.CourseRegistrationRepository;
 import com.sau.learningplatform.Repository.CourseRepository;
 import com.sau.learningplatform.Repository.PostRepository;
+import com.sau.learningplatform.Repository.ProjectRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -22,6 +23,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -37,13 +39,15 @@ public class CourseServiceImpl implements CourseService {
     private SemesterService semesterService;
 
     private PostRepository postRepository;
+    private ProjectRepository projectRepository;
 
-    public CourseServiceImpl(CourseRepository courseRepository, UserService userService, CourseRegistrationRepository courseRegistrationRepository, SemesterService semesterService, PostRepository postRepository) {
+    public CourseServiceImpl(CourseRepository courseRepository, UserService userService, CourseRegistrationRepository courseRegistrationRepository, SemesterService semesterService, PostRepository postRepository, ProjectRepository projectRepository) {
         this.courseRepository = courseRepository;
         this.userService = userService;
         this.courseRegistrationRepository = courseRegistrationRepository;
         this.semesterService = semesterService;
         this.postRepository = postRepository;
+        this.projectRepository = projectRepository;
     }
 
     @Override
@@ -360,8 +364,16 @@ public class CourseServiceImpl implements CourseService {
 
     private CourseResponse courseToResponse(Course course) {
 
-        return CourseResponse.builder().id(course.getId()).code(course.getCode()).owner(course.getOwner())
-                .title(course.getTitle()).build();
+        return CourseResponse
+                .builder()
+                .id(course.getId())
+                .code(course.getCode())
+                .owner(course.getOwner())
+                .title(course.getTitle())
+                .openProjectCount(projectRepository.countByCourseIdAndDateEndAfter(course.getId(),LocalDateTime.now()))
+                .closedProjectCount(projectRepository.countByCourseIdAndDateEndBefore(course.getId(),LocalDateTime.now()))
+                .studentCount(courseRegistrationRepository.countByCourseIdAndUserRoleIgnoreCaseAndSemester(course.getId(),"student",semesterService.getCurrentSemester()))
+                .build();
 
     }
 }

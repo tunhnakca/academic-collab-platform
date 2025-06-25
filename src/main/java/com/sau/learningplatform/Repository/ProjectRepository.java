@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -30,5 +31,10 @@ public interface ProjectRepository extends JpaRepository<Project,Integer> {
 
     //newest to oldest
     List<Project> findByCourseCodeOrderByDateCreatedDesc(String CourseCode);
+
+    //open
+    int countByCourseIdAndDateEndAfter(int courseId, LocalDateTime now);
+    //closed
+    int countByCourseIdAndDateEndBefore(int courseId, LocalDateTime now);
 
 }
