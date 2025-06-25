@@ -171,7 +171,7 @@ public class UserServiceImpl implements UserService {
     public UserPageResponse getPaginatedUsersByCourseCodeAndRole(String courseCode, String role, int pageNo, int pageSize) {
         Pageable pageable = PageRequest.of(pageNo, pageSize);
         Page<CourseRegistration> registrations = courseRegistrationRepository
-                .findByCourseCodeAndUserRoleAndSemester(courseCode, role, semesterService.getCurrentSemester(), pageable);
+                .findSortedUsersByNameIgnoreCase(courseCode, role, semesterService.getCurrentSemester(), pageable);
 
         List<UserResponse> userResponses = registrations.getContent().stream()
                 .map(CourseRegistration::getUser)
@@ -183,7 +183,6 @@ public class UserServiceImpl implements UserService {
         }
         else {
             userResponses.sort(Comparator.comparing(UserResponse::getName));
-
         }
 
         UserPageResponse response = new UserPageResponse();
@@ -192,6 +191,7 @@ public class UserServiceImpl implements UserService {
         response.setPageNo(pageNo);
         response.setTotalPages(registrations.getTotalPages());
 
+        log.info("userResponses:"+userResponses);
 
         return response;
     }

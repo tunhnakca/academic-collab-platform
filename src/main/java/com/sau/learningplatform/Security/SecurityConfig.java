@@ -32,6 +32,7 @@ public class SecurityConfig {
                         .requestMatchers("/courses/delete/**").hasAnyAuthority("ADMIN", "INSTRUCTOR")
                         .requestMatchers("/forgot/password").permitAll()
                         .requestMatchers("/reset-password").permitAll()
+                        .requestMatchers("/invalid-token").permitAll()
                         .anyRequest().authenticated())
                 .formLogin(form -> form
                         .loginPage("/login")

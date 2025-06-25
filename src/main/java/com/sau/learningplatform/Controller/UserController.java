@@ -97,7 +97,7 @@ public class UserController {
 
         //buraya bir sayfa lazım (token geçersiz veya süresi geçmiş)
         if(user.isEmpty()){
-            return "unauthorized";
+            return "invalid-token";
         }
 
         model.addAttribute("token",token);
@@ -110,9 +110,9 @@ public class UserController {
 
         Optional<User>user=userService.getUserByValidToken(token);
 
-        //buraya bir sayfa lazım (token geçersiz veya süresi geçmiş)
+
         if(user.isEmpty()){
-            return new RedirectView("/unauthorized");
+            return new RedirectView("/invalid-token");
         }
 
         MessageResponseWithStatus messageResponseWithStatus=userService.resetPassword(user.get(),newPassword,confirmNewPassword);
