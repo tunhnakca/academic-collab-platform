@@ -19,6 +19,10 @@ public class CourseResponse {
 
     private String code;
 
+    private int studentCount;
 
+    private int openProjectCount;
+
+    private int closedProjectCount;
 
 }

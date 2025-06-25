@@ -33,4 +33,5 @@ public interface CourseRegistrationRepository extends JpaRepository<CourseRegist
 
     boolean existsByUserAndCourseAndSemester(User user, Course course, Semester semester);
 
+    int countByCourseIdAndUserRoleIgnoreCaseAndSemester(int courseId, String role, Semester semester);
 }
