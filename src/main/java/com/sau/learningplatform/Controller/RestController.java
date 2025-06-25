@@ -1,23 +1,9 @@
 package com.sau.learningplatform.Controller;
 
-import com.sau.learningplatform.Entity.Project;
-import com.sau.learningplatform.Entity.Semester;
-import com.sau.learningplatform.Entity.User;
 import com.sau.learningplatform.EntityResponse.MessageResponse;
-import com.sau.learningplatform.EntityResponse.MessageResponseWithStatus;
-import com.sau.learningplatform.EntityResponse.SemesterResponse;
 import com.sau.learningplatform.Service.*;
-
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import org.springframework.web.servlet.view.RedirectView;
-
-import java.io.IOException;
-import java.security.Principal;
 
 @org.springframework.web.bind.annotation.RestController
 @RequestMapping("/api")

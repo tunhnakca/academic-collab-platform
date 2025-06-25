@@ -15,6 +15,6 @@ public class GlobalExceptionHandler {
         log.warn("Error: " + e.getMessage());
 
 
-        return "custom-error";
+        return "error";
     }
 }
