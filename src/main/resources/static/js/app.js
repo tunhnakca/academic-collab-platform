@@ -71,21 +71,23 @@ document.addEventListener("DOMContentLoaded", () => {
 ///////////////////////////
 // Login Page
 ///////////////////////////
-if (window.location.pathname.includes("login")) {
-  document.addEventListener("DOMContentLoaded", (e) => {
+document.addEventListener("DOMContentLoaded", (e) => {
+  if (document.querySelector(".container-login")) {
     showLoginInfoModal();
     handleLoginAlerts();
     removeLoginParams();
     showForgotPasswordModal();
     setupNumberValidation();
-  });
-}
+  }
+});
 
 ///////////////////////////
 // Reset Password Page
 ///////////////////////////
 document.addEventListener("DOMContentLoaded", (e) => {
-  setupResetPasswordValidation();
+  if (document.querySelector(".container__reset-password")) {
+    setupResetPasswordValidation();
+  }
 });
 
 ///////////////////////////
@@ -98,18 +100,20 @@ document.addEventListener("DOMContentLoaded", (e) => {
 ///////////////////////////
 // Footer
 ///////////////////////////
+/*
 document.addEventListener("DOMContentLoaded", (e) => {
   setCurrentYear();
 });
+*/
 
 ///////////////////////////
 // Profile Page
 ///////////////////////////
-if (window.location.pathname.includes("profile")) {
-  document.addEventListener("DOMContentLoaded", (e) => {
+document.addEventListener("DOMContentLoaded", (e) => {
+  if (document.querySelector(".section-profile")) {
     setupPasswordValidation();
-  });
-}
+  }
+});
 
 ///////////////////////////
 // Add Semester Page
@@ -117,8 +121,10 @@ if (window.location.pathname.includes("profile")) {
 
 // When the document is fully loaded
 document.addEventListener("DOMContentLoaded", function () {
-  // Initialize date validation for start and end date inputs
-  setupSemesterDateValidation();
+  if (document.querySelector(".section-add-semester")) {
+    // Initialize date validation for start and end date inputs
+    setupSemesterDateValidation();
+  }
 });
 
 ///////////////////////////
@@ -127,18 +133,20 @@ document.addEventListener("DOMContentLoaded", function () {
 
 // When the document is fully loaded
 document.addEventListener("DOMContentLoaded", function (e) {
-  //Start calculating padding
-  updatePadding();
+  if (document.querySelector(".section-courses")) {
+    //Start calculating padding
+    updatePadding();
 
-  // Call updatePadding when the window is resized
-  window.addEventListener("resize", updatePadding);
+    // Call updatePadding when the window is resized
+    window.addEventListener("resize", updatePadding);
 
-  // If no courses, show empty message
-  showEmptyMessageCourses();
+    // If no courses, show empty message
+    showEmptyMessageCourses();
 
-  // Deleting Course
-  if (deleteCourseButton) {
-    deleteCourse();
+    // Deleting Course
+    if (deleteCourseButton) {
+      deleteCourse();
+    }
   }
 });
 
@@ -148,24 +156,26 @@ document.addEventListener("DOMContentLoaded", function (e) {
 
 // When the document is fully loaded
 document.addEventListener("DOMContentLoaded", function (e) {
-  //Start calculating header height
-  updateSectionProjectsHeight();
+  if (document.querySelector(".section-projects")) {
+    //Start calculating header height
+    updateSectionProjectsHeight();
 
-  // Call updateSectionProjectsHeight when the window is resized
-  window.addEventListener("resize", updateSectionProjectsHeight());
+    // Call updateSectionProjectsHeight when the window is resized
+    window.addEventListener("resize", updateSectionProjectsHeight());
 
-  // If no projects, show empty message
-  showEmptyMessageProjects();
+    // If no projects, show empty message
+    showEmptyMessageProjects();
 
-  // Update Date Formats
-  updateProjectDateTime();
+    // Update Date Formats
+    updateProjectDateTime();
 
-  // Removing HTML Tags
-  removeHTMLTags();
+    // Removing HTML Tags
+    removeHTMLTags();
 
-  // Deleting Project
-  if (deleteProjectButton) {
-    deleteProject();
+    // Deleting Project
+    if (deleteProjectButton) {
+      deleteProject();
+    }
   }
 });
 
@@ -175,11 +185,13 @@ document.addEventListener("DOMContentLoaded", function (e) {
 
 // When the document is fully loaded
 document.addEventListener("DOMContentLoaded", function () {
-  // Initialize date validation for start and end date inputs
-  setupDateValidation();
+  if (document.querySelector(".section-add-project")) {
+    // Initialize date validation for start and end date inputs
+    setupDateValidation();
 
-  // Initialize markdown editor for project description
-  initializeAddProjectMarkdownEditor();
+    // Initialize markdown editor for project description
+    initializeAddProjectMarkdownEditor();
+  }
 });
 
 ///////////////////////////
@@ -188,14 +200,16 @@ document.addEventListener("DOMContentLoaded", function () {
 
 // When the document is fully loaded
 document.addEventListener("DOMContentLoaded", function () {
-  //Start calculating header height
-  updateSectionUserListHeight();
+  if (document.querySelector(".section-user-list")) {
+    //Start calculating header height
+    updateSectionUserListHeight();
 
-  // Call updateSectionProjectsHeight when the window is resized
-  window.addEventListener("resize", updateSectionUserListHeight());
+    // Call updateSectionProjectsHeight when the window is resized
+    window.addEventListener("resize", updateSectionUserListHeight());
 
-  if (deleteUserButton) {
-    deleteUser();
+    if (deleteUserButton) {
+      deleteUser();
+    }
   }
 });
 
@@ -205,30 +219,32 @@ document.addEventListener("DOMContentLoaded", function () {
 
 // When the document is fully loaded
 document.addEventListener("DOMContentLoaded", function () {
-  //Start calculating header height
-  updateSectionPostsHeight();
+  if (document.querySelector(".section-posts")) {
+    //Start calculating header height
+    updateSectionPostsHeight();
 
-  // Call updateSectionProjectsHeight when the window is resized
-  window.addEventListener("resize", updateSectionPostsHeight());
+    // Call updateSectionProjectsHeight when the window is resized
+    window.addEventListener("resize", updateSectionPostsHeight());
 
-  // Update Date Formats
-  updateProjectDateTimeOnPosts();
+    // Update Date Formats
+    updateProjectDateTimeOnPosts();
 
-  // Highlight code blocks
-  highlightCodeBlocks();
+    // Highlight code blocks
+    highlightCodeBlocks();
 
-  // Initialize markdown editor for answer
-  initializePostsMarkdownEditor();
+    // Initialize markdown editor for answer
+    initializePostsMarkdownEditor();
 
-  // Initialize markdown editor for reply
-  initializeReplyMarkdownEditor();
+    // Initialize markdown editor for reply
+    initializeReplyMarkdownEditor();
 
-  // Scrolling form
-  initializeReplyScrollToForm();
+    // Scrolling form
+    initializeReplyScrollToForm();
 
-  // Showing replies block
-  initializeRepliesToggle();
+    // Showing replies block
+    initializeRepliesToggle();
 
-  //Deleting post or reply
-  deletePostOrReply();
+    //Deleting post or reply
+    deletePostOrReply();
+  }
 });

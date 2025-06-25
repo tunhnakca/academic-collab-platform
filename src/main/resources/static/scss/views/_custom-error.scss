@@ -1,0 +1,51 @@
+@use "../abstracts/base" as *;
+@use "../abstracts/mixins" as *;
+@use "../abstracts/utilities" as *;
+@use "../components" as *;
+
+body:has(.container__error-page) {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.container__error-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 42rem;
+  width: 90%;
+  text-align: center;
+}
+
+.error-page__icon {
+  margin-bottom: 1rem;
+
+  ion-icon {
+    width: 10.2rem;
+    height: 10.2rem;
+    fill: $color-danger;
+  }
+}
+
+.error-page__title {
+  font-size: 3.6rem;
+  font-weight: 500;
+  margin-bottom: 2rem;
+  max-width: 34rem;
+  margin-left: auto;
+  margin-right: auto;
+  line-height: 1.22;
+}
+
+.error-page__message {
+  font-size: 1.6rem;
+  color: $color-grey-light-6;
+  line-height: 1.6;
+  max-width: 38rem;
+  margin: 0 auto;
+  letter-spacing: 0.1px;
+  word-break: break-word;
+}

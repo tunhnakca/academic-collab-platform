@@ -59,3 +59,16 @@ body {
 .section {
   padding: 4.8rem 0 3.2rem 0;
 }
+
+.error-message {
+  color: $color-danger;
+  margin-top: 0.4rem;
+}
+
+.input-error {
+  border-color: $color-danger !important;
+
+  &::placeholder {
+    color: $color-danger !important;
+  }
+}
