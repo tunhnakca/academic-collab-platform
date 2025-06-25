@@ -52,7 +52,6 @@ public class CourseController {
         }
         model.addAttribute("courses", courses);
         model.addAttribute("loggedUser", user);
-        log.info("courses: {}",courses);
 
         return "courses";
     }
