@@ -1,11 +1,42 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-<h1>Oops!</h1>
-<p>Something went wrong. Please try again later.</p>
-</body>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Lexend+Deca:wght@100..900&family=Lexend:wght@100..900&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" th:href="@{/dist/scss/main.css}" />
+
+    <script
+      type="module"
+      src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"
+    ></script>
+    <script
+      nomodule
+      src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"
+    ></script>
+
+    <script type="module" defer th:src="@{/dist/js/app.js}"></script>
+
+    <title>Unexpected Error</title>
+  </head>
+  <body>
+    <div class="container__error-page">
+      <div class="error-page__icon">
+        <ion-icon name="warning-sharp"></ion-icon>
+      </div>
+      <h2 class="error-page__title">Unexpected Error</h2>
+      <p class="error-page__message" th:text="${errorMessage}">
+        An error occurred while processing your request. Please try again later.
+      </p>
+    </div>
+  </body>
 </html>
+

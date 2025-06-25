@@ -81,11 +81,12 @@
 
   overflow: hidden;
 
-  .users-header {
+  .posts-header {
     .search {
       background-color: #fff;
       border: none;
       @include box-shadow(rgba(0, 0, 0, 0.06));
+      margin-top: 2px;
     }
   }
 

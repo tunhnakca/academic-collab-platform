@@ -5,16 +5,7 @@
 
 .section-profile {
   .error-message {
-    color: $color-danger;
     margin-top: -1rem;
-  }
-
-  .input-error {
-    border-color: $color-danger !important;
-
-    &::placeholder {
-      color: $color-danger !important;
-    }
   }
 }
 
