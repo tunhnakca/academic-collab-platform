@@ -10,6 +10,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.servlet.view.RedirectView;
 
 import java.security.Principal;
 import java.util.Optional;
@@ -70,29 +72,26 @@ public class UserController {
     }
 
 
-    @GetMapping("/forgot/password")
-    public MessageResponseWithStatus sentEmail(@RequestParam String number) {
+
+    @PostMapping("/forgot/password")
+    public RedirectView sentEmail(@RequestParam String number, RedirectAttributes redirectAttributes) {
 
         Optional<User> user = userService.findByNumberOptional(number);
-
+        MessageResponseWithStatus messageResponseWithStatus;
         if(user.isEmpty()){
-            return new MessageResponseWithStatus("No user found with the given number. Please check and try again.",false);
+            messageResponseWithStatus= new MessageResponseWithStatus("No user found with the given number. Please check and try again.",false);
         }
-        if(userService.isThereActiveToken(user.get())){
-            return new MessageResponseWithStatus("We have already sent an active link, please check your email address.",true);
+        else {
+            messageResponseWithStatus=userService.sendResetPasswordEmail(user.get());
         }
+        redirectAttributes.addFlashAttribute(messageResponseWithStatus);
 
-        return userService.sendResetPasswordEmail(user.get());
+        return new RedirectView("/login");
 
     }
-/*
+
     @GetMapping("/reset-password")
-    public String showResetPasswordForm(@RequestParam String token) {
-        return "reset-password";
-    }
-*/
-    @PostMapping("/reset-password")
-    public String resetPasswordWithToken(@RequestParam String token,String newPassword) {
+    public String showResetPasswordForm(@RequestParam String token, Model model) {
 
         Optional<User>user=userService.getUserByValidToken(token);
 
@@ -101,11 +100,32 @@ public class UserController {
             return "unauthorized";
         }
 
-        userService.resetPassword(user.get(),newPassword);
+        model.addAttribute("token",token);
 
-        return "/login";
+        return "reset-password";
     }
 
+    @PostMapping("/reset-password")
+    public RedirectView resetPasswordWithToken(@RequestParam String token,String newPassword,String confirmNewPassword,RedirectAttributes redirectAttributes) {
 
+        Optional<User>user=userService.getUserByValidToken(token);
 
+        //buraya bir sayfa lazım (token geçersiz veya süresi geçmiş)
+        if(user.isEmpty()){
+            return new RedirectView("/unauthorized");
+        }
+
+        MessageResponseWithStatus messageResponseWithStatus=userService.resetPassword(user.get(),newPassword,confirmNewPassword);
+        redirectAttributes.addFlashAttribute(messageResponseWithStatus);
+
+        if (!messageResponseWithStatus.getIsStatusOk()){
+            return new RedirectView("/reset-password?token="+token);
+        }
+
+        return new RedirectView("/login");
+    }
+
+    
 }
+
+

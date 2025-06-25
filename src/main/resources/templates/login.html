@@ -106,6 +106,10 @@
         method="post"
         class="forgot-password__form"
       >
+        <p class="forgot-password__description">
+          Enter your number. We'll send a password reset link to your university
+          email address.
+        </p>
         <div class="forgot-password__input-group">
           <label for="numberInput">Number</label>
           <input
@@ -129,7 +133,7 @@
         </div>
 
         <button type="submit" class="btn btn__forgot-password btn--primary">
-          Reset Password
+          Send Reset Link
         </button>
       </form>
     </div>
@@ -137,6 +141,7 @@
     <div
       th:replace="~{fragments/alert-bar-with-fetch :: alert-bar-with-fetch}"
     ></div>
+    <div th:replace="~{fragments/alert-bar :: alert-bar}"></div>
 
     <div class="overlay d-none"></div>
   </body>

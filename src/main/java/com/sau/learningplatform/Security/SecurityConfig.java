@@ -30,6 +30,8 @@ public class SecurityConfig {
                         .requestMatchers("/courses/add").hasAnyAuthority("ADMIN", "INSTRUCTOR")
                         .requestMatchers("/projects/add").hasAnyAuthority("ADMIN", "INSTRUCTOR")
                         .requestMatchers("/courses/delete/**").hasAnyAuthority("ADMIN", "INSTRUCTOR")
+                        .requestMatchers("/forgot/password").permitAll()
+                        .requestMatchers("/reset-password").permitAll()
                         .anyRequest().authenticated())
                 .formLogin(form -> form
                         .loginPage("/login")
