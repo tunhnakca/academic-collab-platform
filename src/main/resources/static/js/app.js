@@ -100,9 +100,11 @@ document.addEventListener("DOMContentLoaded", (e) => {
 ///////////////////////////
 // Footer
 ///////////////////////////
+/*
 document.addEventListener("DOMContentLoaded", (e) => {
   setCurrentYear();
 });
+*/
 
 ///////////////////////////
 // Profile Page
