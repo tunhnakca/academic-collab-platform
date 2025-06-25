@@ -2,7 +2,10 @@ package com.sau.learningplatform.Controller;
 
 import com.sau.learningplatform.Entity.Project;
 import com.sau.learningplatform.Entity.User;
-import com.sau.learningplatform.EntityResponse.*;
+import com.sau.learningplatform.EntityResponse.MessageResponseWithStatus;
+import com.sau.learningplatform.EntityResponse.PostPageResponse;
+import com.sau.learningplatform.EntityResponse.PostRequest;
+import com.sau.learningplatform.EntityResponse.ProjectResponse;
 import com.sau.learningplatform.Service.CourseService;
 import com.sau.learningplatform.Service.PostService;
 import com.sau.learningplatform.Service.ProjectService;
@@ -12,11 +15,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
+
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
-
 import java.security.Principal;
-import java.util.List;
 
 @Controller
 public class PostController {
