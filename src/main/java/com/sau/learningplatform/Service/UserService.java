@@ -38,7 +38,7 @@ public interface UserService {
 
     MessageResponseWithStatus sendResetPasswordEmail(User user);
 
-    MessageResponseWithStatus resetPassword(User user, String newPassword);
+    MessageResponseWithStatus resetPassword(User user, String newPassword,String confirmNewPassword);
 
     Boolean isThereActiveToken(User user);
     public Optional<User> findByNumberOptional(String number);

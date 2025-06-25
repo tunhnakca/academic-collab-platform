@@ -48,3 +48,5 @@ package-lock.json
 # Other unnecessary files
 *.log
 .DS_Store
+
+.env

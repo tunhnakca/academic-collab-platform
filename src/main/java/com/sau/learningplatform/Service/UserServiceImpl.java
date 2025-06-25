@@ -207,6 +207,11 @@ public class UserServiceImpl implements UserService {
 
     public MessageResponseWithStatus sendResetPasswordEmail(User user) {
     try {
+        //if there is a valid token already, do not send
+        if(isThereActiveToken(user)) {
+            return new MessageResponseWithStatus("We have already sent an active link, please check your email address.", true);
+        }
+
         // create token
         String token = UUID.randomUUID().toString();
         LocalDateTime expiryDate = LocalDateTime.now().plusMinutes(30); // valid for 30 minutes
@@ -224,7 +229,7 @@ public class UserServiceImpl implements UserService {
                 + "To reset your password, click the link below:\n"
                 + resetLink + "\n"
                 + "If you did not request a password reset, please ignore this email.\n"
-                + "Best regards,\n Collab Learning Team";
+                + "Best regards,\n Collaborative Learning Team Sau";
 
         sendEmail(subject, body, user.getNumber());
 
@@ -235,6 +240,9 @@ public class UserServiceImpl implements UserService {
     }
     catch (Exception e){
         log.warn("Failed to send email to {}: {}", user.getName(), e.getMessage());
+        user.setResetToken(null);
+        user.setTokenExpiryDate(null);
+        userRepository.save(user);
         return new MessageResponseWithStatus("An error occurred while sending the password reset email. Please contact support if the problem persists. ",false);
     }
 
@@ -252,10 +260,8 @@ public class UserServiceImpl implements UserService {
     }
 
     public Boolean isThereActiveToken(User user){
-        if (user.getTokenExpiryDate()!=null && user.getTokenExpiryDate().isAfter(LocalDateTime.now())){
-            return true;
-        }
-        return false;
+
+        return user.getTokenExpiryDate()!=null && user.getTokenExpiryDate().isAfter(LocalDateTime.now());
     }
 
 
@@ -286,7 +292,12 @@ public class UserServiceImpl implements UserService {
         return user;
     }
 
-    public MessageResponseWithStatus resetPassword(User user, String newPassword) {
+    public MessageResponseWithStatus resetPassword(User user, String newPassword,String confirmNewPassword) {
+
+        if (!newPassword.equals(confirmNewPassword)) {
+            log.warn("Password and confirmation password do not match for reset request. User: {}", user.getName());
+            return new MessageResponseWithStatus("Passwords do not match. Please make sure both fields contain the same password.", false);
+        }
 
         if (newPassword.equalsIgnoreCase(user.getNumber())) {
             log.warn("Your new password cannot be same as your number!");
@@ -297,6 +308,8 @@ public class UserServiceImpl implements UserService {
         user.setResetToken(null);
         user.setTokenExpiryDate(null);
         userRepository.save(user);
+
+        log.info(user.getName()+"'s password has been updated successfully!");
 
         return new MessageResponseWithStatus("Your password has been updated successfully!", true);
     }
