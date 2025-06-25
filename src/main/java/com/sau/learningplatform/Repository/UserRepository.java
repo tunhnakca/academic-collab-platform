@@ -36,7 +36,8 @@ public interface UserRepository extends JpaRepository<User, Integer> {
             "LOWER(u.name) LIKE LOWER(CONCAT(:keyword, '%')) " +
             "OR LOWER(u.name) LIKE LOWER(CONCAT('% ', :keyword, '%')) " +
             "OR LOWER(u.surname) LIKE LOWER(CONCAT(:keyword, '%')) " +
-            "OR LOWER(u.surname) LIKE LOWER(CONCAT('% ', :keyword, '%')))")
+            "OR LOWER(u.surname) LIKE LOWER(CONCAT('% ', :keyword, '%')))" +
+            "ORDER BY u.name ASC")
     Page<User> searchUsersByCourseAndRoleAndNameOrSurnamePaged(
             @Param("courseCode") String courseCode,
             @Param("semester") Semester semester,
