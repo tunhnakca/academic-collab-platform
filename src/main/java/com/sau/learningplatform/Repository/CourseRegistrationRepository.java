@@ -7,6 +7,8 @@ import com.sau.learningplatform.Entity.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 import java.util.Optional;
@@ -17,7 +19,16 @@ public interface CourseRegistrationRepository extends JpaRepository<CourseRegist
 
     List<CourseRegistration> findByUserIdAndSemesterId(int userId, Long semesterId);
 
-    Page<CourseRegistration> findByCourseCodeAndUserRoleAndSemester(String courseCode, String role, Semester semester, Pageable pageable);
+    @Query("SELECT cr FROM CourseRegistration cr " +
+            "WHERE cr.course.code = :courseCode " +
+            "AND cr.user.role = :role " +
+            "AND cr.semester = :semester " +
+            "ORDER BY LOWER(cr.user.name) ASC")
+    Page<CourseRegistration> findSortedUsersByNameIgnoreCase(
+            @Param("courseCode") String courseCode,
+            @Param("role") String role,
+            @Param("semester") Semester semester,
+            Pageable pageable);
     List<CourseRegistration> findByUserRoleIgnoreCaseAndSemester(String userRole, Semester semester);
 
     boolean existsByUserAndCourseAndSemester(User user, Course course, Semester semester);

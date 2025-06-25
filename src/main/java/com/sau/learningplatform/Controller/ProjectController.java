@@ -96,7 +96,7 @@ public class ProjectController {
         model.addAttribute("loggedUser", user);
         CourseResponse course=courseService.getCourseResponseByCode(courseCode);
         if (!courseService.isUserRegisteredToCourseInCurrentSemester(user,course.getId()) && !user.getRole().equalsIgnoreCase("admin")){
-            return "unauthorized";
+            return "error";
         }
         model.addAttribute("course",course);
         List<ProjectResponse>projects=projectService.filterOrSort(courseCode,queryParam);
@@ -113,7 +113,7 @@ public class ProjectController {
         User user = userService.findByNumber(number);
 
         if (!user.getRole().equalsIgnoreCase("admin") && !user.getRole().equalsIgnoreCase("instructor")){
-            return new RedirectView("unauthorized");
+            return new RedirectView("/error");
         }
 
         MessageResponseWithStatus messageResponseWithStatus= projectService.saveProjectToCourseWithCode(project,courseCode);
@@ -121,9 +121,6 @@ public class ProjectController {
 
         return new RedirectView("/projects?courseCode=" + courseCode);
 
-        //location.reload lazım yok ise
-
-        //return "redirect:/projects?courseCode=" + courseCode;
     }
 
 

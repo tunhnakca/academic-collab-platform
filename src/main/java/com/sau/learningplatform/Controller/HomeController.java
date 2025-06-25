@@ -65,10 +65,15 @@ public class HomeController {
 
     }
 
-    @GetMapping("/unauthorized")
-    String showUnauthorizedPage(){
-        return "unauthorized";
+    @GetMapping("/error")
+    public String showErrorPage() {
+        return "error";
     }
+    @GetMapping("/invalid-token")
+    public String showInvalidTokenPage() {
+        return "invalid-token";
+    }
+
 
 
 }
