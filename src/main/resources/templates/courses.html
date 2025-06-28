@@ -28,7 +28,8 @@
                   class="course__information__icon course__information__icon--open-projects"
                 ></ion-icon>
                 <span class="course__information"
-                  >Open Projects <span>1</span></span
+                  >Open Projects
+                  <span th:text="${course.openProjectCount}">1</span></span
                 >
               </li>
               <li>
@@ -37,8 +38,9 @@
                   class="course__information__icon course__information__icon--closed-projects"
                 ></ion-icon>
                 <span class="course__information"
-                  >Closed Projects <span>4</span></span
-                >
+                  >Closed Projects
+                  <span th:text="${course.closedProjectCount}"></span
+                ></span>
               </li>
               <li>
                 <ion-icon
@@ -46,8 +48,9 @@
                   class="course__information__icon"
                 ></ion-icon>
                 <span class="course__information"
-                  >Number of Students <span>54</span></span
-                >
+                  >Number of Students
+                  <span th:text="${course.studentCount}"></span
+                ></span>
               </li>
             </ul>
           </a>
