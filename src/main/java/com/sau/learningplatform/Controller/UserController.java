@@ -95,7 +95,7 @@ public class UserController {
 
         Optional<User>user=userService.getUserByValidToken(token);
 
-        //buraya bir sayfa lazım (token geçersiz veya süresi geçmiş)
+
         if(user.isEmpty()){
             return "invalid-token";
         }
