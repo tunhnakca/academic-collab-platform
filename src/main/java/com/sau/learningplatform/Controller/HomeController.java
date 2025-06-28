@@ -2,7 +2,7 @@ package com.sau.learningplatform.Controller;
 
 import com.sau.learningplatform.Entity.User;
 import com.sau.learningplatform.EntityResponse.MessageResponseWithStatus;
-import com.sau.learningplatform.Service.SemesterService;
+
 import com.sau.learningplatform.Service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,18 +19,23 @@ public class HomeController {
 
     private final UserService userService;
 
-    private SemesterService semesterService;
-
-    public HomeController(UserService userService, SemesterService semesterService) {
+    public HomeController(UserService userService) {
         this.userService = userService;
-        this.semesterService = semesterService;
+
     }
 
 
     @GetMapping("/login")
-    String loginPage() {
+    String showLoginPage() {
 
         return "login";
+
+    }
+
+    @GetMapping("/")
+    String  showHomePage() {
+
+        return "redirect:/courses";
 
     }
     

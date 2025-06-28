@@ -21,10 +21,11 @@ public class MyUserDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
+         username=username.toUpperCase();
          Optional<User> user=userRepository.findByNumber(username);
 
          if (user.isEmpty()){
-             log.error("User not found!");
+             log.warn("User not found!");
              throw new UsernameNotFoundException("User not found!");
          }
 
