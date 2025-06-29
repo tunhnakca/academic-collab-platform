@@ -16,8 +16,7 @@ public class Course {
     @Column(name = "id")
     private int id;
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = { CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH,
-            CascadeType.DETACH },
+    @OneToMany(fetch = FetchType.LAZY, cascade = {CascadeType.ALL},
     mappedBy = "course")
     private List<CourseRegistration> courseRegistrations =new ArrayList<>();
 

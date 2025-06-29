@@ -53,7 +53,7 @@ public class CourseServiceImpl implements CourseService {
     @Override
     public List<CourseResponse> getActiveCourseResponsesByUser(User user) {
 
-        List<CourseRegistration>courseRegistrations=courseRegistrationRepository.findByUserIdAndSemesterId(user.getId(), semesterService.getCurrentSemester().getId());
+        List<CourseRegistration>courseRegistrations=courseRegistrationRepository.findByUserIdAndSemesterIdAndCourseIsDeletedFalse(user.getId(), semesterService.getCurrentSemester().getId());
 
         List<Course> courses = courseRegistrations.stream().map(CourseRegistration::getCourse).toList();
 
@@ -108,8 +108,9 @@ public class CourseServiceImpl implements CourseService {
 
         // get a course, save and associate students with it
         Course course = new Course(courseName, ownerName, courseCode);
+        courseRepository.save(course);
 
-        userService.saveAll(users);
+        userService.saveUser(owner);
 
         users.add(owner);
 
@@ -251,7 +252,7 @@ public class CourseServiceImpl implements CourseService {
                     // if it's not exists create a new user object
                     else {
                         student = new User(number, name, surname, number, "student");
-                        userService.encodePasswordAndSaveUser(student);
+                        student= userService.encodePasswordAndSaveUser(student);
                     }
                     students.add(student);
                 }
