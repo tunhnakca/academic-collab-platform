@@ -28,6 +28,7 @@
     flex-direction: column;
     gap: 0.2rem;
     padding: 2rem 0;
+    word-break: break-word;
 
     &:not(:last-child) {
       border-bottom: 1px solid #e2e5e9;
