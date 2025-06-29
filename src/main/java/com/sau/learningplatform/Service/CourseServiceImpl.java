@@ -53,7 +53,7 @@ public class CourseServiceImpl implements CourseService {
     @Override
     public List<CourseResponse> getActiveCourseResponsesByUser(User user) {
 
-        List<CourseRegistration>courseRegistrations=courseRegistrationRepository.findByUserIdAndSemesterId(user.getId(), semesterService.getCurrentSemester().getId());
+        List<CourseRegistration>courseRegistrations=courseRegistrationRepository.findByUserIdAndSemesterIdAndCourseIsDeletedFalse(user.getId(), semesterService.getCurrentSemester().getId());
 
         List<Course> courses = courseRegistrations.stream().map(CourseRegistration::getCourse).toList();
 
