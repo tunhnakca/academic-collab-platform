@@ -223,9 +223,6 @@ public class CourseServiceImpl implements CourseService {
 
 
 
-
-
-
     public List<User> getStudentsFromExcelAndCreateNonExists(MultipartFile file) throws IOException {
         List<User> students = new ArrayList<>();
 
@@ -254,7 +251,7 @@ public class CourseServiceImpl implements CourseService {
                     // if it's not exists create a new user object
                     else {
                         student = new User(number, name, surname, number, "student");
-                        //userService.register(student);
+                        userService.encodePasswordAndSaveUser(student);
                     }
                     students.add(student);
                 }

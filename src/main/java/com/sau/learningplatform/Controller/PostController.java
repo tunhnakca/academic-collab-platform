@@ -49,7 +49,7 @@ public class PostController {
         ProjectResponse projectResponse=projectService.getResponseById(projectId);
 
         if (!courseService.isUserRegisteredToCourseInCurrentSemester(user,projectResponse.getCourse().getId()) && !user.getRole().equalsIgnoreCase("admin")){
-            return "unauthorized";
+            return "error";
         }
 
         PostPageResponse postPageResponse=postService.getParentPostsAsPostPageResponseByProjectId(projectId,pageNo,pageSize);
@@ -69,7 +69,7 @@ public class PostController {
 
         ProjectResponse projectResponse=projectService.getResponseById(projectId);
         if (!courseService.isUserRegisteredToCourseInCurrentSemester(user,projectResponse.getCourse().getId()) && !user.getRole().equalsIgnoreCase("admin")){
-            return "unauthorized";
+            return "error";
         }
 
         PostPageResponse postPageResponse=postService.searchParentPostsAsPostPageResponseByProjectId(keyword,projectId,pageNo,pageSize);

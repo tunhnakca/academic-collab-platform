@@ -42,7 +42,7 @@ public class ProjectController {
         CourseResponse course=courseService.getCourseResponseByCode(courseCode);
 
         if (!courseService.isUserRegisteredToCourseInCurrentSemester(user,course.getId()) && !user.getRole().equalsIgnoreCase("admin")){
-            return "unauthorized";
+            return "error";
         }
 
         List<ProjectResponse> projectResponses=projectService.getProjectsByCourseId(course.getId());
@@ -61,7 +61,7 @@ public class ProjectController {
         model.addAttribute("loggedUser", user);
         CourseResponse course=courseService.getCourseResponseByCode(courseCode);
         if (!courseService.isUserRegisteredToCourseInCurrentSemester(user,course.getId()) && !user.getRole().equalsIgnoreCase("admin")){
-            return "unauthorized";
+            return "error";
         }
         model.addAttribute("course",course);
         List<ProjectResponse> foundProjects = projectService.searchByCourseCodeAndProjectTitle(courseCode, keyword);
@@ -78,7 +78,7 @@ public class ProjectController {
         CourseResponse course=courseService.getCourseResponseByCode(courseCode);
 
         if (!courseService.isUserRegisteredToCourseInCurrentSemester(user,course.getId()) && !user.getRole().equalsIgnoreCase("admin")){
-            return "unauthorized";
+            return "error";
         }
         model.addAttribute("loggedUser", user);
         model.addAttribute("courseCode",courseCode);
