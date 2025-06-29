@@ -13,7 +13,7 @@ import java.util.Optional;
 public interface UserService {
     User findById(int id);
 
-    void encodePasswordAndSaveUser(User user);
+    User encodePasswordAndSaveUser(User user);
 
     User findByNumber(String number);
 

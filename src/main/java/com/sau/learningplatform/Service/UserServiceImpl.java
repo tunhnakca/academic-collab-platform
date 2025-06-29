@@ -64,11 +64,11 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
-    public void encodePasswordAndSaveUser(User user) {
+    public User encodePasswordAndSaveUser(User user) {
         String hashedPassword = passwordEncoder.encode(user.getPassword());
         user.setPassword(hashedPassword);
-        userRepository.save(user);
-        log.info("New user has been registered !");
+        return userRepository.save(user);
+
     }
 
     @Override
