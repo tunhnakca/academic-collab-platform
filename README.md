@@ -12,6 +12,11 @@
 ## 🧰 Tech Stack
 Spring Boot • Thymeleaf • PostgreSQL • JavaScript • SCSS • Parcel
 
+## ⚙️ Development Focus
+
+- **Frontend development** by Tunahan Akça  
+- **Backend development** by Mert Munar
+
 ## 🔒 License
 
 This repository is **public for portfolio purposes only**.  
