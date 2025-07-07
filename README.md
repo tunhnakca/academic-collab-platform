@@ -3,12 +3,11 @@
 🎓 **A full-stack academic collaboration platform** developed as a senior project. The system facilitates structured, semester-based project workflows and enhances communication between students and instructors.
 
 ## 📌 Key Features
-- Role-based access control (Admin / Instructor / Student)
-- Semester and course management
-- Project creation with markdown-supported descriptions
-- Threaded posts and replies with nested discussions
-- Secure password reset via tokenized email links
-- Pagination, filtering, search across posts and projects
+- **Role-based access control** with Administrator, Instructor, and Student roles  
+- **Semester-based course creation** and student enrollment  
+- **Instructor-assigned projects** with Markdown-supported descriptions  
+- **Threaded discussions** with nested replies under each project  
+- **Centralized academic workspace** for managing courses, projects, and interactions
 
 ## 🧰 Tech Stack
 Spring Boot • Thymeleaf • PostgreSQL • JavaScript • SCSS • Parcel
